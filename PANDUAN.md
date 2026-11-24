@@ -75,6 +75,8 @@ Selama `rsvpEndpoint` masih kosong, RSVP berjalan dalam mode demo: ucapan hanya 
 5. Upload / push. Kirim link draf ke pelanggan: `https://domainmu/<slug>/?to=Nama+Tamu`.
 6. Setelah disetujui dan dibayar: kirim `admin/link-tamu.html?u=<slug>` (atau buatkan daftarnya) supaya mereka bisa sebar ke semua tamu.
 
+**Setelah mengubah file CSS/JS** (bukan JSON undangan), naikkan nomor versi `?v=…` di `index.html`, `undangan/index.html`, `admin/*.html`, serta `VERSI` di `assets/landing.js`. Ini supaya HP pengunjung tidak memakai file lama dari cache dan tampilannya tidak berantakan.
+
 Revisi cukup edit JSON-nya. Link tidak berubah, jadi tamu yang sudah menerima langsung melihat versi terbaru.
 
 ## 6. Rencana 30 hari pertama: 10 pelanggan

@@ -513,7 +513,7 @@
     var s = el('section', { class: 'sampul' + (foto ? ' berfoto' : ''), id: 'sampul' });
     if (foto) {
       var f = el('div', { class: 'sampul-foto', 'aria-hidden': 'true' });
-      f.style.backgroundImage = cssUrl(foto);
+      f.style.setProperty('--foto-sampul', cssUrl(foto));
       s.append(f);
     } else {
       s.append(el('div', { class: 'sampul-hias' },

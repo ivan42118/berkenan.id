@@ -2,6 +2,7 @@
   'use strict';
   var B = window.BRAND || {};
   var NOMOR_CONTOH = '6281234567890';
+  var VERSI = '20261124b'; // samakan dengan ?v= di index.html setiap kali ada update
   var wa = String(B.whatsapp || '').replace(/\D/g, '');
 
   function rupiah(n) { return 'Rp ' + Number(n || 0).toLocaleString('id-ID'); }
@@ -68,7 +69,8 @@
   }
   var SAPAAN_DEMO = { pernikahan: 'Calon Pengantin', khitan: 'Bapak/Ibu', ulangtahun: 'Teman Kecil', acara: 'Tamu Undangan' };
   (B.tema || []).forEach(function (t) {
-    var demo = 'undangan/?u=' + encodeURIComponent(t.demo) + '&to=' + encodeURIComponent(SAPAAN_DEMO[t.kategori] || 'Tamu Undangan');
+    // v = versi situs, supaya browser tidak memakai halaman demo lama dari cache setelah update.
+    var demo = 'undangan/?u=' + encodeURIComponent(t.demo) + '&to=' + encodeURIComponent(SAPAAN_DEMO[t.kategori] || 'Tamu Undangan') + '&v=' + VERSI;
     var kartu = el('article', 'kartu-tema');
     if (t.kategori) {
       kartu.dataset.kategori = t.kategori;

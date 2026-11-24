@@ -8,7 +8,7 @@ window.BRAND = {
   tagline: "Undangan Digital",
 
   // Nomor WhatsApp penerima pesanan: format 62xxxxxxxxxx, tanpa +, spasi, atau tanda hubung.
-  whatsapp: "6281234567890",
+  whatsapp: "62895386124189",
   instagram: "", // contoh: "ikrar.undangan" (tanpa @)
 
   // Alamat situs setelah online, TANPA garis miring di akhir. Contoh: "https://ikrar.my.id"
