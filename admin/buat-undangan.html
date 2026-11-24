@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Admin · Buat Undangan</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+  <header class="atas">
+    <div class="kiri">
+      <h1>Buat Undangan</h1>
+      <nav><a href="link-tamu.html">Generator link tamu →</a></nav>
+    </div>
+    <div class="alat">
+      <label class="btn garis" for="file-json">Buka JSON</label>
+      <input type="file" id="file-json" accept="application/json,.json" hidden>
+      <select id="pilih-demo" aria-label="Muat data contoh"><option value="">Muat contoh…</option></select>
+      <button class="btn garis" type="button" id="btn-baru">Kosongkan</button>
+      <button class="btn" type="button" id="btn-json">Unduh data (.json)</button>
+      <button class="btn" type="button" id="btn-stub">Unduh link pendek (index.html)</button>
+    </div>
+  </header>
+
+  <div class="tata">
+    <form class="kolom-form" id="form" autocomplete="off" onsubmit="return false">
+      <div class="pesan" id="pesan">Isi form, pratinjau di kanan langsung berubah. Draf tersimpan otomatis di browser ini.</div>
+
+      <section class="panel">
+        <h2>Dasar</h2>
+        <div class="baris">
+          <label class="f">Slug / nama link (huruf kecil, angka, tanda -)
+            <input data-k="slug" id="slug" pattern="[a-z0-9-]{1,60}" placeholder="raka-nadia"></label>
+          <label class="f">Tema <select data-k="tema" id="tema"></select></label>
+          <label class="f">Urutan nama
+            <select data-k="urutan"><option value="pria">Pria dulu</option><option value="wanita">Wanita dulu</option></select></label>
+          <label class="f">URL musik (mp3, opsional) <input data-k="musik" placeholder="musik/lagu.mp3"></label>
+          <label class="f">Aktif sampai (sesuai paket) <input type="date" data-k="aktifSampai"></label>
+          <label class="f lebar">Foto sampul (opsional) <input data-k="sampul" placeholder="foto/raka-nadia/sampul.jpg atau https://…"></label>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>Mempelai Pria</h2>
+        <div class="baris">
+          <label class="f">Nama panggilan <input data-k="pria.panggilan" data-nama></label>
+          <label class="f">Nama lengkap & gelar <input data-k="pria.lengkap"></label>
+          <label class="f lebar">Keterangan orang tua <input data-k="pria.ortu" placeholder="Putra pertama dari Bapak … & Ibu …"></label>
+          <label class="f">Foto (opsional) <input data-k="pria.foto"></label>
+          <label class="f">Instagram (opsional) <input data-k="pria.instagram" placeholder="tanpa @"></label>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>Mempelai Wanita</h2>
+        <div class="baris">
+          <label class="f">Nama panggilan <input data-k="wanita.panggilan" data-nama></label>
+          <label class="f">Nama lengkap & gelar <input data-k="wanita.lengkap"></label>
+          <label class="f lebar">Keterangan orang tua <input data-k="wanita.ortu" placeholder="Putri kedua dari Bapak … & Ibu …"></label>
+          <label class="f">Foto (opsional) <input data-k="wanita.foto"></label>
+          <label class="f">Instagram (opsional) <input data-k="wanita.instagram" placeholder="tanpa @"></label>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>Pembuka & Kutipan</h2>
+        <div class="baris">
+          <label class="f lebar">Salam (kosongkan jika tidak perlu) <input data-k="salam"></label>
+          <label class="f lebar">Kalimat pembuka <textarea data-k="pembuka"></textarea></label>
+          <label class="f lebar">Kutipan / ayat <textarea data-k="kutipan.teks"></textarea></label>
+          <label class="f">Sumber kutipan <input data-k="kutipan.sumber"></label>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>Acara</h2>
+        <p class="bantu">Acara pertama dipakai untuk hitung mundur dan tanggal di sampul.</p>
+        <div data-grup="acara"></div>
+        <button class="btn garis kecil" type="button" data-tambah="acara">+ Tambah acara</button>
+        <div class="baris" style="margin-top:12px">
+          <label class="f lebar">Link siaran langsung (opsional) <input data-k="siaran" placeholder="https://youtube.com/…"></label>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>Kisah Cinta <small>(Premium)</small></h2>
+        <div data-grup="cerita"></div>
+        <button class="btn garis kecil" type="button" data-tambah="cerita">+ Tambah cerita</button>
+      </section>
+
+      <section class="panel">
+        <h2>Galeri <small>(Premium)</small></h2>
+        <p class="bantu">Path foto relatif terhadap folder <code>undangan/</code>, misalnya <code>foto/raka-nadia/1.jpg</code>, atau URL lengkap. Kecilkan foto ke lebar ±1200px supaya undangan cepat dibuka.</p>
+        <div data-grup="galeri"></div>
+        <button class="btn garis kecil" type="button" data-tambah="galeri">+ Tambah foto</button>
+      </section>
+
+      <section class="panel">
+        <h2>Amplop Digital</h2>
+        <div class="baris" style="margin-bottom:12px">
+          <label class="f lebar">Kalimat pengantar (opsional) <textarea data-k="amplop.pengantar"></textarea></label>
+        </div>
+        <div data-grup="amplop.rekening"></div>
+        <button class="btn garis kecil" type="button" data-tambah="amplop.rekening">+ Tambah rekening</button>
+        <div class="baris" style="margin-top:12px">
+          <label class="f lebar">Alamat kirim kado (opsional) <textarea data-k="amplop.alamat"></textarea></label>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>RSVP & Penutup</h2>
+        <div class="baris">
+          <label class="cek"><input type="checkbox" data-k="rsvp.aktif" checked> Tampilkan RSVP & ucapan</label>
+          <label class="f">WA mempelai untuk konfirmasi (opsional) <input data-k="rsvp.wa" placeholder="62812…"></label>
+          <label class="f lebar">Endpoint RSVP khusus (kosong = pakai yang di config.js) <input data-k="rsvp.endpoint"></label>
+          <label class="f lebar">Kalimat penutup <textarea data-k="penutup"></textarea></label>
+          <label class="f lebar">Keluarga yang mengundang <input data-k="keluarga" placeholder="Kel. Bapak … & Kel. Bapak …"></label>
+        </div>
+      </section>
+    </form>
+
+    <aside class="kolom-preview">
+      <div class="hp"><iframe id="preview" title="Pratinjau undangan" src="../undangan/index.html?preview=1&amp;buka=1&amp;to=Nama%20Tamu"></iframe></div>
+      <p class="info-link" id="info-link"></p>
+    </aside>
+  </div>
+
+  <script src="../config.js"></script>
+  <script src="buat-undangan.js"></script>
+</body>
+</html>

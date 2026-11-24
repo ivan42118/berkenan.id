@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Generator Link Tamu</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+  <header class="atas">
+    <div class="kiri">
+      <h1>Generator Link Tamu</h1>
+      <nav><a href="buat-undangan.html">← Buat undangan</a></nav>
+    </div>
+  </header>
+
+  <main class="tunggal">
+    <section class="panel">
+      <h2>1. Link undangan</h2>
+      <label class="f">Link dasar undangan (tanpa nama tamu)
+        <input id="dasar" placeholder="https://namabrand.my.id/raka-nadia/"></label>
+    </section>
+
+    <section class="panel">
+      <h2>2. Daftar tamu</h2>
+      <p class="bantu">Satu tamu per baris. Boleh tambahkan nomor WA di akhir baris supaya tombol kirim langsung ke orangnya. Contoh: <code>Bapak Joko Santoso, S.H. 081234567890</code></p>
+      <textarea id="tamu" rows="8" placeholder="Bapak Joko & Keluarga&#10;Ibu Ratna 081234567890&#10;Teman Kantor"></textarea>
+    </section>
+
+    <section class="panel">
+      <h2>3. Template pesan</h2>
+      <p class="bantu">Gunakan <code>{nama}</code> dan <code>{link}</code>. Keduanya diganti otomatis untuk setiap tamu.</p>
+      <textarea id="template" rows="10"></textarea>
+    </section>
+
+    <section class="panel">
+      <div class="item-kepala" style="margin-bottom:12px">
+        <h2 style="margin:0">Hasil (<span id="jumlah">0</span> tamu)</h2>
+        <div class="alat">
+          <button class="btn garis kecil" type="button" id="salin-semua">Salin semua link</button>
+          <button class="btn kecil" type="button" id="unduh-csv">Unduh CSV</button>
+        </div>
+      </div>
+      <div style="overflow-x:auto">
+        <table>
+          <thead><tr><th>#</th><th>Nama</th><th>Link</th><th>Kirim</th></tr></thead>
+          <tbody id="hasil"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <script src="../config.js"></script>
+  <script>
+  (function () {
+    'use strict';
+    var B = window.BRAND || {};
+    var $ = function (id) { return document.getElementById(id); };
+    var KUNCI = 'admin:link-tamu';
+    var TEMPLATE_AWAL = [
+      'Kepada Yth.',
+      'Bapak/Ibu/Saudara/i',
+      '*{nama}*',
+      '',
+      'Tanpa mengurangi rasa hormat, kami mengundang Bapak/Ibu/Saudara/i untuk hadir di acara pernikahan kami.',
+      '',
+      'Info lengkap acara dapat dilihat melalui undangan berikut:',
+      '{link}',
+      '',
+      'Merupakan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir dan memberikan doa restu.',
+      '',
+      'Terima kasih.'
+    ].join('\n');
+
+    // Nomor HP Indonesia di akhir baris: 08…, 628…, atau +628…
+    var POLA_HP = /^(.*?)[\s,;|:-]*((?:\+?62[\s-]?|0)8[\d\s-]{7,15})\s*$/;
+
+    function normalHp(s) {
+      var d = s.replace(/\D/g, '');
+      if (d.indexOf('0') === 0) d = '62' + d.slice(1);
+      return d;
+    }
+    function buatLink(dasar, nama) {
+      var pemisah = dasar.indexOf('?') >= 0 ? '&' : '?';
+      return dasar + pemisah + 'to=' + encodeURIComponent(nama).replace(/%20/g, '+');
+    }
+    function parse() {
+      return $('tamu').value.split(/\r?\n/).map(function (baris) {
+        baris = baris.trim();
+        if (!baris) return null;
+        var m = baris.match(POLA_HP);
+        return m && m[1].trim() ? { nama: m[1].trim(), hp: normalHp(m[2]) } : { nama: baris, hp: '' };
+      }).filter(Boolean);
+    }
+    function pesanUntuk(t, link) {
+      return $('template').value.split('{nama}').join(t.nama).split('{link}').join(link);
+    }
+    function salin(teks, tombol) {
+      var asli = tombol.textContent;
+      var ok = function () { tombol.textContent = 'Tersalin ✓'; setTimeout(function () { tombol.textContent = asli; }, 1500); };
+      if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(teks).then(ok);
+      else {
+        var ta = document.createElement('textarea');
+        ta.value = teks; document.body.append(ta); ta.select();
+        document.execCommand('copy'); ta.remove(); ok();
+      }
+    }
+    function tombol(teks, kelas) {
+      var b = document.createElement(kelas === 'a' ? 'a' : 'button');
+      b.className = 'btn kecil' + (kelas === 'garis' ? ' garis' : '');
+      b.textContent = teks;
+      if (b.tagName === 'BUTTON') b.type = 'button';
+      return b;
+    }
+
+    var data = [];
+    function render() {
+      var dasar = $('dasar').value.trim();
+      data = parse().map(function (t) { return Object.assign(t, { link: dasar ? buatLink(dasar, t.nama) : '' }); });
+      $('jumlah').textContent = data.length;
+      var tbody = $('hasil');
+      tbody.textContent = '';
+      data.forEach(function (t, i) {
+        var tr = document.createElement('tr');
+        var tdNo = document.createElement('td'); tdNo.textContent = i + 1;
+        var tdNama = document.createElement('td'); tdNama.textContent = t.nama;
+        if (t.hp) { var kecil = document.createElement('div'); kecil.style.cssText = 'font-size:12px;color:var(--redup)'; kecil.textContent = '+' + t.hp; tdNama.append(kecil); }
+        var tdLink = document.createElement('td'); tdLink.className = 'link';
+        if (t.link) { var a = document.createElement('a'); a.href = t.link; a.target = '_blank'; a.rel = 'noopener'; a.textContent = t.link; tdLink.append(a); }
+        else tdLink.textContent = 'Isi link dasar dulu';
+        var tdAksi = document.createElement('td'); tdAksi.className = 'aksi';
+        if (t.link) {
+          var bSalin = tombol('Salin pesan', 'garis');
+          bSalin.addEventListener('click', function () { salin(pesanUntuk(t, t.link), bSalin); });
+          var bWa = tombol('Kirim WA', 'a');
+          bWa.href = 'https://wa.me/' + (t.hp || '') + '?text=' + encodeURIComponent(pesanUntuk(t, t.link));
+          bWa.target = '_blank'; bWa.rel = 'noopener';
+          bWa.style.marginLeft = '6px';
+          tdAksi.append(bSalin, bWa);
+        }
+        tr.append(tdNo, tdNama, tdLink, tdAksi);
+        tbody.append(tr);
+      });
+      try { localStorage.setItem(KUNCI, JSON.stringify({ dasar: dasar, tamu: $('tamu').value, template: $('template').value })); } catch (e) { /* penuh */ }
+    }
+
+    $('salin-semua').addEventListener('click', function (e) {
+      salin(data.filter(function (t) { return t.link; }).map(function (t) { return t.nama + ': ' + t.link; }).join('\n'), e.currentTarget);
+    });
+    $('unduh-csv').addEventListener('click', function () {
+      // Awali sel yang dimulai = + - @ dengan ' agar tidak dieksekusi sebagai rumus di Excel/Sheets.
+      var sel = function (v) { v = String(v || ''); if (/^[=+\-@]/.test(v)) v = "'" + v; return '"' + v.replace(/"/g, '""') + '"'; };
+      var csv = ['Nama,WhatsApp,Link'].concat(data.map(function (t) { return [sel(t.nama), sel(t.hp), sel(t.link)].join(','); })).join('\r\n');
+      var url = URL.createObjectURL(new Blob(['﻿' + csv], { type: 'text/csv;charset=utf-8' }));
+      var a = document.createElement('a'); a.href = url; a.download = 'link-tamu.csv';
+      document.body.append(a); a.click(); a.remove();
+      setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+    });
+
+    // Muat isian terakhir; ?u=slug mengisi link dasar otomatis.
+    var simpan = {};
+    try { simpan = JSON.parse(localStorage.getItem(KUNCI)) || {}; } catch (e) { /* abaikan */ }
+    var slug = (new URLSearchParams(location.search).get('u') || '').toLowerCase();
+    var dasarSitus = (B.situs || location.origin).replace(/\/+$/, '');
+    $('dasar').value = /^[a-z0-9-]{1,60}$/.test(slug) ? dasarSitus + '/' + slug + '/' : (simpan.dasar || '');
+    $('tamu').value = simpan.tamu || '';
+    $('template').value = simpan.template || TEMPLATE_AWAL;
+    ['dasar', 'tamu', 'template'].forEach(function (id) { $(id).addEventListener('input', render); });
+    render();
+  })();
+  </script>
+</body>
+</html>

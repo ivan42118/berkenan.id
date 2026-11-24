@@ -1,0 +1,66 @@
+{
+  "slug": "demo-emas",
+  "tema": "emas",
+  "urutan": "wanita",
+  "sampul": "",
+  "musik": "",
+  "pria": {
+    "panggilan": "Dimas",
+    "lengkap": "Dimas Arya Wicaksono",
+    "ortu": "Putra dari Bapak Bambang Wicaksono & Ibu Dewi Kartika",
+    "foto": "",
+    "instagram": ""
+  },
+  "wanita": {
+    "panggilan": "Ayu",
+    "lengkap": "Ayu Larasati",
+    "ortu": "Putri dari Bapak Joko Susilo & Ibu Endang Rahayu",
+    "foto": "",
+    "instagram": ""
+  },
+  "salam": "Assalamu'alaikum Warahmatullahi Wabarakatuh",
+  "pembuka": "Tanpa mengurangi rasa hormat, kami mengundang Bapak/Ibu/Saudara/i untuk hadir dan memberikan doa restu pada pernikahan kami:",
+  "kutipan": {
+    "teks": "Dan segala sesuatu Kami ciptakan berpasang-pasangan agar kamu mengingat kebesaran Allah.",
+    "sumber": "QS. Adz-Dzariyat: 49"
+  },
+  "acara": [
+    {
+      "nama": "Akad Nikah",
+      "tanggal": "2027-04-17",
+      "mulai": "09:00",
+      "selesai": "10:30",
+      "zona": "WIB",
+      "tempat": "Kediaman Mempelai Wanita",
+      "alamat": "Jl. Contoh Melati No. 21, Yogyakarta",
+      "maps": ""
+    },
+    {
+      "nama": "Resepsi",
+      "tanggal": "2027-04-17",
+      "mulai": "19:00",
+      "selesai": "21:00",
+      "zona": "WIB",
+      "tempat": "Ballroom Hotel Contoh",
+      "alamat": "Jl. Contoh Malioboro No. 5, Yogyakarta",
+      "maps": ""
+    }
+  ],
+  "cerita": [],
+  "galeri": [
+    { "src": "", "ket": "Foto 1" },
+    { "src": "", "ket": "Foto 2" },
+    { "src": "", "ket": "Foto 3" }
+  ],
+  "amplop": {
+    "pengantar": "",
+    "rekening": [
+      { "bank": "Bank Contoh", "nomor": "9876543210", "atas_nama": "Ayu Larasati" }
+    ],
+    "alamat": ""
+  },
+  "rsvp": { "aktif": true, "endpoint": "", "wa": "" },
+  "siaran": "",
+  "penutup": "",
+  "keluarga": "Kel. Bapak Joko Susilo & Kel. Bapak Bambang Wicaksono"
+}
