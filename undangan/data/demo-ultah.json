@@ -1,0 +1,58 @@
+{
+  "slug": "demo-ultah",
+  "jenis": "ulangtahun",
+  "tema": "ceria",
+  "usia": "2",
+  "judul": "",
+  "sampul": "https://images.pexels.com/photos/27175741/pexels-photo-27175741.jpeg?auto=compress&cs=tinysrgb&w=1000",
+  "musik": "",
+  "tokoh": {
+    "panggilan": "Kenzie",
+    "lengkap": "Kenzie Alfarizi Putra",
+    "ortu": "Putra dari Bapak Rio & Ibu Dinda",
+    "foto": "https://images.pexels.com/photos/27175484/pexels-photo-27175484.jpeg?auto=compress&cs=tinysrgb&w=900",
+    "fokus": "47% 38% 2.2",
+    "instagram": ""
+  },
+  "salam": "",
+  "pembuka": "Hore, Kenzie sudah 2 tahun! Ayo datang dan rayakan bersama kami.",
+  "deskripsi": "",
+  "kutipan": {
+    "teks": "Setiap tawa kecilmu adalah doa yang terkabul.",
+    "sumber": ""
+  },
+  "acara": [
+    {
+      "nama": "Birthday Party",
+      "tanggal": "2027-01-16",
+      "mulai": "15:00",
+      "selesai": "18:00",
+      "zona": "WIB",
+      "tempat": "Taman Bermain Contoh",
+      "alamat": "Jl. Contoh Ceria No. 2, Bekasi",
+      "maps": ""
+    }
+  ],
+  "rundown": [
+    { "jam": "15:00", "kegiatan": "Kedatangan tamu & photo booth", "ket": "" },
+    { "jam": "15:30", "kegiatan": "Games seru & pertunjukan badut", "ket": "" },
+    { "jam": "16:30", "kegiatan": "Tiup lilin & potong kue", "ket": "" },
+    { "jam": "17:00", "kegiatan": "Makan bersama & bagi goodie bag", "ket": "" }
+  ],
+  "dresscode": "Pakaian warna-warni yang ceria",
+  "dresscodeWarna": ["#ff6f8e", "#3aa6f2", "#ffb000"],
+  "cerita": [],
+  "galeri": [
+    { "src": "https://images.pexels.com/photos/27176732/pexels-photo-27176732.jpeg?auto=compress&cs=tinysrgb&w=1000", "ket": "" },
+    { "src": "https://images.pexels.com/photos/27177048/pexels-photo-27177048.jpeg?auto=compress&cs=tinysrgb&w=1000", "ket": "" },
+    { "src": "https://images.pexels.com/photos/7180612/pexels-photo-7180612.jpeg?auto=compress&cs=tinysrgb&w=1000", "ket": "" },
+    { "src": "https://images.pexels.com/photos/6148507/pexels-photo-6148507.jpeg?auto=compress&cs=tinysrgb&w=1000", "ket": "" },
+    { "src": "https://images.pexels.com/photos/27175484/pexels-photo-27175484.jpeg?auto=compress&cs=tinysrgb&w=1000", "ket": "" }
+  ],
+  "amplop": { "pengantar": "", "rekening": [], "alamat": "" },
+  "kontak": [],
+  "rsvp": { "aktif": true, "endpoint": "", "wa": "" },
+  "siaran": "",
+  "penutup": "Kehadiranmu akan membuat hari Kenzie makin seru. Sampai jumpa!",
+  "keluarga": "Papa Rio & Mama Dinda"
+}

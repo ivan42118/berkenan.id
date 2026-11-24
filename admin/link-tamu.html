@@ -32,6 +32,14 @@
     <section class="panel">
       <h2>3. Template pesan</h2>
       <p class="bantu">Gunakan <code>{nama}</code> dan <code>{link}</code>. Keduanya diganti otomatis untuk setiap tamu.</p>
+      <label class="f" style="max-width:320px;margin-bottom:10px">Pakai template
+        <select id="preset">
+          <option value="">Pilih template…</option>
+          <option value="pernikahan">Pernikahan</option>
+          <option value="khitan">Khitanan</option>
+          <option value="ulangtahun">Ulang tahun</option>
+          <option value="acara">Acara umum / reuni</option>
+        </select></label>
       <textarea id="template" rows="10"></textarea>
     </section>
 
@@ -59,20 +67,33 @@
     var B = window.BRAND || {};
     var $ = function (id) { return document.getElementById(id); };
     var KUNCI = 'admin:link-tamu';
-    var TEMPLATE_AWAL = [
-      'Kepada Yth.',
-      'Bapak/Ibu/Saudara/i',
-      '*{nama}*',
-      '',
-      'Tanpa mengurangi rasa hormat, kami mengundang Bapak/Ibu/Saudara/i untuk hadir di acara pernikahan kami.',
-      '',
-      'Info lengkap acara dapat dilihat melalui undangan berikut:',
-      '{link}',
-      '',
-      'Merupakan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir dan memberikan doa restu.',
-      '',
-      'Terima kasih.'
-    ].join('\n');
+    var PRESET = {
+      pernikahan: [
+        'Kepada Yth.', 'Bapak/Ibu/Saudara/i', '*{nama}*', '',
+        'Tanpa mengurangi rasa hormat, kami mengundang Bapak/Ibu/Saudara/i untuk hadir di acara pernikahan kami.', '',
+        'Info lengkap acara dapat dilihat melalui undangan berikut:', '{link}', '',
+        'Merupakan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir dan memberikan doa restu.', '', 'Terima kasih.'
+      ],
+      khitan: [
+        "Assalamu'alaikum Warahmatullahi Wabarakatuh", '', 'Kepada Yth.', '*{nama}*', '',
+        'Dengan memohon rahmat Allah SWT, kami mengundang Bapak/Ibu/Saudara/i untuk hadir di acara tasyakuran khitanan putra kami.', '',
+        'Info lengkap acara:', '{link}', '',
+        'Kehadiran dan doa Bapak/Ibu/Saudara/i sangat berarti bagi kami.', '', "Wassalamu'alaikum Warahmatullahi Wabarakatuh"
+      ],
+      ulangtahun: [
+        'Halo *{nama}*!', '',
+        'Kami mengundangmu ke pesta ulang tahun kami. Pasti seru kalau kamu bisa datang!', '',
+        'Cek detail acaranya di sini:', '{link}', '',
+        'Jangan lupa konfirmasi kehadiran lewat undangan, ya. Sampai jumpa!'
+      ],
+      acara: [
+        'Yth. *{nama}*', '',
+        'Dengan hormat, kami mengundang Bapak/Ibu/Saudara/i untuk hadir pada acara kami.', '',
+        'Detail acara, susunan acara, dan konfirmasi kehadiran:', '{link}', '',
+        'Atas perhatian dan kehadirannya, kami ucapkan terima kasih.'
+      ]
+    };
+    var TEMPLATE_AWAL = PRESET.pernikahan.join('\n');
 
     // Nomor HP Indonesia di akhir baris: 08…, 628…, atau +628…
     var POLA_HP = /^(.*?)[\s,;|:-]*((?:\+?62[\s-]?|0)8[\d\s-]{7,15})\s*$/;
@@ -168,6 +189,12 @@
     $('tamu').value = simpan.tamu || '';
     $('template').value = simpan.template || TEMPLATE_AWAL;
     ['dasar', 'tamu', 'template'].forEach(function (id) { $(id).addEventListener('input', render); });
+    $('preset').addEventListener('change', function () {
+      var p = PRESET[$('preset').value];
+      if (!p) return;
+      $('template').value = p.join('\n');
+      render();
+    });
     render();
   })();
   </script>

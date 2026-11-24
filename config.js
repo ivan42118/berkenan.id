@@ -51,7 +51,7 @@ window.BRAND = {
       fitur: [
         "Semua fitur Basic",
         "Galeri hingga 12 foto",
-        "Kisah perjalanan cinta",
+        "Kisah / cerita, rundown & dress code",
         "RSVP & ucapan tamu + rekap kehadiran",
         "Generator link tamu untuk sebar via WA",
         "3× revisi"
@@ -74,10 +74,15 @@ window.BRAND = {
 
   // Daftar tema di katalog. Tambah tema baru: buat CSS-nya di undangan/undangan.css,
   // buat data demo di undangan/data/, lalu tambahkan satu baris di sini.
+  // kategori: pernikahan | khitan | ulangtahun | acara (dipakai filter katalog di landing page).
+  // Semua tema bisa dipakai untuk jenis undangan apa pun; kategori hanya menentukan demo yang ditampilkan.
   tema: [
-    { id: "maroon", nama: "Maroon Romance", deskripsi: "Merah marun hangat, bunga mawar, dan kilau emas.", demo: "demo-maroon" },
-    { id: "moss", nama: "Moss Garden", deskripsi: "Hijau lumut yang teduh, nuansa pesta taman.", demo: "demo-moss" },
-    { id: "vintage", nama: "Vintage Paper", deskripsi: "Kertas krem bertekstur, foto bernuansa sepia.", demo: "demo-vintage" },
-    { id: "gold", nama: "Noir Gold", deskripsi: "Hitam elegan dengan aksen emas, glamor dan mewah.", demo: "demo-gold" }
+    { id: "maroon", nama: "Maroon Romance", kategori: "pernikahan", deskripsi: "Merah marun hangat, bunga mawar, dan kilau emas.", demo: "demo-maroon" },
+    { id: "moss", nama: "Moss Garden", kategori: "pernikahan", deskripsi: "Hijau lumut yang teduh, nuansa pesta taman.", demo: "demo-moss" },
+    { id: "vintage", nama: "Vintage Paper", kategori: "pernikahan", deskripsi: "Kertas krem bertekstur, foto bernuansa sepia.", demo: "demo-vintage" },
+    { id: "gold", nama: "Noir Gold", kategori: "pernikahan", deskripsi: "Hitam elegan dengan aksen emas, glamor dan mewah.", demo: "demo-gold" },
+    { id: "islami", nama: "Islami Zamrud", kategori: "khitan", deskripsi: "Hijau zamrud dan emas dengan ornamen bintang geometris.", demo: "demo-khitan" },
+    { id: "ceria", nama: "Ceria Pastel", kategori: "ulangtahun", deskripsi: "Balon, konfeti, dan warna pastel yang riang.", demo: "demo-ultah" },
+    { id: "modern", nama: "Modern Navy", kategori: "acara", deskripsi: "Bersih dan profesional untuk reuni, seminar, dan grand opening.", demo: "demo-acara" }
   ]
 };

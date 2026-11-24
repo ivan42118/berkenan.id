@@ -1,0 +1,61 @@
+{
+  "slug": "demo-acara",
+  "jenis": "acara",
+  "tema": "modern",
+  "judul": "You are invited to",
+  "namaAcara": "Reuni Akbar 15 Tahun",
+  "penyelenggara": "Alumni SMA Contoh Angkatan 2011",
+  "sampul": "https://images.pexels.com/photos/38446275/pexels-photo-38446275.jpeg?auto=compress&cs=tinysrgb&w=1000",
+  "musik": "",
+  "salam": "",
+  "pembuka": "Lima belas tahun sejak kita meninggalkan bangku SMA. Saatnya berkumpul lagi, bernostalgia, dan merayakan perjalanan kita masing-masing.",
+  "deskripsi": "Malam penuh nostalgia: makan malam bersama, penampilan band alumni, pemutaran video kenangan, dan doorprize menarik.\nTerbuka untuk seluruh alumni angkatan 2011 beserta pasangan.",
+  "kutipan": {
+    "teks": "Teman lama adalah cermin terbaik untuk melihat seberapa jauh kita telah melangkah.",
+    "sumber": ""
+  },
+  "acara": [
+    {
+      "nama": "Gala Dinner",
+      "tanggal": "2027-07-10",
+      "mulai": "18:30",
+      "selesai": "22:00",
+      "zona": "WIB",
+      "tempat": "Ballroom Hotel Contoh",
+      "alamat": "Jl. Contoh Asia Afrika No. 10, Bandung",
+      "maps": ""
+    }
+  ],
+  "rundown": [
+    { "jam": "18:30", "kegiatan": "Registrasi & welcome drink", "ket": "" },
+    { "jam": "19:00", "kegiatan": "Pembukaan & sambutan ketua panitia", "ket": "" },
+    { "jam": "19:30", "kegiatan": "Makan malam", "ket": "Diiringi live music" },
+    { "jam": "20:30", "kegiatan": "Pemutaran video kenangan", "ket": "" },
+    { "jam": "21:00", "kegiatan": "Band alumni & doorprize", "ket": "" },
+    { "jam": "21:45", "kegiatan": "Foto bersama & penutupan", "ket": "" }
+  ],
+  "dresscode": "Smart casual, nuansa navy & putih",
+  "dresscodeWarna": ["#1f2c50", "#ffffff", "#c29856"],
+  "cerita": [],
+  "galeri": [
+    { "src": "https://images.pexels.com/photos/14646749/pexels-photo-14646749.jpeg?auto=compress&cs=tinysrgb&w=1000", "ket": "" },
+    { "src": "https://images.pexels.com/photos/37975399/pexels-photo-37975399.jpeg?auto=compress&cs=tinysrgb&w=1000", "ket": "" },
+    { "src": "https://images.pexels.com/photos/35017879/pexels-photo-35017879.jpeg?auto=compress&cs=tinysrgb&w=1000", "ket": "" },
+    { "src": "https://images.pexels.com/photos/17315483/pexels-photo-17315483.jpeg?auto=compress&cs=tinysrgb&w=1000", "ket": "" }
+  ],
+  "amplop": {
+    "pengantar": "Iuran acara Rp 350.000/orang (termasuk makan malam & merchandise). Pembayaran melalui:",
+    "rekening": [
+      { "bank": "Bank Contoh", "nomor": "4440001234", "atas_nama": "Panitia Reuni 2011" }
+    ],
+    "alamat": ""
+  },
+  "kontak": [
+    { "nama": "Andi", "peran": "Ketua Panitia", "wa": "080000000001" },
+    { "nama": "Rina", "peran": "Bendahara", "wa": "080000000002" }
+  ],
+  "rsvp": { "aktif": true, "endpoint": "", "wa": "" },
+  "siaran": "",
+  "penutup": "Sampai jumpa di malam reuni! Mari kita buat kenangan baru bersama.",
+  "keluarga": "Panitia Reuni Akbar Angkatan 2011"
+}

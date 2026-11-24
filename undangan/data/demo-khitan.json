@@ -1,0 +1,62 @@
+{
+  "slug": "demo-khitan",
+  "jenis": "khitan",
+  "tema": "islami",
+  "judul": "Tasyakuran Khitanan",
+  "sampul": "https://images.pexels.com/photos/11860824/pexels-photo-11860824.jpeg?auto=compress&cs=tinysrgb&w=1000",
+  "musik": "",
+  "tokoh": {
+    "panggilan": "Arkan",
+    "lengkap": "Muhammad Arkan Al-Fatih",
+    "ortu": "Putra pertama dari Bapak Fajar Hidayat & Ibu Siti Aminah",
+    "foto": "https://images.pexels.com/photos/2608353/pexels-photo-2608353.jpeg?auto=compress&cs=tinysrgb&w=900",
+    "fokus": "70% 62% 1.7",
+    "instagram": ""
+  },
+  "arab": "بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ",
+  "salam": "Assalamu'alaikum Warahmatullahi Wabarakatuh",
+  "pembuka": "Dengan memohon rahmat dan ridho Allah SWT, kami bermaksud menyelenggarakan tasyakuran khitanan putra kami:",
+  "deskripsi": "",
+  "kutipan": {
+    "teks": "Ya Tuhanku, jadikanlah aku dan anak cucuku orang-orang yang tetap mendirikan salat. Ya Tuhan kami, perkenankanlah doaku.",
+    "sumber": "QS. Ibrahim: 40"
+  },
+  "acara": [
+    {
+      "nama": "Tasyakuran & Doa Bersama",
+      "tanggal": "2027-02-20",
+      "mulai": "10:00",
+      "selesai": "13:00",
+      "zona": "WIB",
+      "tempat": "Kediaman Bapak Fajar Hidayat",
+      "alamat": "Jl. Contoh Melati No. 5, Depok",
+      "maps": ""
+    }
+  ],
+  "rundown": [
+    { "jam": "10:00", "kegiatan": "Pembukaan & tilawah Al-Qur'an", "ket": "" },
+    { "jam": "10:30", "kegiatan": "Tausiyah", "ket": "Oleh ustaz setempat" },
+    { "jam": "11:30", "kegiatan": "Doa bersama untuk ananda Arkan", "ket": "" },
+    { "jam": "12:00", "kegiatan": "Ramah tamah & makan siang", "ket": "" }
+  ],
+  "dresscode": "Busana muslim, nuansa putih atau hijau",
+  "dresscodeWarna": ["#ffffff", "#0f3d35", "#d9b86c"],
+  "cerita": [],
+  "galeri": [
+    { "src": "https://images.pexels.com/photos/2608353/pexels-photo-2608353.jpeg?auto=compress&cs=tinysrgb&w=1000", "ket": "" },
+    { "src": "https://images.pexels.com/photos/29478672/pexels-photo-29478672.jpeg?auto=compress&cs=tinysrgb&w=1000", "ket": "" },
+    { "src": "https://images.pexels.com/photos/36073196/pexels-photo-36073196.jpeg?auto=compress&cs=tinysrgb&w=1000", "ket": "" }
+  ],
+  "amplop": {
+    "pengantar": "",
+    "rekening": [
+      { "bank": "Bank Contoh", "nomor": "3330001111", "atas_nama": "Fajar Hidayat" }
+    ],
+    "alamat": ""
+  },
+  "kontak": [],
+  "rsvp": { "aktif": true, "endpoint": "", "wa": "" },
+  "siaran": "",
+  "penutup": "Merupakan suatu kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir dan mendoakan putra kami. Wassalamu'alaikum Warahmatullahi Wabarakatuh.",
+  "keluarga": "Kel. Bapak Fajar Hidayat & Ibu Siti Aminah"
+}

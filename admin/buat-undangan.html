@@ -31,18 +31,26 @@
       <section class="panel">
         <h2>Dasar</h2>
         <div class="baris">
+          <label class="f">Jenis undangan
+            <select data-k="jenis" id="jenis">
+              <option value="pernikahan">Pernikahan</option>
+              <option value="khitan">Khitan / Aqiqah</option>
+              <option value="ulangtahun">Ulang Tahun</option>
+              <option value="acara">Acara umum (reuni, syukuran, seminar…)</option>
+            </select></label>
+          <label class="f">Tema <select data-k="tema" id="tema"></select></label>
           <label class="f">Slug / nama link (huruf kecil, angka, tanda -)
             <input data-k="slug" id="slug" pattern="[a-z0-9-]{1,60}" placeholder="raka-nadia"></label>
-          <label class="f">Tema <select data-k="tema" id="tema"></select></label>
-          <label class="f">Urutan nama
+          <label class="f">Judul kecil di sampul (opsional) <input data-k="judul" placeholder="Otomatis sesuai jenis"></label>
+          <label class="f" data-jenis="pernikahan">Urutan nama
             <select data-k="urutan"><option value="pria">Pria dulu</option><option value="wanita">Wanita dulu</option></select></label>
           <label class="f">URL musik (mp3, opsional) <input data-k="musik" placeholder="musik/lagu.mp3"></label>
           <label class="f">Aktif sampai (sesuai paket) <input type="date" data-k="aktifSampai"></label>
-          <label class="f lebar">Foto sampul (opsional) <input data-k="sampul" placeholder="foto/raka-nadia/sampul.jpg atau https://…"></label>
+          <label class="f lebar">Foto sampul (opsional) <input data-k="sampul" placeholder="foto/nama-acara/sampul.jpg atau https://…"></label>
         </div>
       </section>
 
-      <section class="panel">
+      <section class="panel" data-jenis="pernikahan">
         <h2>Mempelai Pria</h2>
         <div class="baris">
           <label class="f">Nama panggilan <input data-k="pria.panggilan" data-nama></label>
@@ -54,7 +62,7 @@
         </div>
       </section>
 
-      <section class="panel">
+      <section class="panel" data-jenis="pernikahan">
         <h2>Mempelai Wanita</h2>
         <div class="baris">
           <label class="f">Nama panggilan <input data-k="wanita.panggilan" data-nama></label>
@@ -66,28 +74,62 @@
         </div>
       </section>
 
+      <section class="panel" data-jenis="khitan ulangtahun">
+        <h2>Profil <small>(anak yang dikhitan / yang berulang tahun)</small></h2>
+        <div class="baris">
+          <label class="f">Nama panggilan <input data-k="tokoh.panggilan" data-nama></label>
+          <label class="f">Nama lengkap <input data-k="tokoh.lengkap"></label>
+          <label class="f" data-jenis="ulangtahun">Ulang tahun ke- <input data-k="usia" inputmode="numeric" placeholder="2"></label>
+          <label class="f lebar">Keterangan orang tua (opsional) <input data-k="tokoh.ortu" placeholder="Putra pertama dari Bapak … & Ibu …"></label>
+          <label class="f">Foto (opsional) <input data-k="tokoh.foto"></label>
+          <label class="f">Fokus & zoom foto <input data-k="tokoh.fokus" placeholder="50% 30%"></label>
+          <label class="f">Instagram (opsional) <input data-k="tokoh.instagram" placeholder="tanpa @"></label>
+        </div>
+      </section>
+
+      <section class="panel" data-jenis="acara">
+        <h2>Info Acara</h2>
+        <div class="baris">
+          <label class="f lebar">Nama acara <input data-k="namaAcara" data-nama placeholder="Reuni Akbar 15 Tahun"></label>
+          <label class="f lebar">Penyelenggara <input data-k="penyelenggara" placeholder="Alumni SMA … Angkatan …"></label>
+        </div>
+      </section>
+
       <section class="panel">
         <h2>Pembuka & Kutipan</h2>
         <div class="baris">
+          <label class="f lebar">Teks Arab di atas salam (opsional, mis. bismillah) <input data-k="arab" dir="rtl" lang="ar"></label>
           <label class="f lebar">Salam (kosongkan jika tidak perlu) <input data-k="salam"></label>
           <label class="f lebar">Kalimat pembuka <textarea data-k="pembuka"></textarea></label>
+          <label class="f lebar" data-jenis="khitan ulangtahun acara">Deskripsi / keterangan tambahan (opsional, Enter = paragraf baru) <textarea data-k="deskripsi"></textarea></label>
           <label class="f lebar">Kutipan / ayat <textarea data-k="kutipan.teks"></textarea></label>
           <label class="f">Sumber kutipan <input data-k="kutipan.sumber"></label>
         </div>
       </section>
 
       <section class="panel">
-        <h2>Acara</h2>
+        <h2>Waktu & Tempat</h2>
         <p class="bantu">Acara pertama dipakai untuk hitung mundur dan tanggal di sampul.</p>
         <div data-grup="acara"></div>
-        <button class="btn garis kecil" type="button" data-tambah="acara">+ Tambah acara</button>
+        <button class="btn garis kecil" type="button" data-tambah="acara">+ Tambah sesi acara</button>
         <div class="baris" style="margin-top:12px">
+          <label class="f lebar">Dress code (opsional) <input data-k="dresscode" placeholder="Busana muslim, nuansa putih"></label>
+          <label class="f lebar">Warna dress code (opsional, pisahkan koma) <input data-k="dresscodeWarna" data-tipe="daftar" placeholder="#ffffff, #0f3d35, #d9b86c"></label>
           <label class="f lebar">Link siaran langsung (opsional) <input data-k="siaran" placeholder="https://youtube.com/…"></label>
         </div>
       </section>
 
       <section class="panel">
-        <h2>Kisah Cinta <small>(Premium)</small></h2>
+        <h2>Susunan Acara <small>(rundown, opsional)</small></h2>
+        <div data-grup="rundown"></div>
+        <button class="btn garis kecil" type="button" data-tambah="rundown">+ Tambah agenda</button>
+      </section>
+
+      <section class="panel">
+        <h2>Kisah / Cerita <small>(Premium)</small></h2>
+        <div class="baris" style="margin-bottom:12px">
+          <label class="f">Judul bagian (opsional) <input data-k="judulCerita" placeholder="Otomatis sesuai jenis"></label>
+        </div>
         <div data-grup="cerita"></div>
         <button class="btn garis kecil" type="button" data-tambah="cerita">+ Tambah cerita</button>
       </section>
@@ -100,7 +142,7 @@
       </section>
 
       <section class="panel">
-        <h2>Amplop Digital</h2>
+        <h2>Amplop Digital / Kado / Iuran</h2>
         <div class="baris" style="margin-bottom:12px">
           <label class="f lebar">Kalimat pengantar (opsional) <textarea data-k="amplop.pengantar"></textarea></label>
         </div>
@@ -112,13 +154,19 @@
       </section>
 
       <section class="panel">
+        <h2>Kontak Panitia <small>(opsional)</small></h2>
+        <div data-grup="kontak"></div>
+        <button class="btn garis kecil" type="button" data-tambah="kontak">+ Tambah kontak</button>
+      </section>
+
+      <section class="panel">
         <h2>RSVP & Penutup</h2>
         <div class="baris">
           <label class="cek"><input type="checkbox" data-k="rsvp.aktif" checked> Tampilkan RSVP & ucapan</label>
-          <label class="f">WA mempelai untuk konfirmasi (opsional) <input data-k="rsvp.wa" placeholder="62812…"></label>
+          <label class="f">WA tuan rumah untuk konfirmasi (opsional) <input data-k="rsvp.wa" placeholder="62812…"></label>
           <label class="f lebar">Endpoint RSVP khusus (kosong = pakai yang di config.js) <input data-k="rsvp.endpoint"></label>
-          <label class="f lebar">Kalimat penutup <textarea data-k="penutup"></textarea></label>
-          <label class="f lebar">Keluarga yang mengundang <input data-k="keluarga" placeholder="Kel. Bapak … & Kel. Bapak …"></label>
+          <label class="f lebar">Kalimat penutup (kosong = otomatis sesuai jenis) <textarea data-k="penutup"></textarea></label>
+          <label class="f lebar">Yang mengundang <input data-k="keluarga" placeholder="Kel. Bapak … & Ibu … / Panitia …"></label>
         </div>
       </section>
     </form>

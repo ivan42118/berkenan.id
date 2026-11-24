@@ -1,6 +1,6 @@
 # Ikrar — Undangan Digital
 
-Situs jualan undangan pernikahan digital: landing page, 4 tema undangan (Maroon, Moss, Vintage, Noir Gold), tool admin, dan RSVP lewat Google Sheets. Semuanya statis (HTML/CSS/JS), tanpa server atau database.
+Situs jualan undangan digital untuk pernikahan, khitan, ulang tahun, dan acara umum: landing page, 7 tema (Maroon, Moss, Vintage, Noir Gold, Islami, Ceria, Modern), tool admin, dan RSVP lewat Google Sheets. Semuanya statis (HTML/CSS/JS), tanpa server atau database.
 
 - **Situs:** https://ivan42118.github.io/ikrar/
 - **Contoh undangan:** https://ivan42118.github.io/ikrar/undangan/?u=demo-maroon&to=Tamu+Spesial

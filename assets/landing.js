@@ -47,11 +47,33 @@
     promo.hidden = false;
   }
 
-  // Katalog tema
+  // Katalog tema + filter kategori
+  var NAMA_KATEGORI = { pernikahan: 'Pernikahan', khitan: 'Khitan', ulangtahun: 'Ulang Tahun', acara: 'Acara' };
   var gridTema = document.getElementById('grid-tema');
+  var filter = document.getElementById('filter-tema');
+  var kategoriAda = [];
+  (B.tema || []).forEach(function (t) { if (t.kategori && kategoriAda.indexOf(t.kategori) < 0) kategoriAda.push(t.kategori); });
+  if (filter && kategoriAda.length > 1) {
+    ['semua'].concat(kategoriAda).forEach(function (k, i) {
+      var b = el('button', 'chip' + (i === 0 ? ' aktif' : ''), k === 'semua' ? 'Semua' : (NAMA_KATEGORI[k] || k));
+      b.type = 'button';
+      b.setAttribute('role', 'tab');
+      b.setAttribute('aria-selected', i === 0 ? 'true' : 'false');
+      b.addEventListener('click', function () {
+        filter.querySelectorAll('.chip').forEach(function (c) { c.classList.toggle('aktif', c === b); c.setAttribute('aria-selected', c === b ? 'true' : 'false'); });
+        gridTema.querySelectorAll('.kartu-tema').forEach(function (kartu) { kartu.hidden = k !== 'semua' && kartu.dataset.kategori !== k; });
+      });
+      filter.append(b);
+    });
+  }
+  var SAPAAN_DEMO = { pernikahan: 'Calon Pengantin', khitan: 'Bapak/Ibu', ulangtahun: 'Teman Kecil', acara: 'Tamu Undangan' };
   (B.tema || []).forEach(function (t) {
-    var demo = 'undangan/?u=' + encodeURIComponent(t.demo) + '&to=' + encodeURIComponent('Calon Pengantin');
+    var demo = 'undangan/?u=' + encodeURIComponent(t.demo) + '&to=' + encodeURIComponent(SAPAAN_DEMO[t.kategori] || 'Tamu Undangan');
     var kartu = el('article', 'kartu-tema');
+    if (t.kategori) {
+      kartu.dataset.kategori = t.kategori;
+      kartu.append(el('span', 'kategori-tema', NAMA_KATEGORI[t.kategori] || t.kategori));
+    }
     var pratinjau = el('div', 'pratinjau');
     var frame = document.createElement('iframe');
     frame.src = demo;

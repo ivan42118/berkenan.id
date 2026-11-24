@@ -1,6 +1,6 @@
 # Panduan Bisnis Undangan Digital
 
-Isi folder ini adalah situs jualan undangan digital yang siap online. Isinya landing page, mesin undangan dengan 3 tema, tool admin untuk membuat undangan dalam ±10 menit, dan backend RSVP gratis lewat Google Sheets. Tidak butuh database, server, atau biaya bulanan.
+Isi folder ini adalah situs jualan undangan digital (pernikahan, khitan, ulang tahun, dan acara umum) yang siap online. Isinya landing page, mesin undangan dengan 3 tema, tool admin untuk membuat undangan dalam ±10 menit, dan backend RSVP gratis lewat Google Sheets. Tidak butuh database, server, atau biaya bulanan.
 
 ## Isi folder
 
@@ -13,6 +13,23 @@ Isi folder ini adalah situs jualan undangan digital yang siap online. Isinya lan
 | `admin/link-tamu.html` | Generator link bernama untuk setiap tamu + tombol kirim WA |
 | `rsvp/apps-script.gs` | Backend RSVP & ucapan (Google Sheets), gratis |
 | `robots.txt` | Mencegah undangan pelanggan muncul di Google |
+
+## Jenis undangan & tema
+
+Satu mesin bisa membuat empat jenis undangan. Pilih di kolom **Jenis undangan** pada `admin/buat-undangan.html`. Teks, susunan bagian, dan judul otomatis menyesuaikan.
+
+| Jenis | Isian khusus | Demo |
+|---|---|---|
+| Pernikahan | Mempelai pria & wanita | `demo-maroon`, `demo-moss`, `demo-vintage`, `demo-gold` |
+| Khitan / aqiqah | Profil anak, nama orang tua | `demo-khitan` (tema Islami) |
+| Ulang tahun | Profil, usia ("ke-…") | `demo-ultah` (tema Ceria) |
+| Acara umum | Nama acara, penyelenggara, deskripsi | `demo-acara` (tema Modern) |
+
+Bagian opsional untuk semua jenis: **rundown** (susunan acara), **dress code** beserta contoh warna, **kontak panitia**, teks **Arab** (misalnya bismillah), galeri, cerita, RSVP, dan amplop/kado/iuran. Bagian yang kosong otomatis disembunyikan.
+
+Ada 7 tema (Maroon, Moss, Vintage, Noir Gold, Islami, Ceria, Modern). **Tema dan jenis bisa dicampur bebas**, misalnya ulang tahun ke-17 dengan Noir Gold, atau aqiqah dengan Ceria.
+
+Harga paket saat ini sama untuk semua jenis. Pasar biasanya menerima harga lebih rendah untuk ulang tahun anak, jadi pertimbangkan paket khusus, misalnya mulai Rp 59–79 ribu. Atur di `config.js`.
 
 ## 1. Jalankan di komputer
 

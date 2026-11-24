@@ -16,9 +16,22 @@
     ],
     'cerita': [['judul', 'Judul / tahun'], ['teks', 'Cerita', 'textarea'], ['foto', 'Foto (opsional)', 'lebar']],
     'galeri': [['src', 'Path / URL foto'], ['ket', 'Keterangan (opsional)']],
-    'amplop.rekening': [['bank', 'Bank / e-wallet'], ['nomor', 'Nomor'], ['atas_nama', 'Atas nama']]
+    'amplop.rekening': [['bank', 'Bank / e-wallet'], ['nomor', 'Nomor'], ['atas_nama', 'Atas nama']],
+    'rundown': [['jam', 'Jam', 'time'], ['kegiatan', 'Kegiatan'], ['ket', 'Keterangan (opsional)', 'lebar']],
+    'kontak': [['nama', 'Nama'], ['peran', 'Peran (mis. Ketua Panitia)'], ['wa', 'No. WhatsApp']]
   };
-  var LABEL_GRUP = { 'acara': 'Acara', 'cerita': 'Cerita', 'galeri': 'Foto', 'amplop.rekening': 'Rekening' };
+  var LABEL_GRUP = { 'acara': 'Sesi acara', 'cerita': 'Cerita', 'galeri': 'Foto', 'amplop.rekening': 'Rekening', 'rundown': 'Agenda', 'kontak': 'Kontak' };
+  var NAMA_JENIS = { pernikahan: 'Pernikahan', khitan: 'Khitan', ulangtahun: 'Ulang Tahun', acara: 'Acara' };
+  var ACARA_AWAL = { pernikahan: 'Akad Nikah', khitan: 'Tasyakuran Khitanan', ulangtahun: 'Birthday Party', acara: 'Acara Utama' };
+  var pilihJenis = document.getElementById('jenis');
+
+  // Tampilkan hanya panel/kolom yang relevan dengan jenis undangan.
+  function terapkanJenis() {
+    var jenis = pilihJenis.value || 'pernikahan';
+    form.querySelectorAll('[data-jenis]').forEach(function (n) {
+      n.hidden = n.dataset.jenis.split(' ').indexOf(jenis) < 0;
+    });
+  }
 
   /* ---------- utilitas ---------- */
   function ambil(obj, jalur) {
@@ -58,7 +71,7 @@
   var pilihDemo = document.getElementById('pilih-demo');
   (B.tema || [{ id: 'sage', nama: 'Sage' }]).forEach(function (t) {
     pilihTema.append(el('option', { value: t.id }, t.nama));
-    if (t.demo) pilihDemo.append(el('option', { value: t.demo }, 'Contoh: ' + t.nama));
+    if (t.demo) pilihDemo.append(el('option', { value: t.demo }, 'Contoh: ' + t.nama + (t.kategori ? ' (' + (NAMA_JENIS[t.kategori] || t.kategori) + ')' : '')));
   });
 
   /* ---------- grup berulang ---------- */
@@ -99,6 +112,7 @@
     var d = {};
     form.querySelectorAll('[data-k]').forEach(function (n) {
       var v = n.type === 'checkbox' ? n.checked : n.value.trim();
+      if (n.dataset.tipe === 'daftar') v = v.split(',').map(function (x) { return x.trim(); }).filter(Boolean);
       pasang(d, n.dataset.k, v);
     });
     Object.keys(GRUP).forEach(function (g) {
@@ -122,14 +136,17 @@
     form.querySelectorAll('[data-k]').forEach(function (n) {
       var v = ambil(d, n.dataset.k);
       if (n.type === 'checkbox') n.checked = v !== false;
+      else if (Array.isArray(v)) n.value = v.join(', ');
       else n.value = v == null ? '' : v;
     });
     if (!pilihTema.value) pilihTema.selectedIndex = 0;
+    if (!pilihJenis.value) pilihJenis.value = 'pernikahan';
+    terapkanJenis();
     Object.keys(GRUP).forEach(function (g) {
       form.querySelector('[data-grup="' + g + '"]').textContent = '';
       (ambil(d, g) || []).forEach(function (v) { buatItem(g, typeof v === 'string' ? { src: v } : v); });
     });
-    if (!(ambil(d, 'acara') || []).length) buatItem('acara', { nama: 'Akad Nikah' });
+    if (!(ambil(d, 'acara') || []).length) buatItem('acara', { nama: ACARA_AWAL[pilihJenis.value] || 'Acara' });
     inputSlug.dataset.manual = d.slug ? '1' : '';
     berubah();
   }
@@ -163,14 +180,35 @@
 
   form.addEventListener('input', function (e) {
     if (e.target === inputSlug) inputSlug.dataset.manual = inputSlug.value ? '1' : '';
-    if (e.target.hasAttribute('data-nama') && !inputSlug.dataset.manual) {
-      var d = kumpulkan();
-      var urut = d.urutan === 'wanita' ? [d.wanita, d.pria] : [d.pria, d.wanita];
-      inputSlug.value = slugify([urut[0].panggilan, urut[1].panggilan].filter(Boolean).join('-'));
+    if ((e.target.hasAttribute('data-nama') || e.target.dataset.k === 'usia') && !inputSlug.dataset.manual) {
+      inputSlug.value = slugOtomatis(kumpulkan());
     }
     berubah();
   });
-  form.addEventListener('change', berubah);
+  form.addEventListener('change', function (e) {
+    if (e.target === pilihJenis) {
+      terapkanJenis();
+      if (!inputSlug.dataset.manual) inputSlug.value = slugOtomatis(kumpulkan());
+    }
+    berubah();
+  });
+
+  function slugOtomatis(d) {
+    if (d.jenis === 'acara') return slugify(d.namaAcara);
+    if (d.jenis === 'khitan') return d.tokoh.panggilan ? slugify('khitan-' + d.tokoh.panggilan) : '';
+    if (d.jenis === 'ulangtahun') return d.tokoh.panggilan ? slugify(['ultah', d.tokoh.panggilan, d.usia].filter(Boolean).join('-')) : '';
+    var urut = d.urutan === 'wanita' ? [d.wanita, d.pria] : [d.pria, d.wanita];
+    return slugify([urut[0].panggilan, urut[1].panggilan].filter(Boolean).join('-'));
+  }
+
+  // Judul halaman sama seperti yang dibuat mesin undangan.
+  function judulDari(d) {
+    if (d.jenis === 'acara') return d.namaAcara || 'Undangan';
+    if (d.jenis === 'khitan') return 'Tasyakuran Khitanan ' + d.tokoh.panggilan;
+    if (d.jenis === 'ulangtahun') return (d.usia ? 'Ulang Tahun ke-' + d.usia + ' ' : 'Ulang Tahun ') + d.tokoh.panggilan;
+    var urut = d.urutan === 'wanita' ? [d.wanita, d.pria] : [d.pria, d.wanita];
+    return 'The Wedding of ' + urut[0].panggilan + ' & ' + urut[1].panggilan;
+  }
   form.querySelectorAll('[data-tambah]').forEach(function (b) {
     b.addEventListener('click', function () { buatItem(b.dataset.tambah).querySelector('input,textarea').focus(); berubah(); });
   });
@@ -178,7 +216,9 @@
   /* ---------- tombol atas ---------- */
   function validasi(d) {
     if (!/^[a-z0-9-]{1,60}$/.test(d.slug)) { info('Slug wajib diisi (huruf kecil, angka, tanda -).', true); inputSlug.focus(); return false; }
-    if (!d.pria.panggilan || !d.wanita.panggilan) { info('Nama panggilan kedua mempelai wajib diisi.', true); return false; }
+    if (d.jenis === 'pernikahan' && (!d.pria.panggilan || !d.wanita.panggilan)) { info('Nama panggilan kedua mempelai wajib diisi.', true); return false; }
+    if ((d.jenis === 'khitan' || d.jenis === 'ulangtahun') && !d.tokoh.panggilan) { info('Nama panggilan di bagian Profil wajib diisi.', true); return false; }
+    if (d.jenis === 'acara' && !d.namaAcara) { info('Nama acara wajib diisi.', true); return false; }
     if (!d.acara.length || !d.acara[0].tanggal) { info('Acara pertama wajib punya tanggal.', true); return false; }
     return true;
   }
@@ -199,7 +239,7 @@
 
   document.getElementById('btn-baru').addEventListener('click', function () {
     if (!confirm('Kosongkan form? Draf yang belum diunduh akan hilang.')) return;
-    isi({ tema: pilihTema.options[0] && pilihTema.options[0].value, rsvp: { aktif: true } });
+    isi({ jenis: pilihJenis.value || 'pernikahan', tema: pilihTema.value || (pilihTema.options[0] && pilihTema.options[0].value), rsvp: { aktif: true } });
     info('Form dikosongkan.');
   });
 
@@ -222,17 +262,16 @@
 
   /* ---------- halaman link pendek (untuk URL rapi & preview WhatsApp) ---------- */
   function buatStub(d) {
-    var urut = d.urutan === 'wanita' ? [d.wanita, d.pria] : [d.pria, d.wanita];
-    var pasangan = urut[0].panggilan + ' & ' + urut[1].panggilan;
     var a = d.acara[0];
     var tgl = '';
     try {
       tgl = new Date(a.tanggal + 'T12:00:00+07:00').toLocaleDateString('id-ID', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric', timeZone: 'Asia/Jakarta' });
     } catch (e) { /* abaikan */ }
-    var gambar = d.sampul || d.wanita.foto || d.pria.foto || '';
+    var gambar = d.sampul || (d.jenis === 'pernikahan' ? d.wanita.foto || d.pria.foto : d.tokoh.foto) || '';
     if (gambar && !/^https?:\/\//i.test(gambar)) gambar = B.situs ? dasarSitus() + '/undangan/' + gambar.replace(/^\/+/, '') : '';
-    var judul = 'The Wedding of ' + pasangan;
-    var desk = (tgl ? tgl + ' — ' : '') + 'Kami mengundang Anda untuk hadir dan memberikan doa restu.';
+    var judul = judulDari(d);
+    var ajakan = d.jenis === 'acara' ? 'Kami mengundang Anda untuk hadir.' : 'Kami mengundang Anda untuk hadir dan memberikan doa restu.';
+    var desk = (tgl ? tgl + ' — ' : '') + ajakan;
     var tujuan = '../undangan/?u=' + d.slug; // slug sudah divalidasi [a-z0-9-]
     return '<!doctype html>\n<html lang="id">\n<head>\n<meta charset="utf-8">\n' +
       '<meta name="viewport" content="width=device-width, initial-scale=1">\n' +
