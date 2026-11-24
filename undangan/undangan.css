@@ -236,7 +236,7 @@ body[data-tema="gold"] .tombol:not(.garis) { background: linear-gradient(135deg,
 }
 .sampul.terbuka { transform: translateY(-104%); opacity: 0.6; pointer-events: none; }
 .sampul.instan { transition: none; }
-.sampul-foto { position: absolute; inset: 0 0 26% 0; background-size: cover; background-position: center 30%; }
+.sampul-foto { position: absolute; inset: 0 0 26% 0; background-size: cover; background-position: center 30%; overflow: hidden; }
 /* Filter hanya pada foto (::before), bukan pada gradien (::after), supaya warna pudarnya pas dengan latar. */
 .sampul-foto::before { content: ""; position: absolute; inset: 0; background: inherit; filter: var(--filter-foto); animation: zoomPelan 22s ease-in-out infinite alternate; }
 .sampul-foto::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(var(--pekat), 0.2) 0%, rgba(var(--pekat), 0) 28%, rgba(var(--pekat), 0.65) 66%, rgb(var(--pekat)) 96%); }
