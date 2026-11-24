@@ -1,0 +1,113 @@
+{
+  "slug": "demo-gold",
+  "tema": "gold",
+  "urutan": "wanita",
+  "sampul": "https://images.pexels.com/photos/3650446/pexels-photo-3650446.jpeg?auto=compress&cs=tinysrgb&w=1000",
+  "musik": "",
+  "pria": {
+    "panggilan": "Dimas",
+    "lengkap": "Dimas Arya Wicaksono",
+    "ortu": "Putra dari Bapak Bambang Wicaksono & Ibu Dewi Kartika",
+    "foto": "https://images.pexels.com/photos/3650446/pexels-photo-3650446.jpeg?auto=compress&cs=tinysrgb&w=900",
+    "fokus": "42% 30% 1.7",
+    "instagram": ""
+  },
+  "wanita": {
+    "panggilan": "Ayu",
+    "lengkap": "Ayu Larasati",
+    "ortu": "Putri dari Bapak Joko Susilo & Ibu Endang Rahayu",
+    "foto": "https://images.pexels.com/photos/3650446/pexels-photo-3650446.jpeg?auto=compress&cs=tinysrgb&w=900",
+    "fokus": "70% 38% 1.7",
+    "instagram": ""
+  },
+  "salam": "",
+  "pembuka": "Tanpa mengurangi rasa hormat, kami mengundang Bapak/Ibu/Saudara/i untuk hadir dan merayakan hari pernikahan kami:",
+  "kutipan": {
+    "teks": "Aku mencintaimu bukan hanya karena siapa dirimu, tetapi karena siapa diriku saat bersamamu.",
+    "sumber": ""
+  },
+  "acara": [
+    {
+      "nama": "Holy Matrimony",
+      "tanggal": "2027-06-19",
+      "mulai": "10:00",
+      "selesai": "11:30",
+      "zona": "WIB",
+      "tempat": "Katedral Contoh",
+      "alamat": "Jl. Contoh Katedral No. 7, Jakarta",
+      "maps": ""
+    },
+    {
+      "nama": "Reception",
+      "tanggal": "2027-06-19",
+      "mulai": "19:00",
+      "selesai": "22:00",
+      "zona": "WIB",
+      "tempat": "Grand Ballroom Hotel Contoh",
+      "alamat": "Jl. Contoh Thamrin No. 1, Jakarta",
+      "maps": ""
+    }
+  ],
+  "cerita": [
+    {
+      "judul": "2018 — Pertemuan",
+      "teks": "Satu kebetulan di sebuah pesta ulang tahun teman yang ternyata mengubah segalanya.",
+      "foto": "https://images.pexels.com/photos/12341927/pexels-photo-12341927.jpeg?auto=compress&cs=tinysrgb&w=800"
+    },
+    {
+      "judul": "2026 — Lamaran",
+      "teks": "Di bawah langit malam Jakarta, satu pertanyaan sederhana dijawab dengan senyum.",
+      "foto": ""
+    }
+  ],
+  "galeri": [
+    {
+      "src": "https://images.pexels.com/photos/8693631/pexels-photo-8693631.jpeg?auto=compress&cs=tinysrgb&w=1000",
+      "ket": ""
+    },
+    {
+      "src": "https://images.pexels.com/photos/18009109/pexels-photo-18009109.jpeg?auto=compress&cs=tinysrgb&w=1000",
+      "ket": ""
+    },
+    {
+      "src": "https://images.pexels.com/photos/12341927/pexels-photo-12341927.jpeg?auto=compress&cs=tinysrgb&w=1000",
+      "ket": ""
+    },
+    {
+      "src": "https://images.pexels.com/photos/3350335/pexels-photo-3350335.jpeg?auto=compress&cs=tinysrgb&w=1000",
+      "ket": ""
+    },
+    {
+      "src": "https://images.pexels.com/photos/15530616/pexels-photo-15530616.jpeg?auto=compress&cs=tinysrgb&w=1000",
+      "ket": ""
+    },
+    {
+      "src": "https://images.pexels.com/photos/916344/pexels-photo-916344.jpeg?auto=compress&cs=tinysrgb&w=1000",
+      "ket": ""
+    }
+  ],
+  "amplop": {
+    "pengantar": "",
+    "rekening": [
+      {
+        "bank": "Bank Contoh",
+        "nomor": "9876543210",
+        "atas_nama": "Ayu Larasati"
+      },
+      {
+        "bank": "Bank Contoh",
+        "nomor": "1122334455",
+        "atas_nama": "Dimas Arya Wicaksono"
+      }
+    ],
+    "alamat": ""
+  },
+  "rsvp": {
+    "aktif": true,
+    "endpoint": "",
+    "wa": ""
+  },
+  "siaran": "",
+  "penutup": "Kehadiran Anda akan melengkapi kebahagiaan kami. Sampai jumpa di hari bahagia kami.",
+  "keluarga": "Kel. Bapak Joko Susilo & Kel. Bapak Bambang Wicaksono"
+}

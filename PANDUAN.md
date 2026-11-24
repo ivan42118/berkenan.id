@@ -28,7 +28,7 @@ Buka `http://localhost:5500`. Jangan buka file dengan klik ganda (`file://`), ka
 1. **Tentukan nama brand.** "Ikrar" hanya nama kerja. Cek dulu nama yang kamu pilih belum dipakai di Instagram, TikTok, dan domain.
 2. Ubah `config.js`: `nama`, `whatsapp` (format `62812…`), `instagram`, lalu `situs` setelah domain aktif.
 3. Ganti kata "Ikrar" di `<title>` dan meta deskripsi pada `index.html`.
-4. **Perbaiki demo.** Ganti kotak "Foto" di galeri demo dengan foto stok gratis berlisensi komersial (Unsplash atau Pexels). Demo yang berfoto jauh lebih menjual.
+4. **Foto demo.** Keempat demo (Maroon, Moss, Vintage, Noir Gold) memakai foto dari Pexels, yang gratis untuk penggunaan komersial, dan dimuat langsung dari server Pexels. Supaya demo tidak pernah rusak kalau link Pexels berubah, simpan salinannya di `undangan/foto/demo/` lalu ganti URL-nya di file `undangan/data/demo-*.json`. Begitu ada pelanggan yang mengizinkan, ganti dengan foto asli mereka.
 
 ## 3. Online gratis
 
@@ -50,6 +50,9 @@ Selama `rsvpEndpoint` masih kosong, RSVP berjalan dalam mode demo: ucapan hanya 
 1. Pelanggan chat WA dari landing page. Kirim daftar data yang dibutuhkan: nama panggilan & lengkap, orang tua, jadwal & lokasi acara (link Google Maps), foto, rekening (opsional), dan lagu.
 2. Buka `admin/buat-undangan.html` → pilih "Muat contoh…" sesuai tema → ganti datanya. Isi **Aktif sampai** sesuai paket (6 bulan / 1 tahun).
 3. Foto: kecilkan dulu (misalnya lewat squoosh.app, lebar ±1200px), simpan di `undangan/foto/<slug>/`, lalu tulis path-nya di form.
+   - **Foto sampul** + 2 foto galeri pertama otomatis jadi slideshow di halaman pembuka. Foto galeri ke-3 dan ke-4 jadi latar hitung mundur dan penutup. Jadi taruh foto terbaik di urutan awal.
+   - **Fokus & zoom foto mempelai:** kalau wajah terpotong di bingkai lengkung, isi misalnya `60% 30% 1.8`. Artinya titik fokus 60% dari kiri dan 30% dari atas, diperbesar 1,8×. Ini berguna untuk memotong satu orang dari foto berdua.
+   - Mempelai tanpa foto otomatis memakai bingkai monogram (inisial nama). Ini bisa jadi pilihan paket yang lebih murah.
 4. Klik **Unduh data (.json)** → simpan ke `undangan/data/`.
    Klik **Unduh link pendek (index.html)** → buat folder `<slug>/` di root situs, lalu simpan di situ.
 5. Upload / push. Kirim link draf ke pelanggan: `https://domainmu/<slug>/?to=Nama+Tamu`.
@@ -88,5 +91,5 @@ Biaya tetap hampir nol: domain + kuota internet. Sumber daya utamanya waktumu.
 ## 9. Langkah berikutnya (setelah ±30 pesanan/bulan)
 
 1. **Self-service.** Pelanggan mengisi form sendiri (form admin ini sudah jadi pondasinya) dan bayar otomatis lewat Midtrans, Xendit, atau Tripay. Butuh backend kecil, misalnya Supabase. Di titik ini produkmu berubah jadi SaaS.
-2. **Tema baru.** Tambah blok warna di `undangan/undangan.css`, buat data demo, lalu tambahkan satu baris di `config.js`. Tema adat (Jawa, Sunda, Minang) biasanya laris.
+2. **Tema baru.** Salin satu blok `body[data-tema="..."]` di `undangan/undangan.css` dan ganti warnanya (termasuk warna bunga `--b1a`…`--da`). Tambahkan font-nya di `FONT` dalam `undangan/undangan.js`, buat data demo, lalu tambahkan satu baris di `config.js`. Tema adat (Jawa, Sunda, Minang) biasanya laris.
 3. **Jasa landing page.** Portofolio ini sekaligus bisa dipakai untuk menjual jasa website ke UMKM.

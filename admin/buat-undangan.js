@@ -14,7 +14,7 @@
       ['selesai', 'Jam selesai (kosong = "Selesai")', 'time'], ['zona', 'Zona waktu', 'zona'],
       ['tempat', 'Tempat'], ['alamat', 'Alamat', 'lebar'], ['maps', 'Link Google Maps (opsional)', 'lebar']
     ],
-    'cerita': [['judul', 'Judul / tahun'], ['teks', 'Cerita', 'textarea']],
+    'cerita': [['judul', 'Judul / tahun'], ['teks', 'Cerita', 'textarea'], ['foto', 'Foto (opsional)', 'lebar']],
     'galeri': [['src', 'Path / URL foto'], ['ket', 'Keterangan (opsional)']],
     'amplop.rekening': [['bank', 'Bank / e-wallet'], ['nomor', 'Nomor'], ['atas_nama', 'Atas nama']]
   };

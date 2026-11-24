@@ -1,0 +1,93 @@
+{
+  "slug": "demo-vintage",
+  "tema": "vintage",
+  "urutan": "pria",
+  "sampul": "https://images.pexels.com/photos/34885369/pexels-photo-34885369.jpeg?auto=compress&cs=tinysrgb&w=1000",
+  "musik": "",
+  "pria": {
+    "panggilan": "Wayan",
+    "lengkap": "I Wayan Adi Saputra",
+    "ortu": "Putra dari Bapak I Made Sudarma & Ibu Ni Ketut Ariani",
+    "foto": "https://images.pexels.com/photos/34885369/pexels-photo-34885369.jpeg?auto=compress&cs=tinysrgb&w=900",
+    "fokus": "57% 62% 2",
+    "instagram": ""
+  },
+  "wanita": {
+    "panggilan": "Sari",
+    "lengkap": "Ni Luh Putu Sari Dewi",
+    "ortu": "Putri dari Bapak I Nyoman Suarta & Ibu Ni Made Rai",
+    "foto": "https://images.pexels.com/photos/34885369/pexels-photo-34885369.jpeg?auto=compress&cs=tinysrgb&w=900",
+    "fokus": "80% 67% 2.2",
+    "instagram": ""
+  },
+  "salam": "Om Swastyastu",
+  "pembuka": "Atas asung kertha wara nugraha Ida Sang Hyang Widhi Wasa, kami bermaksud mengundang Bapak/Ibu/Saudara/i pada upacara pernikahan kami:",
+  "kutipan": {
+    "teks": "Semoga kalian berdua tetap bersatu dan tidak terpisahkan, menikmati hidup bersama dalam kebahagiaan.",
+    "sumber": "Doa pernikahan"
+  },
+  "acara": [
+    {
+      "nama": "Pawiwahan",
+      "tanggal": "2027-05-15",
+      "mulai": "09:00",
+      "selesai": "12:00",
+      "zona": "WITA",
+      "tempat": "Kediaman Mempelai Pria",
+      "alamat": "Jl. Contoh Raya Ubud No. 7, Gianyar",
+      "maps": ""
+    },
+    {
+      "nama": "Resepsi",
+      "tanggal": "2027-05-15",
+      "mulai": "18:00",
+      "selesai": "21:00",
+      "zona": "WITA",
+      "tempat": "Balai Banjar Contoh",
+      "alamat": "Jl. Contoh Raya Ubud No. 20, Gianyar",
+      "maps": ""
+    }
+  ],
+  "cerita": [],
+  "galeri": [
+    {
+      "src": "https://images.pexels.com/photos/30700718/pexels-photo-30700718.jpeg?auto=compress&cs=tinysrgb&w=1000",
+      "ket": ""
+    },
+    {
+      "src": "https://images.pexels.com/photos/10074784/pexels-photo-10074784.jpeg?auto=compress&cs=tinysrgb&w=1000",
+      "ket": ""
+    },
+    {
+      "src": "https://images.pexels.com/photos/19092421/pexels-photo-19092421.jpeg?auto=compress&cs=tinysrgb&w=1000",
+      "ket": ""
+    },
+    {
+      "src": "https://images.pexels.com/photos/20645194/pexels-photo-20645194.jpeg?auto=compress&cs=tinysrgb&w=1000",
+      "ket": ""
+    },
+    {
+      "src": "https://images.pexels.com/photos/2802429/pexels-photo-2802429.jpeg?auto=compress&cs=tinysrgb&w=1000",
+      "ket": ""
+    }
+  ],
+  "amplop": {
+    "pengantar": "",
+    "rekening": [
+      {
+        "bank": "Bank Contoh",
+        "nomor": "7770001111",
+        "atas_nama": "I Wayan Adi Saputra"
+      }
+    ],
+    "alamat": "Jl. Contoh Raya Ubud No. 7, Gianyar, Bali"
+  },
+  "rsvp": {
+    "aktif": true,
+    "endpoint": "",
+    "wa": ""
+  },
+  "siaran": "",
+  "penutup": "Merupakan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir dan memberikan doa restu. Om Shanti Shanti Shanti Om.",
+  "keluarga": "Kel. Bapak I Made Sudarma & Kel. Bapak I Nyoman Suarta"
+}

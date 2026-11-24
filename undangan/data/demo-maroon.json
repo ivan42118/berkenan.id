@@ -1,0 +1,118 @@
+{
+  "slug": "demo-maroon",
+  "tema": "maroon",
+  "urutan": "pria",
+  "sampul": "https://images.pexels.com/photos/16098078/pexels-photo-16098078.jpeg?auto=compress&cs=tinysrgb&w=1000",
+  "musik": "",
+  "pria": {
+    "panggilan": "Raka",
+    "lengkap": "Raka Aditya Pratama, S.T.",
+    "ortu": "Putra pertama dari Bapak Hendra Pratama & Ibu Sri Wahyuni",
+    "foto": "https://images.pexels.com/photos/13529489/pexels-photo-13529489.jpeg?auto=compress&cs=tinysrgb&w=700",
+    "fokus": "75% 52% 1.7",
+    "instagram": ""
+  },
+  "wanita": {
+    "panggilan": "Nadia",
+    "lengkap": "Nadia Putri Lestari, S.Psi.",
+    "ortu": "Putri kedua dari Bapak Agus Santoso & Ibu Rina Marlina",
+    "foto": "https://images.pexels.com/photos/12898461/pexels-photo-12898461.jpeg?auto=compress&cs=tinysrgb&w=700",
+    "fokus": "50% 30%",
+    "instagram": ""
+  },
+  "salam": "Assalamu'alaikum Warahmatullahi Wabarakatuh",
+  "pembuka": "Dengan memohon rahmat dan ridho Allah SWT, kami bermaksud menyelenggarakan pernikahan putra-putri kami:",
+  "kutipan": {
+    "teks": "Dan di antara tanda-tanda kebesaran-Nya ialah Dia menciptakan pasangan-pasangan untukmu dari jenismu sendiri, agar kamu merasa tenteram kepadanya, dan Dia menjadikan di antaramu rasa kasih dan sayang.",
+    "sumber": "QS. Ar-Rum: 21"
+  },
+  "acara": [
+    {
+      "nama": "Akad Nikah",
+      "tanggal": "2027-03-13",
+      "mulai": "08:00",
+      "selesai": "10:00",
+      "zona": "WIB",
+      "tempat": "Masjid Contoh Al-Ikhlas",
+      "alamat": "Jl. Contoh Raya No. 12, Bandung",
+      "maps": ""
+    },
+    {
+      "nama": "Resepsi",
+      "tanggal": "2027-03-13",
+      "mulai": "11:00",
+      "selesai": "",
+      "zona": "WIB",
+      "tempat": "Pendopo Contoh Ageng",
+      "alamat": "Jl. Contoh Indah No. 8, Bandung",
+      "maps": ""
+    }
+  ],
+  "cerita": [
+    {
+      "judul": "2019 — Pertama Bertemu",
+      "teks": "Kami bertemu di sebuah kegiatan relawan kampus. Obrolan singkat soal buku berubah jadi pertemanan yang hangat.",
+      "foto": ""
+    },
+    {
+      "judul": "2023 — Memutuskan Bersama",
+      "teks": "Setelah bertahun-tahun saling mengenal, kami sepakat melangkah lebih serius dan memperkenalkan keluarga.",
+      "foto": "https://images.pexels.com/photos/2802429/pexels-photo-2802429.jpeg?auto=compress&cs=tinysrgb&w=800"
+    },
+    {
+      "judul": "2026 — Lamaran",
+      "teks": "Dengan restu kedua keluarga, kami resmi bertunangan dan mulai menyiapkan hari bahagia ini.",
+      "foto": "https://images.pexels.com/photos/30679828/pexels-photo-30679828.jpeg?auto=compress&cs=tinysrgb&w=800"
+    }
+  ],
+  "galeri": [
+    {
+      "src": "https://images.pexels.com/photos/2802429/pexels-photo-2802429.jpeg?auto=compress&cs=tinysrgb&w=1000",
+      "ket": ""
+    },
+    {
+      "src": "https://images.pexels.com/photos/12898461/pexels-photo-12898461.jpeg?auto=compress&cs=tinysrgb&w=1000",
+      "ket": ""
+    },
+    {
+      "src": "https://images.pexels.com/photos/30679828/pexels-photo-30679828.jpeg?auto=compress&cs=tinysrgb&w=1000",
+      "ket": ""
+    },
+    {
+      "src": "https://images.pexels.com/photos/20189038/pexels-photo-20189038.jpeg?auto=compress&cs=tinysrgb&w=1000",
+      "ket": ""
+    },
+    {
+      "src": "https://images.pexels.com/photos/916344/pexels-photo-916344.jpeg?auto=compress&cs=tinysrgb&w=1000",
+      "ket": ""
+    },
+    {
+      "src": "https://images.pexels.com/photos/37875895/pexels-photo-37875895.jpeg?auto=compress&cs=tinysrgb&w=1000",
+      "ket": ""
+    }
+  ],
+  "amplop": {
+    "pengantar": "",
+    "rekening": [
+      {
+        "bank": "Bank Contoh",
+        "nomor": "1234567890",
+        "atas_nama": "Raka Aditya Pratama"
+      },
+      {
+        "bank": "E-Wallet",
+        "nomor": "080000000000",
+        "atas_nama": "Nadia Putri Lestari"
+      }
+    ],
+    "alamat": "Jl. Contoh Raya No. 12, Bandung 40000"
+  },
+  "rsvp": {
+    "aktif": true,
+    "endpoint": "",
+    "wa": ""
+  },
+  "siaran": "",
+  "penutup": "Merupakan suatu kebahagiaan dan kehormatan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir dan memberikan doa restu. Wassalamu'alaikum Warahmatullahi Wabarakatuh.",
+  "keluarga": "Kel. Bapak Hendra Pratama & Kel. Bapak Agus Santoso"
+}

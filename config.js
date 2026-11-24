@@ -75,8 +75,9 @@ window.BRAND = {
   // Daftar tema di katalog. Tambah tema baru: buat CSS-nya di undangan/undangan.css,
   // buat data demo di undangan/data/, lalu tambahkan satu baris di sini.
   tema: [
-    { id: "sage", nama: "Sage Garden", deskripsi: "Hijau sage lembut, nuansa taman yang hangat.", demo: "demo-sage" },
-    { id: "emas", nama: "Royal Gold", deskripsi: "Gelap dan mewah dengan aksen emas.", demo: "demo-emas" },
-    { id: "putih", nama: "Pure Minimal", deskripsi: "Putih bersih, modern, dan tenang.", demo: "demo-putih" }
+    { id: "maroon", nama: "Maroon Romance", deskripsi: "Merah marun hangat, bunga mawar, dan kilau emas.", demo: "demo-maroon" },
+    { id: "moss", nama: "Moss Garden", deskripsi: "Hijau lumut yang teduh, nuansa pesta taman.", demo: "demo-moss" },
+    { id: "vintage", nama: "Vintage Paper", deskripsi: "Kertas krem bertekstur, foto bernuansa sepia.", demo: "demo-vintage" },
+    { id: "gold", nama: "Noir Gold", deskripsi: "Hitam elegan dengan aksen emas, glamor dan mewah.", demo: "demo-gold" }
   ]
 };

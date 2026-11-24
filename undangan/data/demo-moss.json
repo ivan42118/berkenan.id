@@ -1,0 +1,108 @@
+{
+  "slug": "demo-moss",
+  "tema": "moss",
+  "urutan": "pria",
+  "sampul": "https://images.pexels.com/photos/20831610/pexels-photo-20831610.jpeg?auto=compress&cs=tinysrgb&w=1000",
+  "musik": "",
+  "pria": {
+    "panggilan": "Kevin",
+    "lengkap": "Kevin Adrian Wijaya",
+    "ortu": "Putra dari Bapak Hartono Wijaya & Ibu Lina Kusuma",
+    "foto": "",
+    "fokus": "",
+    "instagram": ""
+  },
+  "wanita": {
+    "panggilan": "Clara",
+    "lengkap": "Clara Anindita",
+    "ortu": "Putri dari Bapak Surya Darma & Ibu Melati Sari",
+    "foto": "",
+    "fokus": "",
+    "instagram": ""
+  },
+  "salam": "",
+  "pembuka": "Dengan penuh sukacita, kami mengundang Bapak/Ibu/Saudara/i untuk merayakan hari pernikahan kami:",
+  "kutipan": {
+    "teks": "Cinta tidak saling menatap, tetapi bersama-sama memandang ke arah yang sama.",
+    "sumber": ""
+  },
+  "acara": [
+    {
+      "nama": "Pemberkatan",
+      "tanggal": "2027-04-24",
+      "mulai": "10:00",
+      "selesai": "11:30",
+      "zona": "WIB",
+      "tempat": "Gereja Contoh Kasih",
+      "alamat": "Jl. Contoh Sudirman No. 3, Jakarta",
+      "maps": ""
+    },
+    {
+      "nama": "Garden Party",
+      "tanggal": "2027-04-24",
+      "mulai": "16:00",
+      "selesai": "20:00",
+      "zona": "WIB",
+      "tempat": "Taman Contoh Botani",
+      "alamat": "Jl. Contoh Kemang No. 17, Jakarta",
+      "maps": ""
+    }
+  ],
+  "cerita": [
+    {
+      "judul": "Awal",
+      "teks": "Berawal dari rekan satu proyek, lalu jadi teman makan siang setiap hari.",
+      "foto": "https://images.pexels.com/photos/4169604/pexels-photo-4169604.jpeg?auto=compress&cs=tinysrgb&w=800"
+    },
+    {
+      "judul": "Hari Ini",
+      "teks": "Kami memilih untuk berjalan bersama, dan ingin merayakannya dengan orang-orang terdekat.",
+      "foto": ""
+    }
+  ],
+  "galeri": [
+    {
+      "src": "https://images.pexels.com/photos/5544662/pexels-photo-5544662.jpeg?auto=compress&cs=tinysrgb&w=1000",
+      "ket": ""
+    },
+    {
+      "src": "https://images.pexels.com/photos/4169604/pexels-photo-4169604.jpeg?auto=compress&cs=tinysrgb&w=1000",
+      "ket": ""
+    },
+    {
+      "src": "https://images.pexels.com/photos/18800370/pexels-photo-18800370.jpeg?auto=compress&cs=tinysrgb&w=1000",
+      "ket": ""
+    },
+    {
+      "src": "https://images.pexels.com/photos/9078646/pexels-photo-9078646.jpeg?auto=compress&cs=tinysrgb&w=1000",
+      "ket": ""
+    },
+    {
+      "src": "https://images.pexels.com/photos/10027209/pexels-photo-10027209.jpeg?auto=compress&cs=tinysrgb&w=1000",
+      "ket": ""
+    },
+    {
+      "src": "https://images.pexels.com/photos/11127331/pexels-photo-11127331.jpeg?auto=compress&cs=tinysrgb&w=1000",
+      "ket": ""
+    }
+  ],
+  "amplop": {
+    "pengantar": "",
+    "rekening": [
+      {
+        "bank": "Bank Contoh",
+        "nomor": "5550001234",
+        "atas_nama": "Clara Anindita"
+      }
+    ],
+    "alamat": ""
+  },
+  "rsvp": {
+    "aktif": true,
+    "endpoint": "",
+    "wa": ""
+  },
+  "siaran": "https://www.youtube.com/",
+  "penutup": "Kehadiran dan doa Anda adalah hadiah terbaik bagi kami.",
+  "keluarga": "Kel. Bapak Hartono Wijaya & Kel. Bapak Surya Darma"
+}
