@@ -2,7 +2,7 @@
   'use strict';
   var B = window.BRAND || {};
   var NOMOR_CONTOH = '6281234567890';
-  var VERSI = '20261124b'; // samakan dengan ?v= di index.html setiap kali ada update
+  var VERSI = '20261125b'; // samakan dengan ?v= di index.html setiap kali ada update
   var wa = String(B.whatsapp || '').replace(/\D/g, '');
 
   function rupiah(n) { return 'Rp ' + Number(n || 0).toLocaleString('id-ID'); }
@@ -68,6 +68,7 @@
     });
   }
   var SAPAAN_DEMO = { pernikahan: 'Calon Pengantin', khitan: 'Bapak/Ibu', ulangtahun: 'Teman Kecil', acara: 'Tamu Undangan' };
+  var paketUnggulan = ((paket.filter(function (p) { return p.unggulan; })[0] || paket[0] || {}).id) || 'premium';
   (B.tema || []).forEach(function (t) {
     // v = versi situs, supaya browser tidak memakai halaman demo lama dari cache setelah update.
     var demo = 'undangan/?u=' + encodeURIComponent(t.demo) + '&to=' + encodeURIComponent(SAPAAN_DEMO[t.kategori] || 'Tamu Undangan') + '&v=' + VERSI;
@@ -87,7 +88,8 @@
 
     var aksi = el('div', 'aksi');
     var lihat = el('a', 'btn garis', 'Lihat Demo');
-    lihat.href = demo; lihat.target = '_blank'; lihat.rel = 'noopener';
+    // Demo dibuka sebagai paket unggulan; di halaman demo pengunjung bisa beralih ke paket lain.
+    lihat.href = demo + '&paket=' + encodeURIComponent(paketUnggulan); lihat.target = '_blank'; lihat.rel = 'noopener';
     var pakai = el('a', 'btn', 'Pakai Tema');
     pakai.href = linkWa(sapaan + 'saya tertarik dengan tema ' + t.nama + '. Boleh minta info lebih lanjut?');
     pakai.target = '_blank'; pakai.rel = 'noopener';
@@ -109,7 +111,15 @@
     var tombol = el('a', 'btn', 'Pesan ' + p.nama);
     tombol.href = linkWa(sapaan + 'saya mau pesan undangan digital paket ' + p.nama + ' (' + rupiah(p.harga) + ').\n\nTema pilihan: \nTanggal acara: \nKota: ');
     tombol.target = '_blank'; tombol.rel = 'noopener';
+    // Contoh undangan dengan fitur paket ini saja (pakai demo tema pertama)
+    var contoh = el('a', 'contoh-paket', 'Lihat contoh paket ' + p.nama + ' ›');
+    var temaContoh = (B.tema || [])[0];
+    if (temaContoh) {
+      contoh.href = 'undangan/?u=' + encodeURIComponent(temaContoh.demo) + '&to=' + encodeURIComponent('Tamu Spesial') + '&paket=' + encodeURIComponent(p.id) + '&v=' + VERSI;
+      contoh.target = '_blank'; contoh.rel = 'noopener';
+    }
     kartu.append(el('h3', null, p.nama), harga, el('p', 'masa', p.catatan || ''), ul, tombol);
+    if (temaContoh) kartu.append(contoh);
     gridHarga.append(kartu);
   });
 

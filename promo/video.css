@@ -1,0 +1,94 @@
+/* Panggung 1080×1920. Semua gerak diatur dari video.js (tanpa transition/animation CSS),
+   supaya setiap frame bisa dirender persis sama. */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { background: #000; overflow: hidden; height: 100%; }
+
+#panggung {
+  position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; overflow: hidden;
+  transform-origin: 0 0; background: #2a0911; color: #fbf3e8;
+  font-family: 'Jost', system-ui, sans-serif; -webkit-font-smoothing: antialiased;
+}
+#latar, #vignet, #cahaya { position: absolute; inset: 0; pointer-events: none; }
+#vignet { background: radial-gradient(125% 95% at 50% 45%, transparent 58%, rgba(0, 0, 0, 0.55) 100%); z-index: 50; }
+#cahaya { background: radial-gradient(circle at 50% 1030px, rgba(240, 205, 140, 0.20) 0, rgba(240, 205, 140, 0) 520px); }
+#kilau { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; pointer-events: none; z-index: 5; }
+
+.el { position: absolute; left: 50px; right: 50px; text-align: center; opacity: 0; visibility: hidden; z-index: 10; }
+
+.tebal { font-weight: 600; font-size: 64px; line-height: 1.15; letter-spacing: -0.01em; }
+.serif { font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic; font-weight: 600; }
+.besar { font-size: 88px; line-height: 1.1; }
+.raksasa { font-weight: 700; font-size: 98px; line-height: 1.05; letter-spacing: -0.02em; }
+.raksasa .serif { font-size: 124px; letter-spacing: 0; padding: 0 6px; }
+.emas { color: #ecc98a; }
+.emas-gradasi {
+  background: linear-gradient(100deg, #b98a40 0%, #f7e2ab 38%, #cf9f52 62%, #f5dca0 100%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.redup { color: rgba(251, 243, 232, 0.78); font-size: 38px; font-weight: 400; }
+.label-lebar { font-size: 34px; font-weight: 500; letter-spacing: 0.42em; padding-left: 0.42em; text-transform: uppercase; color: #f3dfb6; }
+
+.mawar { color: #f2b4a9; }
+
+.pil {
+  display: inline-flex; align-items: center; gap: 16px; padding: 16px 36px; border-radius: 999px;
+  border: 2px solid rgba(236, 201, 138, 0.6); background: rgba(0, 0, 0, 0.28);
+  font-size: 36px; font-weight: 500; color: #f8ead0; white-space: nowrap;
+}
+.pil-terang { background: linear-gradient(135deg, #c9974a, #f3d89c 55%, #c9974a); color: #2a0911; border-color: transparent; font-weight: 600; font-size: 40px; padding: 18px 40px; }
+.pil b { font-weight: 700; }
+.pil .kat { font-size: 26px; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase; color: #ecc98a; }
+
+.keterangan .judul { font-weight: 600; font-size: 60px; line-height: 1.15; letter-spacing: -0.01em; margin-bottom: 26px; text-shadow: 0 6px 30px rgba(0, 0, 0, 0.35); }
+
+/* ---------- HP ---------- */
+#hp {
+  --s: 1.36; /* skala layar: 375 px CSS → 510 px */
+  position: absolute; z-index: 20; left: 50%; top: 452px;
+  width: calc(375px * var(--s) + 36px); height: calc(812px * var(--s) + 36px);
+  margin-left: calc((375px * var(--s) + 36px) / -2); padding: 18px; border-radius: 90px;
+  background: linear-gradient(150deg, #44444b 0%, #141417 38%, #2a2a30 100%);
+  box-shadow: 0 90px 140px -50px rgba(0, 0, 0, 0.8), inset 0 0 0 2px rgba(255, 255, 255, 0.09), inset 0 0 0 6px #0b0b0d;
+  opacity: 0; visibility: hidden;
+}
+.layar { position: relative; width: calc(375px * var(--s)); height: calc(812px * var(--s)); border-radius: 74px; overflow: hidden; background: #000; isolation: isolate; }
+.layar iframe { position: absolute; left: 0; top: 0; width: 375px; height: 812px; border: 0; transform-origin: 0 0; visibility: hidden; background: #000; }
+.pulau { position: absolute; z-index: 52; top: 18px; left: 50%; width: 156px; height: 44px; margin-left: -78px; border-radius: 26px; background: #000; }
+.kilap { position: absolute; z-index: 51; inset: 0; border-radius: 74px; pointer-events: none; background: linear-gradient(115deg, rgba(255, 255, 255, 0.10) 0%, rgba(255, 255, 255, 0) 26%); }
+.ketuk {
+  position: absolute; z-index: 53; width: 120px; height: 120px; margin: -60px 0 0 -60px; border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5); border: 4px solid rgba(255, 255, 255, 0.95); box-shadow: 0 0 30px rgba(255, 255, 255, 0.6);
+  opacity: 0; visibility: hidden;
+}
+
+/* ---------- Harga ---------- */
+.harga { font-size: 210px; line-height: 1; padding: 6px 0 14px; }
+.cek { list-style: none; left: 120px; right: 120px; display: grid; gap: 22px; text-align: left; }
+.cek li {
+  display: flex; align-items: center; gap: 24px; padding: 22px 30px; border-radius: 26px;
+  background: rgba(255, 255, 255, 0.07); border: 1.5px solid rgba(236, 201, 138, 0.32);
+  font-size: 38px; font-weight: 500; line-height: 1.2;
+}
+.cek li::before {
+  content: ""; flex: none; width: 48px; height: 48px; border-radius: 50%;
+  background: #ecc98a url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232a0911' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5'/%3E%3C/svg%3E") center / 30px no-repeat;
+}
+
+/* ---------- Ajakan ---------- */
+.ikon-akhir { display: inline-block; filter: drop-shadow(0 30px 50px rgba(0, 0, 0, 0.35)); }
+.ikon-akhir svg { display: block; }
+/* Wordmark logo: "berkenan" huruf kecil, Jost 500 */
+.merek { font-family: 'Jost', sans-serif; font-weight: 500; font-size: 168px; line-height: 1; letter-spacing: -0.012em; text-transform: lowercase; color: #f3dca6; }
+.jenis { font-size: 36px; }
+.tombol-cta {
+  display: inline-flex; align-items: center; gap: 30px; padding: 26px 56px 26px 30px; border-radius: 999px;
+  background: linear-gradient(135deg, #c9974a, #f6dea6 52%, #c9974a); color: #2a0911; text-align: left;
+  box-shadow: 0 30px 70px -20px rgba(236, 201, 138, 0.55);
+}
+.ikon-cta { width: 96px; height: 96px; border-radius: 50%; background: #2a0911; display: grid; place-items: center; flex: none; }
+.ikon-cta svg { width: 48px; height: 48px; fill: #f6dea6; }
+.teks-cta { display: grid; gap: 2px; }
+.teks-cta small { font-size: 30px; font-weight: 500; }
+.teks-cta b { font-size: 60px; font-weight: 700; letter-spacing: 0.01em; line-height: 1.05; }
+.situs { font-size: 36px; }
+.situs b { color: #f3dfb6; font-weight: 600; }

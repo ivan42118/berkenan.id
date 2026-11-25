@@ -12,6 +12,7 @@ Isi folder ini adalah situs jualan undangan digital (pernikahan, khitan, ulang t
 | `admin/buat-undangan.html` | Form pembuat undangan + pratinjau langsung + tombol unduh |
 | `admin/link-tamu.html` | Generator link bernama untuk setiap tamu + tombol kirim WA |
 | `rsvp/apps-script.gs` | Backend RSVP & ucapan (Google Sheets), gratis |
+| `promo/` | Sumber video promo 9:16 + skrip render ke MP4 (lihat "Video promo" di bagian 6) |
 | `robots.txt` | Mencegah undangan pelanggan muncul di Google |
 
 ## Jenis undangan & tema
@@ -29,6 +30,8 @@ Bagian opsional untuk semua jenis: **rundown** (susunan acara), **dress code** b
 
 Ada 7 tema (Maroon, Moss, Vintage, Noir Gold, Islami, Ceria, Modern). **Tema dan jenis bisa dicampur bebas**, misalnya ulang tahun ke-17 dengan Noir Gold, atau aqiqah dengan Ceria.
 
+**Contoh per paket.** Semua tema bisa dipakai di paket mana pun; yang membedakan paket adalah fiturnya. Setiap demo bisa dibuka sebagai paket tertentu lewat `?paket=basic|premium|eksklusif`, misalnya `undangan/?u=demo-maroon&paket=basic`. Di halaman demo muncul bilah "Contoh paket" untuk beralih paket, dan bagian yang tidak termasuk paket itu disembunyikan. Atur bagian yang disembunyikan lewat `demoTanpa` dan teks penjelasannya lewat `ringkasDemo` di `config.js`. Bilah ini hanya muncul di undangan demo (slug `demo-…`), tidak pernah di undangan pelanggan.
+
 Harga paket saat ini sama untuk semua jenis. Pasar biasanya menerima harga lebih rendah untuk ulang tahun anak, jadi pertimbangkan paket khusus, misalnya mulai Rp 59–79 ribu. Atur di `config.js`.
 
 ## 1. Jalankan di komputer
@@ -42,9 +45,9 @@ Buka `http://localhost:5500`. Jangan buka file dengan klik ganda (`file://`), ka
 
 ## 2. Sebelum online (wajib)
 
-1. **Tentukan nama brand.** "Ikrar" hanya nama kerja. Cek dulu nama yang kamu pilih belum dipakai di Instagram, TikTok, dan domain.
-2. Ubah `config.js`: `nama`, `whatsapp` (format `62812…`), `instagram`, lalu `situs` setelah domain aktif.
-3. Ganti kata "Ikrar" di `<title>` dan meta deskripsi pada `index.html`.
+1. **Nama brand: Berkenan** (handle @berkenan.id). Amankan domain `berkenan.id` dan daftarkan mereknya di DJKI setelah usaha berjalan.
+2. Cek `config.js`: `nama`, `whatsapp` (format `62812…`), `instagram`, lalu ganti `situs` setelah domain aktif.
+3. Setelah pindah domain, ganti juga alamat `og:image` di `index.html` (gambar pratinjau saat link dibagikan di WhatsApp).
 4. **Foto demo.** Keempat demo (Maroon, Moss, Vintage, Noir Gold) memakai foto dari Pexels, yang gratis untuk penggunaan komersial, dan dimuat langsung dari server Pexels. Supaya demo tidak pernah rusak kalau link Pexels berubah, simpan salinannya di `undangan/foto/demo/` lalu ganti URL-nya di file `undangan/data/demo-*.json`. Begitu ada pelanggan yang mengizinkan, ganti dengan foto asli mereka.
 
 ## 3. Online gratis
@@ -89,6 +92,36 @@ Membangun situs adalah bagian mudahnya. Uangnya datang dari distribusi. Lakukan 
 - **Kerja sama vendor.** Tawari WO, MUA, fotografer, dan pengelola gedung komisi 15–20% per pesanan yang mereka bawa.
 - **Iklan gratis di setiap undangan.** Footer "Undangan digital oleh …" dilihat ratusan tamu per acara. Banyak di antara mereka akan menikah juga.
 - **Iklan berbayar baru setelah ada penjualan organik.** Mulai dari Rp 50 ribu/hari di Meta atau TikTok, dan lanjutkan hanya kalau biaya per pesanan masih di bawah margin.
+
+### Logo
+
+Semua file logo ada di `assets/logo/`:
+
+| File | Untuk |
+|---|---|
+| `foto-profil.png` | Foto profil Instagram, TikTok, dan WhatsApp Business (1080×1080) |
+| `logo-mendatar-terang.png` / `-gelap.png` | Logo lengkap (ikon + "berkenan"), latar transparan, untuk latar terang / gelap |
+| `ikon-terang-512.png` / `ikon-gelap-512.png` | Ikon amplop saja, latar transparan |
+| `og.png` | Gambar pratinjau saat link situs dibagikan |
+| `favicon-*.png`, `apple-touch-icon.png` | Ikon tab browser dan ikon di layar HP |
+
+Sumber vektornya `assets/logo/logo.js`. Untuk mengekspor ulang (misalnya setelah mengubah warna), buka `assets/logo/sumber.html?a=ikon&t=terang&s=512` di Chrome. Parameter lain: `a=datar`, `a=profil`, `a=og`, `t=gelap`. Huruf memakai font Cormorant Garamond dan Jost (gratis untuk komersial). Untuk keperluan cetak (spanduk, stiker), minta versi vektor dengan huruf yang sudah diubah menjadi garis.
+
+### Video promo
+
+`promo/video.html` adalah video promo 31 detik (1080×1920, untuk Reels, TikTok, Shorts, dan Status WA) yang memakai undangan demo asli. Nama brand, harga termurah, waktu pengerjaan, nomor WA, alamat situs, dan jumlah tema diambil dari `config.js`. Jadi setelah mengganti nama brand atau harga, cukup render ulang.
+
+- **Pratinjau:** jalankan server (bagian 1), lalu buka `http://localhost:5500/promo/video.html`. Muat ulang halaman untuk memutar lagi.
+- **Render ke MP4** (butuh Node 22+, Chrome, dan ffmpeg; hasilnya di `promo/hasil/`, yang tidak ikut ter-upload ke GitHub):
+
+```powershell
+pip install imageio-ffmpeg
+$env:FFMPEG = python -c "import imageio_ffmpeg; print(imageio_ffmpeg.get_ffmpeg_exe())"
+node promo/render.mjs
+```
+
+- **Musik:** videonya sengaja tanpa suara. Tambahkan lagu dari pustaka musik TikTok/Instagram saat mengunggah, karena lagu di sana sudah berlisensi untuk platform tersebut. Jangan menempelkan lagu komersial sendiri.
+- **Saat posting:** taruh link situs di bio, dan tulis caption yang mengajak chat, misalnya "Mau undangan seperti ini? Chat WA di bio, draf gratis dulu sebelum bayar."
 
 ## 7. Hitungan kasar
 

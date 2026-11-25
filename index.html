@@ -3,17 +3,25 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- Ganti "Ikrar" di judul & deskripsi ini dengan nama brand kamu. -->
-  <title>Ikrar — Undangan Digital Pernikahan, Khitan, Ulang Tahun & Acara</title>
+  <title>Berkenan — Undangan Digital Pernikahan, Khitan, Ulang Tahun & Acara</title>
   <meta name="description" content="Undangan digital elegan untuk pernikahan, khitanan, ulang tahun, reuni, dan acara lainnya: nama tamu otomatis, RSVP, amplop digital, hitung mundur, dan musik. Jadi dalam 1×24 jam.">
-  <meta property="og:title" content="Ikrar — Undangan Digital untuk Setiap Momen">
+  <meta property="og:title" content="Berkenan — Undangan Digital untuk Setiap Momen">
   <meta property="og:description" content="Undangan digital untuk pernikahan, khitan, ulang tahun, dan acara. Siap disebar dalam 1×24 jam.">
   <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Berkenan">
+  <!-- Pratinjau link (WhatsApp, Facebook) butuh alamat lengkap. Ganti saat pindah ke domain sendiri. -->
+  <meta property="og:image" content="https://ivan42118.github.io/ikrar/assets/logo/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
   <meta name="theme-color" content="#faf7f2">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/logo/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/logo/favicon-16.png">
+  <link rel="apple-touch-icon" href="assets/logo/apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/landing.css?v=20261124b">
+  <link rel="stylesheet" href="assets/landing.css?v=20261125b">
 </head>
 <body>
   <div class="peringatan" id="peringatan" hidden>
@@ -21,7 +29,10 @@
   </div>
 
   <header class="nav">
-    <a class="logo" href="#"><span data-brand>Ikrar</span><small data-tagline>Undangan Digital</small></a>
+    <a class="logo" href="#" aria-label="Berkenan, undangan digital">
+      <img src="assets/logo/ikon-terang-96.png" srcset="assets/logo/ikon-terang-96.png 1x, assets/logo/ikon-terang-192.png 2x" width="46" height="46" alt="">
+      <span class="logo-teks"><span class="logo-nama" data-brand>Berkenan</span><small data-tagline>Undangan Digital</small></span>
+    </a>
     <nav class="menu" aria-label="Navigasi utama">
       <a href="#tema">Tema</a>
       <a href="#harga">Harga</a>
@@ -36,7 +47,7 @@
       <div class="hero-teks">
         <p class="eyebrow">Pernikahan · Khitan · Ulang Tahun · Acara</p>
         <h1>Undangan digital yang <em>berkesan</em> untuk setiap momen.</h1>
-        <p class="lead">Untuk pernikahan, khitanan, ulang tahun, sampai reuni dan syukuran. Nama tamu tampil otomatis di setiap link, lengkap dengan RSVP, amplop digital, hitung mundur, dan musik. Siap dalam <span data-waktu>1×24 jam</span>, mulai <strong data-harga-min>Rp 99.000</strong>.</p>
+        <p class="lead">Untuk pernikahan, khitanan, ulang tahun, sampai reuni dan syukuran. Nama tamu tampil otomatis di setiap link, lengkap dengan hitung mundur, peta lokasi, amplop digital, dan musik. Siap dalam <span data-waktu>1×24 jam</span>, mulai <strong data-harga-min>Rp 99.000</strong>.</p>
         <div class="cta">
           <a class="btn" data-wa target="_blank" rel="noopener">Pesan Sekarang</a>
           <a class="btn garis" href="#tema">Lihat Contoh Tema</a>
@@ -51,7 +62,7 @@
         <div class="hp">
           <!-- Undangan dirender selebar HP asli (375px) lalu diperkecil, supaya tampilannya persis seperti di HP tamu. -->
           <div class="hp-layar">
-            <iframe src="undangan/?u=demo-maroon&amp;to=Tamu%20Spesial&amp;v=20261124b" title="Contoh undangan tema Maroon Romance"></iframe>
+            <iframe src="undangan/?u=demo-maroon&amp;to=Tamu%20Spesial&amp;v=20261125b" title="Contoh undangan tema Maroon Romance"></iframe>
           </div>
         </div>
         <p class="hp-ket">Coba langsung: tekan “Buka Undangan”</p>
@@ -60,48 +71,57 @@
 
     <section class="bagian" id="fitur">
       <header class="kepala">
-        <p class="eyebrow">Semua sudah termasuk</p>
+        <p class="eyebrow">Fitur undangan</p>
         <h2>Yang tamu kalian dapatkan</h2>
+        <p>Label di setiap fitur menunjukkan paket yang sudah mencakup fitur tersebut.</p>
       </header>
       <div class="grid-fitur">
         <article class="fitur">
           <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>
           <h3>Nama tamu personal</h3>
+          <span class="lencana-paket">Semua paket</span>
           <p>Setiap tamu menerima link dengan namanya sendiri di halaman sampul.</p>
         </article>
         <article class="fitur">
           <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg>
           <h3>RSVP &amp; ucapan</h3>
+          <span class="lencana-paket premium">Mulai Premium</span>
           <p>Tamu konfirmasi hadir dan menitipkan doa. Kalian dapat rekapnya.</p>
         </article>
         <article class="fitur">
           <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="8" width="18" height="5" rx="1"/><rect x="5" y="13" width="14" height="8" rx="1"/><path d="M12 8v13M12 8c-2-4-6-4-6-1s4 1 6 1zM12 8c2-4 6-4 6-1s-4 1-6 1z"/></svg>
           <h3>Amplop digital</h3>
+          <span class="lencana-paket">Semua paket</span>
           <p>Nomor rekening dan e-wallet dengan tombol salin sekali ketuk.</p>
         </article>
         <article class="fitur">
           <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
           <h3>Hitung mundur</h3>
+          <span class="lencana-paket">Semua paket</span>
           <p>Hari, jam, menit, dan detik menuju hari bahagia.</p>
         </article>
         <article class="fitur">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6-7-11a7 7 0 0 1 14 0c0 5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
           <h3>Lokasi &amp; kalender</h3>
+          <span class="lencana-paket">Semua paket</span>
           <p>Satu ketuk ke Google Maps dan simpan acara ke kalender tamu.</p>
         </article>
         <article class="fitur">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18V5l11-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="17" cy="16" r="3"/></svg>
           <h3>Rundown &amp; dress code</h3>
+          <span class="lencana-paket premium">Mulai Premium</span>
           <p>Susunan acara, dress code, dan kontak panitia dalam satu halaman.</p>
         </article>
         <article class="fitur">
           <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M21 17l-5-5-9 8"/></svg>
           <h3>Galeri &amp; cerita</h3>
+          <span class="lencana-paket premium">Mulai Premium</span>
           <p>Foto terbaik dan kisah perjalanan, tampil rapi di HP.</p>
         </article>
         <article class="fitur">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12l16-8-6 16-3-7z"/></svg>
           <h3>Sebar via WhatsApp</h3>
+          <span class="lencana-paket premium">Mulai Premium</span>
           <p>Generator link tamu: ratusan undangan siap kirim dalam hitungan menit.</p>
         </article>
       </div>
@@ -111,7 +131,7 @@
       <header class="kepala">
         <p class="eyebrow">Katalog</p>
         <h2>Pilih tema favorit kalian</h2>
-        <p>Semua tema bisa dicoba langsung, persis seperti yang akan dilihat tamu, dan bisa dipakai untuk jenis acara apa pun.</p>
+        <p>Semua tema bisa dipakai di paket mana pun dan untuk jenis acara apa pun. Yang membedakan paket adalah fiturnya: di setiap demo, kamu bisa beralih antara Basic, Premium, dan Eksklusif untuk melihat bedanya.</p>
         <div class="filter-tema" id="filter-tema" role="tablist" aria-label="Filter kategori"></div>
       </header>
       <div class="grid-tema" id="grid-tema"></div>
@@ -187,16 +207,16 @@
   </main>
 
   <footer class="kaki">
-    <p><strong data-brand>Ikrar</strong> · <span data-tagline>Undangan Digital</span></p>
+    <img class="kaki-logo" src="assets/logo/logo-mendatar-terang.png" width="250" height="75" alt="Berkenan, undangan digital">
     <p id="kontak"></p>
-    <p class="hak">© <span id="tahun"></span> <span data-brand>Ikrar</span></p>
+    <p class="hak">© <span id="tahun"></span> <span data-brand>Berkenan</span></p>
   </footer>
 
   <a class="wa-mengambang" data-wa target="_blank" rel="noopener" aria-label="Chat via WhatsApp">
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 0 0-7.8 13.5L3 21l4.6-1.2A9 9 0 1 0 12 3z"/><path d="M9 8.5c0 3.5 3 6.5 6.5 6.5l1-1.6-2-1-1 1c-1.2-.5-2.4-1.7-2.9-2.9l1-1-1-2z"/></svg>
   </a>
 
-  <script src="config.js?v=20261124b"></script>
-  <script src="assets/landing.js?v=20261124b"></script>
+  <script src="config.js?v=20261125b"></script>
+  <script src="assets/landing.js?v=20261125b"></script>
 </body>
 </html>

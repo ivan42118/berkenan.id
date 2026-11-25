@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<title>Sumber logo Berkenan</title>
+<!--
+  Halaman bantu untuk mengekspor logo ke PNG (lihat PANDUAN.md bagian "Logo").
+  Parameter: a=ikon|datar|profil|og  t=terang|gelap  s=ukuran ikon (px)  h=tinggi logo mendatar (px)
+             kecil=1 (versi favicon)  bg=krem (latar krem penuh, untuk ikon aplikasi)
+-->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,600&family=Jost:wght@400;500&display=block">
+<style>
+  html, body { margin: 0; padding: 0; background: transparent; overflow: hidden; }
+  body { font-family: 'Jost', sans-serif; }
+  svg { display: block; }
+</style>
+</head>
+<body>
+<script src="../../config.js"></script>
+<script src="logo.js"></script>
+<script>
+(function () {
+  var Q = new URLSearchParams(location.search);
+  var a = Q.get('a') || 'ikon', t = Q.get('t') || 'terang', gelap = t === 'gelap';
+  var B = window.BRAND || {};
+  var nama = String(B.nama || 'Berkenan').toLowerCase();
+  var WARNA = gelap ? { wm: '#f3dca6', tag: '#e2c999' } : { wm: '#6b1c2b', tag: '#9a7a4a' };
+  var LATAR_MARUN = 'radial-gradient(120% 120% at 50% 22%, #7a2233 0%, #4a1220 55%, #2a0911 100%)';
+
+  function muat() {
+    return Promise.all(['italic 600 40px "Cormorant Garamond"', '500 40px Jost', '400 40px Jost'].map(function (f) { return document.fonts.load(f); }));
+  }
+  muat().then(function () {
+    var html = '';
+    if (a === 'ikon') {
+      var s = +Q.get('s') || 512, kecil = Q.get('kecil') === '1';
+      if (Q.get('bg') === 'krem') document.body.style.background = '#fffaf3';
+      var isi = Q.get('bg') === 'krem' ? Math.round(s * 0.84) : s;
+      html = '<div style="width:' + s + 'px;height:' + s + 'px;display:grid;place-items:center">' + svgIkonBerkenan(t, isi, kecil) + '</div>';
+    } else if (a === 'datar') {
+      // Logo mendatar: ikon + "berkenan" + UNDANGAN DIGITAL, viewBox 500×150
+      var h = +Q.get('h') || 150;
+      html = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 150" width="' + Math.round(h * 500 / 150) + '" height="' + h + '">' +
+        '<svg x="0" y="0" width="150" height="150" viewBox="0 0 100 100">' + ikonBerkenan(t) + '</svg>' +
+        '<text x="168" y="88" font-family="Jost" font-weight="500" font-size="74" letter-spacing="-0.4" fill="' + WARNA.wm + '">' + nama + '</text>' +
+        '<text x="171" y="124" font-family="Jost" font-weight="500" font-size="15.5" letter-spacing="6.2" fill="' + WARNA.tag + '">UNDANGAN DIGITAL</text>' +
+        '</svg>';
+    } else if (a === 'profil') {
+      document.body.style.background = LATAR_MARUN;
+      html = '<div style="width:1080px;height:1080px;position:relative">' +
+        '<div style="position:absolute;left:' + (540 - 400 - 0.057 * 800) + 'px;top:' + (540 - 400 + 0.025 * 800) + 'px">' + svgIkonBerkenan('gelap', 800) + '</div></div>';
+    } else if (a === 'og') {
+      document.body.style.background = LATAR_MARUN;
+      var paket = Array.isArray(B.paket) ? B.paket : [];
+      var min = paket.length ? Math.min.apply(null, paket.map(function (p) { return p.harga; })) : 99000;
+      html = '<div style="width:1200px;height:630px;display:flex;align-items:center;gap:40px;padding:0 70px 0 60px;box-sizing:border-box;color:#f3dca6">' +
+        svgIkonBerkenan('gelap', 440) +
+        '<div style="display:grid;gap:14px">' +
+          '<div style="font:500 118px/0.9 Jost;letter-spacing:-1px">' + nama + '</div>' +
+          '<div style="font:500 22px/1 Jost;letter-spacing:9px;color:#e2c999">UNDANGAN DIGITAL</div>' +
+          '<div style="height:2px;width:120px;background:#d9b66f;margin:14px 0 6px"></div>' +
+          '<div style="font:400 30px/1.35 Jost;color:#f6efdc">Pernikahan · Khitan · Ulang Tahun · Acara</div>' +
+          '<div style="font:500 30px/1.35 Jost;color:#f6efdc">Mulai Rp ' + Math.round(min / 1000) + 'rb · jadi ' + (B.waktuPengerjaan || '1×24 jam') + '</div>' +
+        '</div></div>';
+    }
+    document.body.insertAdjacentHTML('afterbegin', html);
+    document.title = 'siap';
+  });
+})();
+</script>
+</body>
+</html>

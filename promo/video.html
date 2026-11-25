@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Video promo — sumber animasi</title>
+<!--
+  Sumber animasi video promo 1080×1920 (9:16, untuk Reels / TikTok / Status WA).
+  Buka langsung di browser untuk pratinjau, atau render jadi MP4: node promo/render.mjs
+  Teks brand, harga, nomor WA, dan daftar tema diambil dari config.js.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Jost:wght@400;500;600;700&display=block">
+<link rel="stylesheet" href="video.css">
+</head>
+<body>
+<div id="panggung">
+  <div id="latar"></div>
+  <div id="cahaya"></div>
+  <canvas id="kilau" width="1080" height="1920"></canvas>
+
+  <!-- Adegan 1: hook -->
+  <p id="h1a" class="el tebal">Undangan cetak 500 lembar?</p>
+  <p id="h1b" class="el serif besar mawar">bisa habis jutaan rupiah.</p>
+  <p id="h1c" class="el raksasa">Undangan <span class="emas-gradasi serif">digital</span></p>
+  <p id="h1d" class="el"><span class="pil pil-terang">mulai <b data-harga-rb></b> · tamu tanpa batas</span></p>
+
+  <!-- Keterangan di atas HP -->
+  <div id="cap2" class="el keterangan">
+    <p class="judul">Nama tamu tertulis otomatis</p>
+    <p><span class="pil">1 link khusus untuk tiap tamu</span></p>
+  </div>
+  <div id="cap3" class="el keterangan">
+    <p class="judul">Semua info acara dalam 1 link</p>
+    <p><span class="pil" id="pil3"></span></p>
+  </div>
+  <div id="cap4" class="el keterangan">
+    <p class="judul">Pilih dari <span data-jumlah-tema></span> tema mewah</p>
+    <p><span class="pil" id="pil4"><span class="kat" id="kat4"></span><span id="nama4"></span></span></p>
+  </div>
+
+  <!-- HP -->
+  <div id="hp">
+    <div class="layar">
+      <div class="pulau"></div>
+      <div class="kilap"></div>
+      <div class="ketuk" id="ketuk"></div>
+    </div>
+  </div>
+
+  <!-- Adegan 5: harga -->
+  <p id="s5a" class="el label-lebar">Mulai dari</p>
+  <p id="s5b" class="el harga emas-gradasi serif" data-harga-penuh></p>
+  <p id="s5c" class="el redup">per undangan</p>
+  <ul id="s5d" class="el cek">
+    <li>Nama tamu personal, tanpa batas</li>
+    <li>Hitung mundur &amp; Google Maps</li>
+    <li>Amplop digital &amp; musik latar</li>
+    <li>Selesai dalam <span data-waktu></span></li>
+  </ul>
+
+  <!-- Adegan 6: ajakan -->
+  <div id="s6a" class="el"><span id="ikon-akhir" class="ikon-akhir"></span></div>
+  <p id="s6b" class="el merek" data-brand></p>
+  <p id="s6c" class="el label-lebar" data-tagline></p>
+  <p id="s6d" class="el redup jenis">Pernikahan · Khitan · Ulang Tahun · Acara</p>
+  <div id="s6e" class="el">
+    <span class="tombol-cta">
+      <span class="ikon-cta" aria-hidden="true">
+        <svg viewBox="0 0 24 24"><path d="M20 15.5c-1.25 0-2.45-.2-3.57-.57a1 1 0 0 0-1.02.24l-2.2 2.2a15.07 15.07 0 0 1-6.59-6.58l2.2-2.21a1 1 0 0 0 .25-1.01A11.36 11.36 0 0 1 8.5 4a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1 17 17 0 0 0 17 17 1 1 0 0 0 1-1v-3.5a1 1 0 0 0-1-1z"/></svg>
+      </span>
+      <span class="teks-cta"><small>Pesan via WhatsApp</small><b data-wa></b></span>
+    </span>
+  </div>
+  <p id="s6f" class="el redup situs">Lihat demo: <b data-situs></b></p>
+
+  <div id="vignet"></div>
+</div>
+<script src="../config.js"></script>
+<script src="../assets/logo/logo.js"></script>
+<script src="video.js"></script>
+</body>
+</html>

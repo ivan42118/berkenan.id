@@ -48,6 +48,39 @@
       "maps": ""
     }
   ],
+  "rundown": [
+    {
+      "jam": "08:00",
+      "kegiatan": "Akad nikah",
+      "ket": "Khusus keluarga inti"
+    },
+    {
+      "jam": "11:00",
+      "kegiatan": "Kirab & penyambutan pengantin",
+      "ket": ""
+    },
+    {
+      "jam": "11:30",
+      "kegiatan": "Sambutan keluarga & doa",
+      "ket": ""
+    },
+    {
+      "jam": "12:00",
+      "kegiatan": "Ramah tamah & makan siang",
+      "ket": ""
+    },
+    {
+      "jam": "13:00",
+      "kegiatan": "Foto bersama",
+      "ket": ""
+    }
+  ],
+  "dresscode": "Formal atau batik, nuansa marun dan krem",
+  "dresscodeWarna": [
+    "#6b1c2b",
+    "#f2e6d8",
+    "#d9b679"
+  ],
   "cerita": [
     {
       "judul": "2019 — Pertama Bertemu",

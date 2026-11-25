@@ -13,6 +13,8 @@
   var tamu = (params.get('to') || '').replace(/\s+/g, ' ').trim().slice(0, 80);
   var modePreview = params.get('preview') === '1';
   var langsungBuka = params.get('buka') === '1';
+  // Demo per paket: undangan/?u=demo-…&paket=basic|premium|eksklusif (hanya untuk undangan demo).
+  var paketDiminta = (params.get('paket') || '').toLowerCase();
   var app = document.getElementById('app');
   var geraknyaDikurangi = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -1097,6 +1099,68 @@
       el('a', { class: 'tombol', href: amanUrl(BRAND.situs) || '../' }, el('span', { class: 'lbl', text: 'Ke halaman utama' }))));
   }
 
+  /* =========================================================
+     Demo per paket: sembunyikan bagian yang tidak termasuk paket,
+     plus bilah untuk beralih paket (hanya saat demo dibuka langsung, bukan di dalam iframe).
+     ========================================================= */
+
+  var dataAsli = null, paketAktif = null;
+
+  function infoPaket(id) {
+    return (Array.isArray(BRAND.paket) ? BRAND.paket : []).filter(function (p) { return p.id === id; })[0] || null;
+  }
+  function saringPaket(d, id) {
+    var p = infoPaket(id);
+    if (!p) return d;
+    var tanpa = Array.isArray(p.demoTanpa) ? p.demoTanpa : [];
+    var c = Object.assign({}, d);
+    if (tanpa.indexOf('galeri') >= 0) c.galeri = [];
+    if (tanpa.indexOf('cerita') >= 0) c.cerita = [];
+    if (tanpa.indexOf('rundown') >= 0) c.rundown = [];
+    if (tanpa.indexOf('dresscode') >= 0) { c.dresscode = ''; c.dresscodeWarna = []; }
+    if (tanpa.indexOf('rsvp') >= 0) c.rsvp = Object.assign({}, d.rsvp || {}, { aktif: false });
+    if (tanpa.indexOf('kontak') >= 0) c.kontak = [];
+    return c;
+  }
+  function dalamBingkai() {
+    try { return window.top !== window; } catch (e) { return true; }
+  }
+  function rupiah(n) { return 'Rp ' + Number(n || 0).toLocaleString('id-ID'); }
+
+  var bilah = null;
+  function pasangBilahPaket() {
+    var pilihan = el('div', { class: 'bp-pilihan', role: 'radiogroup', 'aria-label': 'Pilih paket' });
+    (BRAND.paket || []).forEach(function (p) {
+      pilihan.append(el('button', { type: 'button', class: 'bp-chip', role: 'radio', 'data-id': p.id, onclick: function () { gantiPaket(p.id); } }, p.nama));
+    });
+    var tutup = el('button', { type: 'button', class: 'bp-tutup', 'aria-label': 'Tutup bilah contoh paket', onclick: function () { bilah.remove(); bilah = null; } }, '×');
+    bilah = el('div', { class: 'bilah-paket', role: 'region', 'aria-label': 'Contoh undangan per paket' },
+      el('div', { class: 'bp-baris' }, el('span', { class: 'bp-label', text: 'Contoh paket' }), pilihan, tutup),
+      el('p', { class: 'bp-ket', 'aria-live': 'polite' }));
+    document.body.append(bilah);
+    perbaruiBilah();
+  }
+  function perbaruiBilah() {
+    if (!bilah) return;
+    var p = infoPaket(paketAktif) || {};
+    bilah.querySelectorAll('.bp-chip').forEach(function (b) {
+      var aktif = b.getAttribute('data-id') === paketAktif;
+      b.classList.toggle('aktif', aktif);
+      b.setAttribute('aria-checked', aktif ? 'true' : 'false');
+    });
+    bilah.querySelector('.bp-ket').textContent = (p.nama || '') + ' · ' + rupiah(p.harga) + ' · ' + teks(p.ringkasDemo);
+  }
+  function gantiPaket(id) {
+    if (id === paketAktif || !dataAsli) return;
+    paketAktif = id;
+    var y = window.scrollY;
+    render(saringPaket(dataAsli, id));
+    window.scrollTo(0, y);
+    perbaruiBilah();
+    params.set('paket', id);
+    history.replaceState(null, '', location.pathname + '?' + params.toString());
+  }
+
   if (modePreview) {
     window.addEventListener('message', function (e) {
       if (e.origin !== location.origin) return;
@@ -1115,7 +1179,10 @@
           tampilkanGalat('Masa aktif undangan telah berakhir', 'Terima kasih telah menjadi bagian dari hari bahagia ini.');
           return;
         }
-        render(d);
+        dataAsli = d;
+        paketAktif = slug.indexOf('demo-') === 0 && infoPaket(paketDiminta) ? paketDiminta : null;
+        render(paketAktif ? saringPaket(d, paketAktif) : d);
+        if (paketAktif && !dalamBingkai()) pasangBilahPaket();
       })
       .catch(function () { tampilkanGalat('Undangan tidak ditemukan', 'Link mungkin salah ketik atau undangan sudah tidak aktif.'); });
   }

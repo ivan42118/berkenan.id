@@ -3,15 +3,15 @@
  * Dipakai oleh landing page (index.html), semua undangan, dan tool admin.
  */
 window.BRAND = {
-  // Nama kerja. Cek dulu ketersediaan nama, akun IG/TikTok, dan domainnya sebelum dipakai.
-  nama: "Ikrar",
+  // Nama brand. Dipakai di website, pesan WhatsApp, footer undangan, dan video promo.
+  nama: "Berkenan",
   tagline: "Undangan Digital",
 
   // Nomor WhatsApp penerima pesanan: format 62xxxxxxxxxx, tanpa +, spasi, atau tanda hubung.
   whatsapp: "62895386124189",
-  instagram: "", // contoh: "ikrar.undangan" (tanpa @)
+  instagram: "berkenan.id", // tanpa @
 
-  // Alamat situs setelah online, TANPA garis miring di akhir. Contoh: "https://ikrar.my.id"
+  // Alamat situs setelah online, TANPA garis miring di akhir. Contoh: "https://berkenan.id"
   // Dipakai untuk membuat link undangan dan preview WhatsApp. Ganti saat pindah ke domain sendiri.
   situs: "https://ivan42118.github.io/ikrar",
 
@@ -26,12 +26,17 @@ window.BRAND = {
   // Contoh: "Harga perkenalan untuk 20 pemesan pertama"
   promo: "",
 
+  // demoTanpa  : bagian undangan yang disembunyikan saat demo dilihat sebagai paket ini
+  //              (pilihan: galeri, cerita, rundown, dresscode, rsvp, kontak). Dipakai di demo ?paket=…
+  // ringkasDemo: penjelasan singkat di bilah "Contoh paket" pada halaman demo.
   paket: [
     {
       id: "basic",
       nama: "Basic",
       harga: 99000,
       catatan: "Aktif 6 bulan",
+      demoTanpa: ["galeri", "cerita", "rundown", "dresscode", "rsvp"],
+      ringkasDemo: "Tanpa galeri, cerita, rundown, dress code, dan RSVP (tersedia di Premium).",
       fitur: [
         "Bebas pilih semua tema",
         "Nama tamu personal, tanpa batas",
@@ -48,6 +53,8 @@ window.BRAND = {
       harga: 179000,
       unggulan: true,
       catatan: "Aktif 1 tahun",
+      demoTanpa: [],
+      ringkasDemo: "Semua yang terlihat di sini sudah termasuk.",
       fitur: [
         "Semua fitur Basic",
         "Galeri hingga 12 foto",
@@ -62,6 +69,8 @@ window.BRAND = {
       nama: "Eksklusif",
       harga: 299000,
       catatan: "Aktif 1 tahun",
+      demoTanpa: [],
+      ringkasDemo: "Semua fitur Premium + galeri tanpa batas, preview link WA berfoto, dan pengerjaan prioritas.",
       fitur: [
         "Semua fitur Premium",
         "Galeri tanpa batas",
