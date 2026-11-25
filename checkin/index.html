@@ -16,7 +16,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,500;1,600&family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="checkin.css?v=20261125f">
+  <link rel="stylesheet" href="checkin.css?v=20261125g">
 </head>
 <body>
   <header class="kepala">
@@ -27,6 +27,11 @@
     </div>
     <span id="status" class="status">…</span>
   </header>
+
+  <div id="toast" class="toast" role="alert" aria-live="assertive" hidden>
+    <span class="toast-ikon" aria-hidden="true"></span>
+    <div><p class="toast-judul"></p><p class="toast-ket"></p></div>
+  </div>
 
   <main class="isi">
     <section id="layar-mulai" class="kartu mulai">
@@ -40,6 +45,7 @@
       <div id="wadah-video" class="wadah-video">
         <video id="video" playsinline muted autoplay></video>
         <div class="bingkai" aria-hidden="true"><span></span></div>
+        <div id="kilat" class="kilat" aria-hidden="true"><span class="kilat-ikon"></span><p class="kilat-nama"></p></div>
       </div>
       <p class="petunjuk">Arahkan kamera ke QR undangan tamu</p>
     </section>
@@ -95,7 +101,7 @@
     <div id="sb-video" class="sb-video"></div>
   </div>
 
-  <script src="../config.js?v=20261125f"></script>
-  <script src="checkin.js?v=20261125f"></script>
+  <script src="../config.js?v=20261125g"></script>
+  <script src="checkin.js?v=20261125g"></script>
 </body>
 </html>

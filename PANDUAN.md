@@ -94,6 +94,19 @@ Membangun situs adalah bagian mudahnya. Uangnya datang dari distribusi. Lakukan 
 - **Iklan gratis di setiap undangan.** Footer "Undangan digital oleh …" dilihat ratusan tamu per acara. Banyak di antara mereka akan menikah juga.
 - **Iklan berbayar baru setelah ada penjualan organik.** Mulai dari Rp 50 ribu/hari di Meta atau TikTok, dan lanjutkan hanya kalau biaya per pesanan masih di bawah margin.
 
+### Paket Eksklusif: cara mengerjakan tiap fitur
+
+| Fitur | Cara | Waktu per pesanan |
+|---|---|---|
+| Desain kustom | Ubah warna, font, dan ornamen tema sesuai konsep acara (misalnya nuansa adat). Batasi 2× revisi desain; desain dari nol jadikan add-on terpisah. | 1–3 jam |
+| QR check-in & layar sambutan | Centang "Aktifkan QR check-in" di admin, lalu kirim link penerima tamu (bagian 4 generator link tamu). | 5 menit |
+| Video undangan 15 detik | `node promo/render.mjs --halaman="promo/video-undangan.html?u=<slug>" --keluaran=promo/hasil/video-<slug>.mp4` lalu kirim MP4-nya (lihat "Video promo" untuk syarat ffmpeg). | ±3 menit |
+| Video prewedding & live streaming | Isi kolom "Video prewedding" (link YouTube atau .mp4) dan "Link siaran langsung". | 2 menit |
+| Halaman terima kasih | Centang "Halaman terima kasih", isi pesan & foto hari H setelah acara. Aktif otomatis sehari setelah acara terakhir. Lihat lebih awal dengan menambahkan `&selesai=1` di link. | 10 menit |
+| Aktif tanpa batas | Kosongkan "Aktif sampai". | – |
+
+Di demo, semua fitur ini bisa dilihat lewat `?paket=eksklusif` (termasuk tombol "Lihat versi setelah acara").
+
 ### QR check-in tamu (uji coba)
 
 Tamu menunjukkan QR di undangannya; penerima tamu memindainya dengan HP biasa lewat browser, tanpa aplikasi.

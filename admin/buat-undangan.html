@@ -8,7 +8,7 @@
   <link rel="icon" type="image/png" sizes="32x32" href="../assets/logo/favicon-32.png">
   <link rel="apple-touch-icon" href="../assets/logo/apple-touch-icon.png">
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="admin.css?v=20261125f">
+  <link rel="stylesheet" href="admin.css?v=20261125g">
 </head>
 <body>
   <header class="atas">
@@ -119,6 +119,7 @@
           <label class="f lebar">Dress code (opsional) <input data-k="dresscode" placeholder="Busana muslim, nuansa putih"></label>
           <label class="f lebar">Warna dress code (opsional, pisahkan koma) <input data-k="dresscodeWarna" data-tipe="daftar" placeholder="#ffffff, #0f3d35, #d9b86c"></label>
           <label class="f lebar">Link siaran langsung (opsional) <input data-k="siaran" placeholder="https://youtube.com/…"></label>
+          <label class="f lebar">Video prewedding (Eksklusif): link YouTube atau file .mp4 <input data-k="video" placeholder="https://youtu.be/… atau foto/nama/video.mp4"></label>
         </div>
       </section>
 
@@ -167,6 +168,9 @@
         <div class="baris">
           <label class="cek"><input type="checkbox" data-k="rsvp.aktif" checked> Tampilkan RSVP & ucapan</label>
           <label class="cek"><input type="checkbox" data-k="checkin" data-bawaan="mati"> Aktifkan QR check-in tamu (paket Eksklusif)</label>
+          <label class="cek"><input type="checkbox" data-k="terimaKasih.aktif" data-bawaan="mati"> Halaman terima kasih setelah acara (paket Eksklusif)</label>
+          <label class="f lebar">Pesan terima kasih (kosong = otomatis) <textarea data-k="terimaKasih.pesan" placeholder="Terima kasih atas kehadiran dan doa restu …"></textarea></label>
+          <label class="f lebar">Foto hari H untuk halaman terima kasih (pisahkan koma) <input data-k="terimaKasih.galeri" data-tipe="daftar" placeholder="foto/nama/hari-h-1.jpg, foto/nama/hari-h-2.jpg"></label>
           <label class="f">WA tuan rumah untuk konfirmasi (opsional) <input data-k="rsvp.wa" placeholder="62812…"></label>
           <label class="f lebar">Endpoint RSVP khusus (kosong = pakai yang di config.js) <input data-k="rsvp.endpoint"></label>
           <label class="f lebar">Kalimat penutup (kosong = otomatis sesuai jenis) <textarea data-k="penutup"></textarea></label>
@@ -181,7 +185,7 @@
     </aside>
   </div>
 
-  <script src="../config.js?v=20261125f"></script>
-  <script src="buat-undangan.js?v=20261125f"></script>
+  <script src="../config.js?v=20261125g"></script>
+  <script src="buat-undangan.js?v=20261125g"></script>
 </body>
 </html>

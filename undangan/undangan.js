@@ -15,6 +15,8 @@
   var langsungBuka = params.get('buka') === '1';
   // Demo per paket: undangan/?u=demo-…&paket=basic|premium|eksklusif (hanya untuk undangan demo).
   var paketDiminta = (params.get('paket') || '').toLowerCase();
+  // Halaman terima kasih: ?selesai=1 untuk melihat tampilan setelah acara lebih awal.
+  var paksaSelesai = params.get('selesai') === '1', modeSelesai = false;
   var app = document.getElementById('app');
   var geraknyaDikurangi = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -566,14 +568,14 @@
     }
     s.append(sudutHias('kiri-bawah'), sudutHias('kanan-bawah'));
     s.append(el('div', { class: 'sampul-isi' },
-      el('p', { class: 'label', text: id.label }),
+      el('p', { class: 'label', text: modeSelesai ? 'Terima Kasih' : id.label }),
       id.tampil('sebaris'),
       tglUtama ? el('p', { class: 'tgl-sampul', text: tglUtama }) : null,
       el('div', { class: 'kartu-tamu' },
-        el('p', { class: 'kecil', text: 'Kepada Yth. Bapak/Ibu/Saudara/i' }),
+        el('p', { class: 'kecil', text: modeSelesai ? 'Untuk Bapak/Ibu/Saudara/i' : 'Kepada Yth. Bapak/Ibu/Saudara/i' }),
         el('p', { class: 'nama-tamu', text: tamu || 'Tamu Undangan' }),
-        el('p', { class: 'mini', text: 'Mohon maaf apabila ada kesalahan penulisan nama atau gelar.' })),
-      el('button', { class: 'tombol tombol-buka', type: 'button', onclick: bukaUndangan }, ikon('amplop'), el('span', { class: 'lbl', text: 'Buka Undangan' }))));
+        el('p', { class: 'mini', text: modeSelesai ? 'Terima kasih atas kehadiran dan doa restu Anda.' : 'Mohon maaf apabila ada kesalahan penulisan nama atau gelar.' })),
+      el('button', { class: 'tombol tombol-buka', type: 'button', onclick: bukaUndangan }, ikon('amplop'), el('span', { class: 'lbl', text: modeSelesai ? 'Lihat Kenangan' : 'Buka Undangan' }))));
     return s;
   }
 
@@ -1048,6 +1050,80 @@
   }
 
   /* =========================================================
+     Video prewedding (YouTube atau file .mp4), dari data "video"
+     ========================================================= */
+  function idYoutube(url) {
+    var m = String(url).match(/(?:youtube\.com\/(?:watch\?(?:.*&)?v=|embed\/|shorts\/|live\/)|youtu\.be\/)([\w-]{11})/);
+    return m ? m[1] : '';
+  }
+  function bagianVideo(d, id) {
+    var url = amanUrl(d.video);
+    if (!url) return null;
+    var yt = idYoutube(url), media;
+    if (yt) {
+      media = el('div', { class: 'video-bingkai lebar muncul' },
+        el('iframe', { src: 'https://www.youtube-nocookie.com/embed/' + yt + '?rel=0&playsinline=1', title: 'Video ' + id.nama, loading: 'lazy',
+          allow: 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share', allowfullscreen: true, referrerpolicy: 'strict-origin-when-cross-origin' }));
+    } else if (/\.(mp4|webm|mov)(\?|#|$)/i.test(url)) {
+      var v = el('video', { src: url, controls: true, playsinline: true, preload: 'metadata' });
+      v.addEventListener('play', function () { if (audio && !audio.paused) audio.pause(); });
+      media = el('div', { class: 'video-bingkai muncul' }, v);
+    } else return null;
+    return el('section', { class: 'bagian video-bagian', id: 'video' },
+      judulBagian(id.jenis === 'pernikahan' ? 'Prewedding' : 'Video', 'Momen Kami'), media);
+  }
+
+  /* =========================================================
+     Halaman terima kasih: setelah acara terakhir lewat (data terimaKasih.aktif),
+     sampul & isi undangan berubah menjadi ucapan terima kasih + foto hari H.
+     ========================================================= */
+  function acaraSudahLewat(d) {
+    var akhir = 0;
+    daftar(d.acara).forEach(function (a) {
+      var t = new Date(teks(a.tanggal) + 'T23:59:59' + (ZONA[a.zona] || '+07:00'));
+      if (!isNaN(t) && t.getTime() > akhir) akhir = t.getTime();
+    });
+    return akhir > 0 && Date.now() > akhir;
+  }
+  function terimaKasihTersedia(d) {
+    if (d.terimaKasih && d.terimaKasih.aktif === true) return true;
+    return slug.indexOf('demo-') === 0 && !!paketAktif && paketMencakup(paketAktif, 'terimakasih') && bagianBerbayar().indexOf('terimakasih') >= 0;
+  }
+  function cekModeSelesai(d) { return terimaKasihTersedia(d) && (paksaSelesai || acaraSudahLewat(d)); }
+  function bagianTerimaKasih(d, id) {
+    if (!modeSelesai) return null;
+    var t = d.terimaKasih || {};
+    var foto = daftar(t.galeri).map(function (g) { return amanUrl(typeof g === 'string' ? g : g && g.src); }).filter(Boolean);
+    if (!foto.length && slug.indexOf('demo-') === 0 && dataAsli) foto = daftar(dataAsli.galeri).map(function (g) { return amanUrl(typeof g === 'string' ? g : g && g.src); }).filter(Boolean);
+    var s = el('section', { class: 'bagian terima-kasih', id: 'terima-kasih' },
+      judulBagian('Terima Kasih', 'Hari Bahagia Telah Berlalu'),
+      el('p', { class: 'paragraf muncul', text: teks(t.pesan) || 'Terima kasih atas kehadiran dan doa restu yang telah Bapak/Ibu/Saudara/i berikan di hari bahagia kami. Semoga kebaikan Anda dibalas berlipat ganda.' }));
+    if (foto.length) {
+      var list = foto.map(function (u, i) { return { src: u, ket: 'Momen hari H ' + (i + 1) }; });
+      var grid = el('div', { class: 'galeri' });
+      list.forEach(function (g, i) {
+        grid.append(el('button', { class: 'foto-galeri muncul', 'data-anim': 'zoom', type: 'button', 'aria-label': 'Perbesar foto ' + (i + 1), onclick: function () { bukaLightbox(list, i); } },
+          el('img', { src: g.src, alt: g.ket, loading: 'lazy' })));
+      });
+      s.append(el('p', { class: 'label muncul label-hari-h', text: 'Momen Hari H' }), grid);
+    }
+    return s;
+  }
+
+  /* Contoh video undangan 15 detik (hanya di demo paket yang mencakupnya) */
+  function contohVideoUndangan(d, id) {
+    var p = infoPaket(paketAktif);
+    if (!p || !p.demoVideoUndangan || modeSelesai) return null;
+    var v = el('video', { src: '../promo/contoh-video-undangan.mp4', controls: true, playsinline: true, preload: 'metadata', poster: amanUrl(d.sampul) || null });
+    v.addEventListener('play', function () { if (audio && !audio.paused) audio.pause(); });
+    return el('section', { class: 'bagian demo-video-undangan' },
+      el('p', { class: 'lencana-demo', text: 'Khusus paket ' + p.nama }),
+      el('h2', { class: 'judul-script muncul', text: 'Video Undangan' }),
+      el('p', { class: 'paragraf muncul', text: 'Video 15 detik dari undangan kalian, siap diunggah ke Status WhatsApp dan Story Instagram.' }),
+      el('div', { class: 'video-bingkai muncul' }, v));
+  }
+
+  /* =========================================================
      QR check-in tamu (aktif bila data "checkin": true)
      QR berisi: BKN1|slug|kode|nama. Kode dihitung dari slug + nama tamu, jadi link tamu lama
      tetap bisa dipakai tanpa daftar tamu. SAMAKAN fungsi kodeTamu dengan checkin/checkin.js.
@@ -1074,7 +1150,10 @@
     return k;
   }
   function checkinAktif(d) {
-    return d.checkin === true || (slug.indexOf('demo-') === 0 && params.get('checkin') === '1');
+    if (modeSelesai || d.checkin === false && paketAktif) return false;
+    if (d.checkin === true) return true;
+    if (slug.indexOf('demo-') !== 0) return false;
+    return params.get('checkin') === '1' || (!!paketAktif && paketMencakup(paketAktif, 'checkin') && bagianBerbayar().indexOf('checkin') >= 0);
   }
   function bagianCheckin(d, id) {
     if (!checkinAktif(d)) return null;
@@ -1191,6 +1270,7 @@
     orn = ORN.ambil(ORNAMEN[tema] || 'bunga');
 
     var id = identitas(d);
+    modeSelesai = cekModeSelesai(d);
     document.body.dataset.jenis = id.jenis;
     var acaraUtama = daftar(d.acara)[0];
     var tglUtama = acaraUtama ? fmtTanggal(acaraUtama, { weekday: undefined, day: '2-digit', month: '2-digit', year: 'numeric' }).replace(/\//g, ' . ') : '';
@@ -1216,17 +1296,20 @@
     if (bagAcara) tandaiFitur(bagAcara.querySelector('.dresscode'), 'dresscode');
     app.append(el('div', { class: 'isi' },
       bagianBeranda(d, id, acaraUtama, fotoSlide),
+      bagianTerimaKasih(d, id),
       pratinjauWa(d, id),
+      contohVideoUndangan(d, id),
       bagianKutipan(d),
       bagianProfil(d, id),
-      bagianHitung(id, acaraUtama, fotoHitung),
+      modeSelesai ? null : bagianHitung(id, acaraUtama, fotoHitung),
       bagAcara,
-      bagianCheckin(d, id),
+      tandaiFitur(bagianCheckin(d, id), 'checkin') || (modeSelesai ? null : terkunci('checkin')),
       terkunci('dresscode'),
       tandaiFitur(bagianRundown(d), 'rundown') || terkunci('rundown'),
       tandaiFitur(bagianCerita(d, id), 'cerita') || terkunci('cerita'),
       tandaiFitur(bagianGaleri(d), 'galeri') || terkunci('galeri'),
-      tandaiFitur(bagianRsvp(d, id), 'rsvp') || terkunci('rsvp'),
+      tandaiFitur(bagianVideo(d, id), 'video') || terkunci('video'),
+      modeSelesai ? null : (tandaiFitur(bagianRsvp(d, id), 'rsvp') || terkunci('rsvp')),
       bagianAmplop(d, id),
       tandaiFitur(bagianKontak(d), 'kontak') || terkunci('kontak'),
       bagianPenutup(d, id, fotoPenutup)));
@@ -1278,6 +1361,8 @@
     if (tanpa.indexOf('dresscode') >= 0) { c.dresscode = ''; c.dresscodeWarna = []; }
     if (tanpa.indexOf('rsvp') >= 0) c.rsvp = Object.assign({}, d.rsvp || {}, { aktif: false });
     if (tanpa.indexOf('kontak') >= 0) c.kontak = [];
+    if (tanpa.indexOf('video') >= 0) c.video = '';
+    if (tanpa.indexOf('checkin') >= 0) c.checkin = false;
     return c;
   }
   function dalamBingkai() {
@@ -1285,7 +1370,8 @@
   }
   function rupiah(n) { return 'Rp ' + Number(n || 0).toLocaleString('id-ID'); }
 
-  var LABEL_BAGIAN = { galeri: 'Galeri foto', cerita: 'Cerita', rundown: 'Rundown', dresscode: 'Dress code', rsvp: 'RSVP & ucapan', kontak: 'Kontak panitia' };
+  var LABEL_BAGIAN = { galeri: 'Galeri foto', cerita: 'Cerita', rundown: 'Rundown', dresscode: 'Dress code', rsvp: 'RSVP & ucapan', kontak: 'Kontak panitia', video: 'Video prewedding', checkin: 'QR check-in tamu', terimakasih: 'Halaman terima kasih' };
+  var LABEL_PIL = { galeri: 'Galeri', cerita: 'Cerita', rundown: 'Rundown', dresscode: 'Dress code', rsvp: 'RSVP', video: 'Video', checkin: 'QR check-in', terimakasih: 'Terima kasih' };
   var GEMBOK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>';
 
   // Bagian yang tidak ada di setidaknya satu paket (urutan sesuai config).
@@ -1300,6 +1386,9 @@
     if (!d) return false;
     if (kunci === 'dresscode') return !!(teks(d.dresscode) || daftar(d.dresscodeWarna).length);
     if (kunci === 'rsvp') return (d.rsvp || {}).aktif !== false;
+    if (kunci === 'video') return !!amanUrl(d.video);
+    if (kunci === 'checkin') return d.checkin === true || slug.indexOf('demo-') === 0;
+    if (kunci === 'terimakasih') return false; // tidak diganti kartu terkunci
     return daftar(d[kunci]).length > 0;
   }
   // Label kecil "Fitur Premium" di bagian yang tidak tersedia di semua paket.
@@ -1380,8 +1469,16 @@
     } else {
       bagianBerbayar().forEach(function (k) {
         var ada = paketMencakup(paketAktif, k);
-        wadah.append(el('span', { class: 'bp-pil ' + (ada ? 'ada' : 'tidak'), text: (ada ? '✓ ' : '✕ ') + (LABEL_BAGIAN[k] || k) }));
+        wadah.append(el('span', { class: 'bp-pil ' + (ada ? 'ada' : 'tidak'), text: (ada ? '✓ ' : '✕ ') + (LABEL_PIL[k] || LABEL_BAGIAN[k] || k) }));
       });
+    }
+    if (p.demoTerimaKasih) {
+      wadah.append(el('button', { type: 'button', class: 'bp-mode', onclick: function () {
+        paksaSelesai = !paksaSelesai;
+        render(saringPaket(dataAsli, paketAktif));
+        window.scrollTo({ top: 0, behavior: 'instant' });
+        perbaruiBilah();
+      } }, paksaSelesai ? '← Lihat versi sebelum acara' : 'Lihat versi setelah acara →'));
     }
     bilah.querySelector('.bp-petunjuk').hidden = sudahDibuka;
   }
@@ -1389,6 +1486,7 @@
     if (!dataAsli) return;
     if (id !== paketAktif) {
       paketAktif = id;
+      if (!(infoPaket(id) || {}).demoTerimaKasih) paksaSelesai = false;
       var y = window.scrollY;
       render(saringPaket(dataAsli, id));
       window.scrollTo({ top: y, behavior: 'instant' });

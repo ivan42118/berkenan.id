@@ -3,6 +3,7 @@
 //   node promo/render.mjs                          → promo/hasil/promo.mp4
 //   node promo/render.mjs --keluaran=promo/hasil/promo-v2.mp4
 //   node promo/render.mjs --cuplik=1,5,12.5        → gambar diam di detik tsb (cek cepat tanpa render penuh)
+//   node promo/render.mjs --halaman="promo/video-undangan.html?u=raka-nadia" --keluaran=promo/hasil/video-raka-nadia.mp4
 //
 // Butuh Node 22+, Google Chrome/Edge, dan ffmpeg. Kalau tidak terdeteksi otomatis, atur lewat
 // variabel lingkungan CHROME dan FFMPEG (lihat PANDUAN.md bagian "Video promo").
@@ -56,7 +57,8 @@ const server = createServer(async (req, res) => {
 });
 server.listen(0, '127.0.0.1');
 await once(server, 'listening');
-const URL_HALAMAN = `http://127.0.0.1:${server.address().port}/promo/video.html?render=1`;
+const HALAMAN = String(arg.halaman || 'promo/video.html').replace(/^\/+/, '');
+const URL_HALAMAN = `http://127.0.0.1:${server.address().port}/${HALAMAN}${HALAMAN.includes('?') ? '&' : '?'}render=1`;
 
 // ---------- Chrome headless + DevTools Protocol ----------
 const PORT_CDP = 9300 + Math.floor(Math.random() * 600);
@@ -152,7 +154,7 @@ try {
     // Ubah ke rentang warna video standar (bt709, tv) agar warna sama di Instagram, TikTok, dan WhatsApp.
     '-vf', 'scale=in_range=pc:out_range=tv:out_color_matrix=bt709,format=yuv420p',
     '-color_range', 'tv', '-colorspace', 'bt709', '-color_primaries', 'bt709', '-color_trc', 'bt709',
-    '-c:v', 'libx264', '-preset', 'slow', '-crf', '18', '-profile:v', 'high', '-level', '4.1',
+    '-c:v', 'libx264', '-preset', 'slow', '-crf', String(arg.crf || 18), '-profile:v', 'high', '-level', '4.1',
     '-c:a', 'aac', '-b:a', '128k', '-movflags', '+faststart', KELUARAN,
   ], { stdio: ['pipe', 'inherit', 'inherit'] });
   const ffSelesai = once(ff, 'close');

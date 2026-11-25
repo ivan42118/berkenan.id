@@ -27,17 +27,19 @@ window.BRAND = {
   promo: "",
 
   // Pengaturan demo per paket (undangan/?u=demo-…&paket=…):
-  //   demoTanpa     : bagian yang disembunyikan di paket ini (galeri, cerita, rundown, dresscode, rsvp, kontak)
+  //   demoTanpa     : fitur yang tidak termasuk paket ini (galeri, cerita, rundown, dresscode, rsvp, kontak,
+  //                   video, checkin, terimakasih)
   //   demoGaleri    : keterangan jumlah foto galeri, tampil di label bagian galeri
   //   demoTambahan  : keunggulan tambahan paket ini, tampil di bilah "Contoh paket"
   //   demoPreviewWa : true = tampilkan contoh preview link WhatsApp berfoto di demo
+  //   demoVideoUndangan / demoTerimaKasih : true = tampilkan contoh video undangan & tombol versi setelah acara
   paket: [
     {
       id: "basic",
       nama: "Basic",
       harga: 99000,
       catatan: "Aktif 6 bulan",
-      demoTanpa: ["galeri", "cerita", "rundown", "dresscode", "rsvp"],
+      demoTanpa: ["galeri", "cerita", "rundown", "dresscode", "rsvp", "video", "checkin", "terimakasih"],
       fitur: [
         "Bebas pilih semua tema",
         "Nama tamu personal, tanpa batas",
@@ -54,7 +56,7 @@ window.BRAND = {
       harga: 179000,
       unggulan: true,
       catatan: "Aktif 1 tahun",
-      demoTanpa: [],
+      demoTanpa: ["video", "checkin", "terimakasih"],
       demoGaleri: "hingga 12 foto",
       fitur: [
         "Semua fitur Basic",
@@ -69,17 +71,22 @@ window.BRAND = {
       id: "eksklusif",
       nama: "Eksklusif",
       harga: 299000,
-      catatan: "Aktif 1 tahun",
+      catatan: "Aktif tanpa batas waktu",
       demoTanpa: [],
       demoGaleri: "tanpa batas",
-      demoTambahan: ["Galeri tanpa batas", "Preview link WA berfoto", "Prioritas 6 jam", "Revisi sepuasnya 7 hari"],
+      demoTambahan: ["Desain kustom", "QR check-in", "Video undangan", "Video prewedding", "Halaman terima kasih", "Aktif selamanya"],
       demoPreviewWa: true,
+      demoVideoUndangan: true,
+      demoTerimaKasih: true,
       fitur: [
         "Semua fitur Premium",
-        "Galeri tanpa batas",
-        "Preview link WhatsApp dengan foto kalian",
-        "Pengerjaan prioritas 6 jam",
-        "Revisi sepuasnya selama 7 hari"
+        "Desain kustom sesuai konsep acara (2× revisi desain)",
+        "QR check-in, buku tamu digital & layar sambutan",
+        "Video undangan 15 detik untuk Status & Story",
+        "Video prewedding & live streaming",
+        "Halaman terima kasih setelah acara",
+        "Galeri tanpa batas & preview link WA berfoto",
+        "Pengerjaan prioritas 6 jam, revisi sepuasnya 7 hari"
       ]
     }
   ],

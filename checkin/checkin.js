@@ -203,7 +203,27 @@
     jeda = true;
     clearTimeout(tundaHasil);
     tundaHasil = setTimeout(function () { jeda = false; }, 2200);
+    notifikasi(jenis, judulHasil, ket);
     if (modeSambutan) sambut(jenis, judulHasil, ket);
+  }
+  // Notifikasi besar: kilat di atas kamera + kotak di atas layar (terlihat walau halaman digulir).
+  var tundaToast = null, tundaKilat = null;
+  var JUDUL_NOTIF = { ok: 'Berhasil check-in', sudah: 'Sudah check-in', salah: 'Gagal' };
+  function notifikasi(jenis, judulHasil, ket) {
+    var k = $('kilat');
+    k.className = 'kilat ' + jenis + ' tampil';
+    k.querySelector('.kilat-nama').textContent = jenis === 'salah' ? judulHasil : judulHasil;
+    clearTimeout(tundaKilat);
+    tundaKilat = setTimeout(function () { k.className = 'kilat'; }, 1600);
+    var t = $('toast');
+    t.className = 'toast ' + jenis;
+    t.querySelector('.toast-judul').textContent = JUDUL_NOTIF[jenis] + (jenis === 'salah' ? '' : ': ' + judulHasil);
+    t.querySelector('.toast-ket').textContent = jenis === 'salah' ? judulHasil + '. ' + ket : ket;
+    t.hidden = false;
+    void t.offsetWidth;
+    t.classList.add('tampil');
+    clearTimeout(tundaToast);
+    tundaToast = setTimeout(function () { t.classList.remove('tampil'); setTimeout(function () { t.hidden = true; }, 300); }, 2800);
   }
   function sambut(jenis, nama, ket) {
     var isi = $('sb-isi');
