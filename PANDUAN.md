@@ -30,7 +30,7 @@ Bagian opsional untuk semua jenis: **rundown** (susunan acara), **dress code** b
 
 Ada 7 tema (Maroon, Moss, Vintage, Noir Gold, Islami, Ceria, Modern). **Tema dan jenis bisa dicampur bebas**, misalnya ulang tahun ke-17 dengan Noir Gold, atau aqiqah dengan Ceria.
 
-**Contoh per paket.** Semua tema bisa dipakai di paket mana pun; yang membedakan paket adalah fiturnya. Setiap demo bisa dibuka sebagai paket tertentu lewat `?paket=basic|premium|eksklusif`, misalnya `undangan/?u=demo-maroon&paket=basic`. Di halaman demo muncul bilah "Contoh paket" untuk beralih paket, dan bagian yang tidak termasuk paket itu disembunyikan. Atur bagian yang disembunyikan lewat `demoTanpa` dan teks penjelasannya lewat `ringkasDemo` di `config.js`. Bilah ini hanya muncul di undangan demo (slug `demo-…`), tidak pernah di undangan pelanggan.
+**Contoh per paket.** Semua tema bisa dipakai di paket mana pun; yang membedakan paket adalah fiturnya. Setiap demo bisa dibuka sebagai paket tertentu lewat `?paket=basic|premium|eksklusif`, misalnya `undangan/?u=demo-maroon&paket=basic`. Di halaman demo muncul bilah "Contoh paket" untuk beralih paket, dan bagian yang tidak termasuk paket itu disembunyikan. Di mode Basic, bagian yang tidak termasuk diganti kartu bergembok "Tersedia mulai paket Premium" (dengan tombol untuk langsung melihatnya di Premium). Di Premium dan Eksklusif, bagian berbayar diberi label paketnya, dan Eksklusif menampilkan contoh preview link WhatsApp berfoto. Semuanya diatur di `config.js`: `demoTanpa` (bagian yang disembunyikan), `demoGaleri` (keterangan jumlah foto), `demoTambahan` (keunggulan tambahan di bilah atas), dan `demoPreviewWa`. Bilah ini hanya muncul di undangan demo (slug `demo-…`), tidak pernah di undangan pelanggan.
 
 Harga paket saat ini sama untuk semua jenis. Pasar biasanya menerima harga lebih rendah untuk ulang tahun anak, jadi pertimbangkan paket khusus, misalnya mulai Rp 59–79 ribu. Atur di `config.js`.
 
@@ -45,7 +45,7 @@ Buka `http://localhost:5500`. Jangan buka file dengan klik ganda (`file://`), ka
 
 ## 2. Sebelum online (wajib)
 
-1. **Nama brand: Berkenan** (handle @berkenan.id). Amankan domain `berkenan.id` dan daftarkan mereknya di DJKI setelah usaha berjalan.
+1. **Nama brand: berkenan.id** (handle Instagram @berkenan.id). Amankan domain `berkenan.id` dan daftarkan mereknya di DJKI setelah usaha berjalan.
 2. Cek `config.js`: `nama`, `whatsapp` (format `62812…`), `instagram`, lalu ganti `situs` setelah domain aktif.
 3. Setelah pindah domain, ganti juga alamat `og:image` di `index.html` (gambar pratinjau saat link dibagikan di WhatsApp).
 4. **Foto demo.** Keempat demo (Maroon, Moss, Vintage, Noir Gold) memakai foto dari Pexels, yang gratis untuk penggunaan komersial, dan dimuat langsung dari server Pexels. Supaya demo tidak pernah rusak kalau link Pexels berubah, simpan salinannya di `undangan/foto/demo/` lalu ganti URL-nya di file `undangan/data/demo-*.json`. Begitu ada pelanggan yang mengizinkan, ganti dengan foto asli mereka.
@@ -71,6 +71,7 @@ Selama `rsvpEndpoint` masih kosong, RSVP berjalan dalam mode demo: ucapan hanya 
 2. Buka `admin/buat-undangan.html` → pilih "Muat contoh…" sesuai tema → ganti datanya. Isi **Aktif sampai** sesuai paket (6 bulan / 1 tahun).
 3. Foto: kecilkan dulu (misalnya lewat squoosh.app, lebar ±1200px), simpan di `undangan/foto/<slug>/`, lalu tulis path-nya di form.
    - **Foto sampul** + 2 foto galeri pertama otomatis jadi slideshow di halaman pembuka. Foto galeri ke-3 dan ke-4 jadi latar hitung mundur dan penutup. Jadi taruh foto terbaik di urutan awal.
+   - **Fokus foto sampul:** kalau orang di foto sampul tidak di tengah (sering terjadi pada foto potret), isi kolom "Fokus foto sampul" dengan letak wajah di foto, misalnya `40% 35%` (40% dari kiri, 35% dari atas). Foto otomatis digeser, dan bila perlu sedikit diperbesar, supaya wajah tepat di tengah layar HP mana pun. Untuk foto galeri, tulis `{"src": "…", "fokus": "40% 35%"}` di JSON.
    - **Fokus & zoom foto mempelai:** kalau wajah terpotong di bingkai lengkung, isi misalnya `60% 30% 1.8`. Artinya titik fokus 60% dari kiri dan 30% dari atas, diperbesar 1,8×. Ini berguna untuk memotong satu orang dari foto berdua.
    - Mempelai tanpa foto otomatis memakai bingkai monogram (inisial nama). Ini bisa jadi pilihan paket yang lebih murah.
 4. Klik **Unduh data (.json)** → simpan ke `undangan/data/`.
@@ -92,6 +93,19 @@ Membangun situs adalah bagian mudahnya. Uangnya datang dari distribusi. Lakukan 
 - **Kerja sama vendor.** Tawari WO, MUA, fotografer, dan pengelola gedung komisi 15–20% per pesanan yang mereka bawa.
 - **Iklan gratis di setiap undangan.** Footer "Undangan digital oleh …" dilihat ratusan tamu per acara. Banyak di antara mereka akan menikah juga.
 - **Iklan berbayar baru setelah ada penjualan organik.** Mulai dari Rp 50 ribu/hari di Meta atau TikTok, dan lanjutkan hanya kalau biaya per pesanan masih di bawah margin.
+
+### QR check-in tamu (uji coba)
+
+Tamu menunjukkan QR di undangannya; penerima tamu memindainya dengan HP biasa lewat browser, tanpa aplikasi.
+
+1. **Aktifkan di undangan:** centang "Aktifkan QR check-in tamu" di `admin/buat-undangan.html` (tersimpan sebagai `"checkin": true`). Di undangan muncul bagian "QR Check-in" berisi QR sesuai nama tamu di link. Link tamu lama dari generator tetap bisa dipakai karena kode QR dihitung dari nama.
+2. **Halaman penerima tamu:** `checkin/?u=<slug>` (linknya juga ada di bagian 4 `admin/link-tamu.html`). Tekan "Mulai scan", izinkan kamera, lalu arahkan ke QR tamu. Hasilnya: hijau (tercatat), oranye (sudah check-in), merah (QR bukan untuk acara ini atau tidak valid). Tamu tanpa QR dicatat lewat "Tambah manual".
+3. **Layar sambutan:** tombol "Layar sambutan" mengubah layar menjadi sambutan besar "Selamat datang, …" setiap ada tamu yang di-scan. Cocok untuk laptop atau TV di pintu masuk.
+4. **Data:** tanpa `rsvpEndpoint`, kehadiran hanya tersimpan di HP penerima tamu itu (mode uji). Setelah Apps Script dipasang (bagian 4), kehadiran juga masuk ke sheet "Kehadiran" dan disinkronkan antar-HP. Daftar hadir bisa diunduh sebagai CSV.
+
+Uji coba tanpa backend: buka undangan demo dengan `&checkin=1`, misalnya `undangan/?u=demo-maroon&to=Bapak+Andi&checkin=1`, lalu scan QR-nya dari HP lain yang membuka `checkin/?u=demo-maroon`.
+
+Catatan: pustaka pembuat dan pembaca QR dimuat dari jsDelivr (qrcode-generator 1.4.4 dan jsQR 1.4.0). Android Chrome memakai pembaca QR bawaan; iPhone memakai jsQR.
 
 ### Logo
 

@@ -135,7 +135,7 @@
     d = d || {};
     form.querySelectorAll('[data-k]').forEach(function (n) {
       var v = ambil(d, n.dataset.k);
-      if (n.type === 'checkbox') n.checked = v !== false;
+      if (n.type === 'checkbox') n.checked = n.dataset.bawaan === 'mati' ? v === true : v !== false;
       else if (Array.isArray(v)) n.value = v.join(', ');
       else n.value = v == null ? '' : v;
     });

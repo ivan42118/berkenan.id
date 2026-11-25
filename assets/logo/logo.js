@@ -1,5 +1,5 @@
 /*
- * Logo Berkenan (sumber vektor).
+ * Logo berkenan.id (sumber vektor).
  * Ikon: amplop terbuka, kartu persegi bermonogram B, segel lilin, ranting daun emas di kiri
  * (terselip di dalam amplop), dan kilau bintang di kanan atas. viewBox 0 0 100 100.
  *
@@ -117,7 +117,7 @@
 
   // SVG lengkap siap disisipkan ke halaman.
   function svgIkon(tema, ukuran, kecil) {
-    return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="' + ukuran + '" height="' + ukuran + '" role="img" aria-label="Berkenan">' + ikonBerkenan(tema, kecil) + '</svg>';
+    return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="' + ukuran + '" height="' + ukuran + '" role="img" aria-label="berkenan.id">' + ikonBerkenan(tema, kecil) + '</svg>';
   }
 
   global.ikonBerkenan = ikonBerkenan;

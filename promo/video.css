@@ -78,7 +78,7 @@ html, body { background: #000; overflow: hidden; height: 100%; }
 .ikon-akhir { display: inline-block; filter: drop-shadow(0 30px 50px rgba(0, 0, 0, 0.35)); }
 .ikon-akhir svg { display: block; }
 /* Wordmark logo: "berkenan" huruf kecil, Jost 500 */
-.merek { font-family: 'Jost', sans-serif; font-weight: 500; font-size: 168px; line-height: 1; letter-spacing: -0.012em; text-transform: lowercase; color: #f3dca6; }
+.merek { font-family: 'Jost', sans-serif; font-weight: 500; font-size: 146px; line-height: 1; letter-spacing: -0.012em; text-transform: lowercase; color: #f3dca6; }
 .jenis { font-size: 36px; }
 .tombol-cta {
   display: inline-flex; align-items: center; gap: 30px; padding: 26px 56px 26px 30px; border-radius: 999px;

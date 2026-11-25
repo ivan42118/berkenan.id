@@ -2,3 +2,4 @@ User-agent: *
 Disallow: /undangan/
 Disallow: /admin/
 Disallow: /promo/
+Disallow: /checkin/

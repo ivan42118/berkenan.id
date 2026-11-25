@@ -8,7 +8,7 @@
   <link rel="icon" type="image/png" sizes="32x32" href="../assets/logo/favicon-32.png">
   <link rel="apple-touch-icon" href="../assets/logo/apple-touch-icon.png">
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="admin.css?v=20261125b">
+  <link rel="stylesheet" href="admin.css?v=20261125f">
 </head>
 <body>
   <header class="atas">
@@ -60,9 +60,18 @@
         </table>
       </div>
     </section>
+
+    <section class="panel">
+      <h2>4. Penerima tamu (QR check-in)</h2>
+      <p class="bantu">Untuk undangan yang mengaktifkan QR check-in. Setiap link di atas otomatis punya QR sesuai nama tamunya. Kirim link ini ke penerima tamu di hari H; cukup dibuka di Chrome/Safari, tanpa aplikasi.</p>
+      <div class="alat" style="align-items:center">
+        <input id="link-checkin" readonly style="flex:1;min-width:0" placeholder="Isi link dasar undangan dulu">
+        <button class="btn kecil" type="button" id="salin-checkin">Salin link</button>
+      </div>
+    </section>
   </main>
 
-  <script src="../config.js?v=20261125b"></script>
+  <script src="../config.js?v=20261125f"></script>
   <script>
   (function () {
     'use strict';
@@ -197,6 +206,21 @@
       $('template').value = p.join('\n');
       render();
     });
+    // Link halaman penerima tamu: slug diambil dari link dasar (…/slug/ atau ?u=slug).
+    function slugDari(dasar) {
+      try {
+        var u = new URL(dasar);
+        var s = (u.searchParams.get('u') || u.pathname.split('/').filter(Boolean).pop() || '').toLowerCase();
+        return /^[a-z0-9-]{1,60}$/.test(s) ? s : '';
+      } catch (e) { return ''; }
+    }
+    function perbaruiCheckin() {
+      var s = slugDari($('dasar').value.trim());
+      $('link-checkin').value = s ? dasarSitus + '/checkin/?u=' + s : '';
+    }
+    $('dasar').addEventListener('input', perbaruiCheckin);
+    $('salin-checkin').addEventListener('click', function (e) { if ($('link-checkin').value) salin($('link-checkin').value, e.currentTarget); });
+    perbaruiCheckin();
     render();
   })();
   </script>

@@ -13,10 +13,14 @@
  * Semua undangan masuk ke satu sheet "RSVP", dibedakan lewat kolom "Undangan" (slug).
  * Yang ditampilkan ke publik hanya nama, ucapan, dan status hadir. Jumlah tamu tetap privat.
  * Setiap kali mengubah kode ini, buat versi deployment baru (Kelola deployment → Edit → Versi baru).
+ *
+ * QR CHECK-IN: halaman penerima tamu (checkin/?u=<slug>) memakai endpoint yang sama. Kehadiran masuk
+ * ke sheet "Kehadiran" (satu baris per tamu, scan ganda tidak dicatat dua kali).
  */
 
 var NAMA_SHEET = 'RSVP';
 var KEHADIRAN = ['hadir', 'tidak', 'ragu'];
+var SHEET_HADIR = 'Kehadiran';
 
 function sheet_() {
   var ss = SpreadsheetApp.getActiveSpreadsheet();
@@ -47,6 +51,7 @@ function doPost(e) {
   try {
     kunci.waitLock(10000);
     var d = JSON.parse((e && e.postData && e.postData.contents) || '{}');
+    if (d.aksi === 'checkin') return checkin_(d);
     var slug = bersih_(d.slug, 60).toLowerCase();
     var nama = bersih_(d.nama, 80);
     if (!/^[a-z0-9-]+$/.test(slug) || !nama) return json_({ ok: false });
@@ -65,6 +70,7 @@ function doPost(e) {
 function doGet(e) {
   var slug = bersih_(e && e.parameter && e.parameter.u, 60).toLowerCase();
   if (!/^[a-z0-9-]+$/.test(slug)) return json_([]);
+  if (e.parameter.aksi === 'kehadiran') return kehadiran_(slug);
   var baris = sheet_().getDataRange().getValues().slice(1);
   var hasil = baris
     .filter(function (r) { return r[1] === slug && String(r[5]).trim(); })
@@ -95,4 +101,41 @@ function rekap() {
   sh.appendRow([]);
   sh.appendRow(['Waktu', 'Nama', 'Kehadiran', 'Jumlah', 'Ucapan']);
   baris.forEach(function (r) { sh.appendRow([r[0], amanSel_(String(r[2])), r[3], r[4], amanSel_(String(r[5]))]); });
+}
+
+/* ---------- QR check-in ---------- */
+
+function sheetHadir_() {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var sh = ss.getSheetByName(SHEET_HADIR);
+  if (!sh) {
+    sh = ss.insertSheet(SHEET_HADIR);
+    sh.appendRow(['Waktu tercatat', 'Undangan', 'Kode', 'Nama', 'Cara', 'Jam di HP penerima']);
+    sh.setFrozenRows(1);
+  }
+  return sh;
+}
+
+// Dipanggil dari doPost (sudah di dalam kunci). Satu kode tamu hanya dicatat sekali per undangan.
+function checkin_(d) {
+  var slug = bersih_(d.slug, 60).toLowerCase();
+  var kode = bersih_(d.kode, 6).toUpperCase();
+  var nama = bersih_(d.nama, 80);
+  if (!/^[a-z0-9-]+$/.test(slug) || !/^[A-Z0-9]{6}$/.test(kode) || !nama) return json_({ ok: false });
+  var sh = sheetHadir_();
+  var ada = sh.getDataRange().getValues().slice(1).some(function (r) { return r[1] === slug && r[2] === kode; });
+  if (ada) return json_({ ok: true, sudah: true });
+  var cara = d.cara === 'manual' ? 'manual' : 'QR';
+  var jamHp = Number(d.waktu) ? new Date(Number(d.waktu)) : '';
+  sh.appendRow([new Date(), slug, kode, amanSel_(nama), cara, jamHp]);
+  return json_({ ok: true });
+}
+
+// Daftar kehadiran untuk sinkron antar-HP penerima tamu.
+function kehadiran_(slug) {
+  var baris = sheetHadir_().getDataRange().getValues().slice(1).filter(function (r) { return r[1] === slug; });
+  return json_(baris.map(function (r) {
+    var t = r[5] instanceof Date ? r[5] : r[0];
+    return { kode: String(r[2]), nama: String(r[3]).replace(/^'/, ''), waktu: t instanceof Date ? t.toISOString() : '' };
+  }));
 }

@@ -8,7 +8,7 @@
   <link rel="icon" type="image/png" sizes="32x32" href="../assets/logo/favicon-32.png">
   <link rel="apple-touch-icon" href="../assets/logo/apple-touch-icon.png">
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="admin.css?v=20261125b">
+  <link rel="stylesheet" href="admin.css?v=20261125f">
 </head>
 <body>
   <header class="atas">
@@ -49,6 +49,7 @@
           <label class="f">URL musik (mp3, opsional) <input data-k="musik" placeholder="musik/lagu.mp3"></label>
           <label class="f">Aktif sampai (sesuai paket) <input type="date" data-k="aktifSampai"></label>
           <label class="f lebar">Foto sampul (opsional) <input data-k="sampul" placeholder="foto/nama-acara/sampul.jpg atau https://…"></label>
+          <label class="f">Fokus foto sampul: letak wajah di foto (contoh: 40% 35%) <input data-k="sampulFokus" placeholder="50% 35%"></label>
         </div>
       </section>
 
@@ -165,6 +166,7 @@
         <h2>RSVP & Penutup</h2>
         <div class="baris">
           <label class="cek"><input type="checkbox" data-k="rsvp.aktif" checked> Tampilkan RSVP & ucapan</label>
+          <label class="cek"><input type="checkbox" data-k="checkin" data-bawaan="mati"> Aktifkan QR check-in tamu (paket Eksklusif)</label>
           <label class="f">WA tuan rumah untuk konfirmasi (opsional) <input data-k="rsvp.wa" placeholder="62812…"></label>
           <label class="f lebar">Endpoint RSVP khusus (kosong = pakai yang di config.js) <input data-k="rsvp.endpoint"></label>
           <label class="f lebar">Kalimat penutup (kosong = otomatis sesuai jenis) <textarea data-k="penutup"></textarea></label>
@@ -179,7 +181,7 @@
     </aside>
   </div>
 
-  <script src="../config.js?v=20261125b"></script>
-  <script src="buat-undangan.js?v=20261125b"></script>
+  <script src="../config.js?v=20261125f"></script>
+  <script src="buat-undangan.js?v=20261125f"></script>
 </body>
 </html>

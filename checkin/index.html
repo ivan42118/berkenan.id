@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#2a0911">
+  <title>Penerima Tamu · berkenan.id</title>
+  <!--
+    Halaman penerima tamu untuk QR check-in: checkin/?u=<slug undangan>
+    Scan QR di undangan tamu → kehadiran tercatat. Tanpa aplikasi, cukup buka di Chrome/Safari.
+    Bila rsvpEndpoint di config.js terisi, data juga dikirim ke Google Sheet (lihat rsvp/apps-script.gs).
+  -->
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/logo/favicon-32.png">
+  <link rel="apple-touch-icon" href="../assets/logo/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,500;1,600&family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="checkin.css?v=20261125f">
+</head>
+<body>
+  <header class="kepala">
+    <img src="../assets/logo/ikon-gelap-512.png" width="42" height="42" alt="">
+    <div class="kepala-teks">
+      <p class="kepala-label">Penerima Tamu</p>
+      <h1 id="judul">Memuat…</h1>
+    </div>
+    <span id="status" class="status">…</span>
+  </header>
+
+  <main class="isi">
+    <section id="layar-mulai" class="kartu mulai">
+      <h2>QR Check-in</h2>
+      <p>Arahkan kamera ke QR di undangan tamu. Kehadiran langsung tercatat beserta jamnya.</p>
+      <button id="mulai" class="tombol besar" type="button">Mulai scan</button>
+      <p id="info-kamera" class="info" role="alert"></p>
+    </section>
+
+    <section id="area-kamera" class="kamera" hidden>
+      <div id="wadah-video" class="wadah-video">
+        <video id="video" playsinline muted autoplay></video>
+        <div class="bingkai" aria-hidden="true"><span></span></div>
+      </div>
+      <p class="petunjuk">Arahkan kamera ke QR undangan tamu</p>
+    </section>
+
+    <div id="hasil" class="hasil" role="status" aria-live="assertive" hidden>
+      <span class="hasil-ikon" aria-hidden="true"></span>
+      <div><p class="hasil-judul"></p><p class="hasil-ket"></p></div>
+    </div>
+
+    <section class="ringkas">
+      <div class="angka"><b id="jumlah-hadir">0</b><span>tamu sudah hadir</span></div>
+      <div class="aksi">
+        <button id="b-manual" type="button">Tambah manual</button>
+        <button id="b-daftar" type="button">Daftar hadir</button>
+        <button id="b-sambutan" type="button">Layar sambutan</button>
+        <button id="b-kamera" type="button">Ganti kamera</button>
+      </div>
+    </section>
+
+    <section id="panel-manual" class="kartu panel" hidden>
+      <h2>Tambah manual</h2>
+      <p class="kecil">Untuk tamu yang tidak membawa QR. Tulis nama sesuai undangan.</p>
+      <form id="form-manual" class="form-manual">
+        <input id="nama-manual" maxlength="80" placeholder="Nama tamu" autocomplete="off" required>
+        <button class="tombol" type="submit">Catat hadir</button>
+      </form>
+      <ul id="saran-manual" class="daftar kecil-daftar"></ul>
+    </section>
+
+    <section id="panel-daftar" class="kartu panel" hidden>
+      <div class="panel-kepala">
+        <h2>Daftar hadir</h2>
+        <button id="unduh-csv" class="tombol garis kecil" type="button">Unduh CSV</button>
+      </div>
+      <input id="cari" class="cari" placeholder="Cari nama…" autocomplete="off">
+      <ul id="daftar-hadir" class="daftar"></ul>
+      <button id="hapus-data" class="tautan-bahaya" type="button">Hapus data di HP ini</button>
+    </section>
+
+    <p id="catatan-mode" class="catatan"></p>
+  </main>
+
+  <div id="sambutan" class="sambutan" hidden>
+    <button id="tutup-sambutan" class="sb-tutup" type="button" aria-label="Keluar dari layar sambutan">×</button>
+    <img class="sb-logo" src="../assets/logo/ikon-gelap-512.png" width="84" height="84" alt="">
+    <p id="sb-acara" class="sb-acara"></p>
+    <div id="sb-isi" class="sb-isi">
+      <p class="sb-kecil">Selamat datang</p>
+      <p id="sb-nama" class="sb-nama"></p>
+      <p id="sb-ket" class="sb-ket"></p>
+    </div>
+    <p id="sb-petunjuk" class="sb-petunjuk">Silakan tunjukkan QR undangan Anda ke kamera</p>
+    <div id="sb-video" class="sb-video"></div>
+  </div>
+
+  <script src="../config.js?v=20261125f"></script>
+  <script src="checkin.js?v=20261125f"></script>
+</body>
+</html>

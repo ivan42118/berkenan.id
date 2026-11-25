@@ -4,7 +4,7 @@
  */
 window.BRAND = {
   // Nama brand. Dipakai di website, pesan WhatsApp, footer undangan, dan video promo.
-  nama: "Berkenan",
+  nama: "berkenan.id",
   tagline: "Undangan Digital",
 
   // Nomor WhatsApp penerima pesanan: format 62xxxxxxxxxx, tanpa +, spasi, atau tanda hubung.
@@ -13,7 +13,7 @@ window.BRAND = {
 
   // Alamat situs setelah online, TANPA garis miring di akhir. Contoh: "https://berkenan.id"
   // Dipakai untuk membuat link undangan dan preview WhatsApp. Ganti saat pindah ke domain sendiri.
-  situs: "https://ivan42118.github.io/ikrar",
+  situs: "https://ivan42118.github.io/berkenan.id",
 
   // URL Web App Google Apps Script untuk RSVP & ucapan (lihat rsvp/apps-script.gs).
   // Kosong = mode demo: ucapan hanya tersimpan di browser pengunjung.
@@ -26,9 +26,11 @@ window.BRAND = {
   // Contoh: "Harga perkenalan untuk 20 pemesan pertama"
   promo: "",
 
-  // demoTanpa  : bagian undangan yang disembunyikan saat demo dilihat sebagai paket ini
-  //              (pilihan: galeri, cerita, rundown, dresscode, rsvp, kontak). Dipakai di demo ?paket=…
-  // ringkasDemo: penjelasan singkat di bilah "Contoh paket" pada halaman demo.
+  // Pengaturan demo per paket (undangan/?u=demo-…&paket=…):
+  //   demoTanpa     : bagian yang disembunyikan di paket ini (galeri, cerita, rundown, dresscode, rsvp, kontak)
+  //   demoGaleri    : keterangan jumlah foto galeri, tampil di label bagian galeri
+  //   demoTambahan  : keunggulan tambahan paket ini, tampil di bilah "Contoh paket"
+  //   demoPreviewWa : true = tampilkan contoh preview link WhatsApp berfoto di demo
   paket: [
     {
       id: "basic",
@@ -36,7 +38,6 @@ window.BRAND = {
       harga: 99000,
       catatan: "Aktif 6 bulan",
       demoTanpa: ["galeri", "cerita", "rundown", "dresscode", "rsvp"],
-      ringkasDemo: "Tanpa galeri, cerita, rundown, dress code, dan RSVP (tersedia di Premium).",
       fitur: [
         "Bebas pilih semua tema",
         "Nama tamu personal, tanpa batas",
@@ -54,7 +55,7 @@ window.BRAND = {
       unggulan: true,
       catatan: "Aktif 1 tahun",
       demoTanpa: [],
-      ringkasDemo: "Semua yang terlihat di sini sudah termasuk.",
+      demoGaleri: "hingga 12 foto",
       fitur: [
         "Semua fitur Basic",
         "Galeri hingga 12 foto",
@@ -70,7 +71,9 @@ window.BRAND = {
       harga: 299000,
       catatan: "Aktif 1 tahun",
       demoTanpa: [],
-      ringkasDemo: "Semua fitur Premium + galeri tanpa batas, preview link WA berfoto, dan pengerjaan prioritas.",
+      demoGaleri: "tanpa batas",
+      demoTambahan: ["Galeri tanpa batas", "Preview link WA berfoto", "Prioritas 6 jam", "Revisi sepuasnya 7 hari"],
+      demoPreviewWa: true,
       fitur: [
         "Semua fitur Premium",
         "Galeri tanpa batas",
