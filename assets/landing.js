@@ -2,7 +2,7 @@
   'use strict';
   var B = window.BRAND || {};
   var NOMOR_CONTOH = '6281234567890';
-  var VERSI = '20261125g'; // samakan dengan ?v= di index.html setiap kali ada update
+  var VERSI = '20261127c'; // samakan dengan ?v= di index.html setiap kali ada update
   var wa = String(B.whatsapp || '').replace(/\D/g, '');
 
   function rupiah(n) { return 'Rp ' + Number(n || 0).toLocaleString('id-ID'); }

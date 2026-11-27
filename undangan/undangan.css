@@ -20,7 +20,7 @@ body[data-tema="maroon"] {
   --teks-foto: #fff6ee;
   --f-judul: "Cormorant Garamond", Georgia, serif;
   --f-label: "Cinzel", "Cormorant Garamond", serif;
-  --f-script: "Pinyon Script", "Cormorant Garamond", cursive;
+  --f-script: "Great Vibes", "Cormorant Garamond", cursive;
   --b1a: #b4505f; --b1b: #f8dcd4;
   --b2a: #e2c193; --b2b: #fcf3e3;
   --da: #56634b; --db: #a3b08b;
@@ -74,7 +74,7 @@ body[data-tema="vintage"] {
   --teks-foto: #3f3125;
   --f-judul: "Bodoni Moda", "Cormorant Garamond", Georgia, serif;
   --f-label: "Cinzel", "Cormorant Garamond", serif;
-  --f-script: "Pinyon Script", "Cormorant Garamond", cursive;
+  --f-script: "Great Vibes", "Cormorant Garamond", cursive;
   --b1a: #d0805f; --b1b: #f8d9c5;
   --b2a: #7593ad; --b2b: #d6e1ea;
   --da: #667b58; --db: #b1c19c;
@@ -278,15 +278,21 @@ body[data-tema="maroon"] .judul-script {
 
 .orn-sudut { position: absolute; width: 190px; pointer-events: none; z-index: 1; }
 .orn-sudut.kecil { width: 130px; opacity: 0.92; }
-.orn-sudut svg { animation: ayun 7s ease-in-out infinite alternate; transform-origin: 0% 100%; }
+.orn-sudut > svg:not(.ukuran) { animation: ayun 7s ease-in-out infinite alternate; transform-origin: 0% 100%; }
+.orn-sudut.orn-bunga { width: 236px; }
+.orn-sudut.orn-bunga.kecil { width: 172px; opacity: 1; }
 .orn-sudut.kiri-bawah { left: -26px; bottom: -26px; }
 .orn-sudut.kanan-bawah { right: -26px; bottom: -26px; transform: scaleX(-1); }
 .orn-sudut.kiri-atas { left: -26px; top: -26px; transform: scaleY(-1); }
 .orn-sudut.kanan-atas { right: -26px; top: -26px; transform: scale(-1, -1); }
+.orn-sudut.orn-bunga.kiri-bawah, .orn-sudut.orn-bunga.kiri-atas { left: -34px; }
+.orn-sudut.orn-bunga.kanan-bawah, .orn-sudut.orn-bunga.kanan-atas { right: -34px; }
+.orn-sudut.orn-bunga.kiri-bawah, .orn-sudut.orn-bunga.kanan-bawah { bottom: -34px; }
+.orn-sudut.orn-bunga.kiri-atas, .orn-sudut.orn-bunga.kanan-atas { top: -34px; }
 .orn-sudut.kanan-bawah svg, .orn-sudut.kanan-atas svg { animation-delay: -3s; }
 @keyframes ayun { from { transform: rotate(-2.5deg); } to { transform: rotate(2.5deg); } }
 
-.orn-untaian { display: block; width: 200px; margin: 0 auto 4px; }
+.orn-untaian { display: block; position: relative; width: 236px; margin: 0 auto 4px; }
 .orn-pembatas { display: block; width: 180px; margin: 6px auto; }
 
 /* ---------- tombol ---------- */
@@ -418,7 +424,7 @@ body[data-tema="gold"] .kutipan blockquote p { font-family: "Cormorant Garamond"
 }
 .bingkai-foto img { width: 100%; height: 100%; object-fit: cover; filter: var(--filter-foto); transition: transform 1.2s ease; }
 .mempelai:hover .bingkai-foto img { transform: scale(1.05); }
-.bingkai-bunga { position: absolute; width: 120px; left: -44px; bottom: -40px; pointer-events: none; }
+.bingkai-bunga { position: absolute; width: 142px; left: -52px; bottom: -48px; pointer-events: none; }
 .mempelai:nth-of-type(odd) .bingkai-bunga { left: auto; right: -44px; transform: scaleX(-1); }
 .monogram { width: 100%; height: 100%; display: grid; place-items: center; background: radial-gradient(circle at 50% 30%, var(--kartu), transparent), var(--bg-2); font-family: var(--f-script); font-size: 96px; color: var(--aksen-2); }
 .nama-lengkap { font-family: var(--f-judul); font-size: 21px; font-weight: 600; color: var(--teks); }
@@ -808,3 +814,43 @@ body[data-tema="modern"] .field input, body[data-tema="modern"] .field select, b
 
 /* tombol versi sebelum/sesudah acara di bilah contoh paket */
 .bp-mode { flex-basis: 100%; margin-top: 4px; padding: 6px 12px; border-radius: 999px; border: 1px dashed rgba(246, 226, 174, 0.6); background: transparent; color: #f6e2ae; font: 500 11.5px/1.2 "Jost", system-ui, sans-serif; cursor: pointer; }
+
+/* =========================================================
+   Bunga berlapis yang tertiup angin (tema bunga: maroon, moss, vintage, gold)
+   Tiap rangkaian = beberapa tangkai (lapisan) yang berayun dengan irama & sudut berbeda.
+   Warna kelopak/daun diambil dari variabel tema (--b1*, --b2*, --da, --db).
+   ========================================================= */
+.s-b1m { stop-color: var(--b1b); stop-color: color-mix(in srgb, var(--b1a) 42%, var(--b1b)); }
+.s-b1g { stop-color: var(--b1a); stop-color: color-mix(in srgb, var(--b1a) 72%, #2b0b12); }
+.s-b2m { stop-color: var(--b2b); stop-color: color-mix(in srgb, var(--b2a) 42%, var(--b2b)); }
+.s-b2g { stop-color: var(--b2a); stop-color: color-mix(in srgb, var(--b2a) 72%, #3a2410); }
+.s-dg { stop-color: var(--da); stop-color: color-mix(in srgb, var(--da) 72%, #141b10); }
+.s-dt { stop-color: var(--db); stop-color: color-mix(in srgb, var(--db) 70%, #f4f6ea); }
+.s-dm2 { stop-color: var(--da); stop-color: color-mix(in srgb, var(--da) 80%, var(--db)); }
+.garis-daun { stroke: rgba(25, 40, 15, 0.3); stroke-width: 0.6; }
+.urat-kelopak { fill: none; stroke: rgba(255, 255, 255, 0.22); stroke-width: 0.5; }
+.s-k1 { stop-color: var(--db); stop-color: color-mix(in srgb, var(--db) 50%, #eef2ea); }
+.s-k2 { stop-color: var(--da); stop-color: color-mix(in srgb, var(--da) 55%, #b9c7b5); }
+.garis-kelopak { stroke: rgba(70, 30, 25, 0.16); stroke-width: 0.5; }
+.tepi-kelopak { fill: none; stroke: rgba(255, 255, 255, 0.5); stroke-width: 0.8; }
+.spiral1, .spiral2 { fill: none; stroke-width: 1; stroke-linecap: round; }
+.spiral1 { stroke: var(--b1a); stroke: color-mix(in srgb, var(--b1a) 75%, #2b0b12); }
+.spiral2 { stroke: var(--b2a); stroke: color-mix(in srgb, var(--b2a) 75%, #3a2410); }
+.urat-daun { fill: none; stroke: rgba(255, 255, 240, 0.45); stroke-width: 0.7; }
+.tangkai-garis { fill: none; stroke: var(--tangkai); stroke-width: 1.5; stroke-linecap: round; }
+.tangkai-garis.tipis { stroke-width: 0.7; }
+.butir-bayi { fill: #fffbf3; stroke: rgba(120, 100, 80, 0.25); stroke-width: 0.4; }
+svg.ukuran { visibility: hidden; }
+.tangkai { position: absolute; inset: 0; display: block; transform-origin: var(--ox, 0%) var(--oy, 100%); }
+.tangkai svg { display: block; width: 100%; height: 100%; overflow: visible; }
+.hidup > .tangkai { animation: angin var(--d, 6s) ease-in-out var(--t, 0s) infinite; }
+/* Hembusan tidak beraturan: condong, kembali sedikit, hembusan lebih kuat, lalu reda */
+@keyframes angin {
+  0%, 100% { transform: rotate(calc(var(--a, 3deg) * -0.55)); }
+  18% { transform: rotate(calc(var(--a, 3deg) * 0.7)); }
+  32% { transform: rotate(calc(var(--a, 3deg) * 0.35)); }
+  55% { transform: rotate(var(--a, 3deg)); }
+  72% { transform: rotate(calc(var(--a, 3deg) * 0.15)); }
+  86% { transform: rotate(calc(var(--a, 3deg) * -0.35)); }
+}
+@media (prefers-reduced-motion: reduce) { .hidup > .tangkai { animation: none; } }

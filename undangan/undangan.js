@@ -23,9 +23,9 @@
   // Nama tema lama tetap jalan.
   var ALIAS = { sage: 'moss', emas: 'gold', putih: 'vintage' };
   var FONT = {
-    maroon: 'family=Cinzel:wght@400;500&family=Pinyon+Script',
+    maroon: 'family=Cinzel:wght@400;500&family=Great+Vibes',
     moss: 'family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Great+Vibes',
-    vintage: 'family=Bodoni+Moda:ital,wght@0,400;0,500;1,400&family=Cinzel:wght@400;500&family=Pinyon+Script',
+    vintage: 'family=Bodoni+Moda:ital,wght@0,400;0,500;1,400&family=Cinzel:wght@400;500&family=Great+Vibes',
     gold: 'family=Cinzel:wght@400;500;600&family=Great+Vibes',
     ceria: 'family=Fredoka:wght@400;500;600&family=Pacifico',
     islami: 'family=Marcellus&family=Parisienne',
@@ -341,31 +341,171 @@
       return '<g transform="translate(' + x + ' ' + y + ') rotate(' + sudut + ')">' + daun(0, 0, r * 1.15, -28) + daun(0, 0, r * 1.15, 28) +
         '<ellipse class="kelopak-b" cx="0" cy="' + n(-r) + '" rx="' + n(r * 0.55) + '" ry="' + n(r) + '" fill="url(#g-b1)"/></g>';
     }
+    /* ---------- bunga realistis berlapis (tema pernikahan) ----------
+       Tiap rangkaian terdiri dari beberapa "tangkai" (lapisan SVG terpisah). Di CSS, tiap tangkai
+       berayun sendiri dengan irama berbeda (.tangkai, @keyframes angin), jadi terlihat tertiup angin. */
+    var KELOPAK_MAWAR = 'M0 0C-.5 -.05 -.78 -.5 -.6 -.86C-.45 -1.08 -.15 -1.06 0 -.98C.15 -1.06 .45 -1.08 .6 -.86C.78 -.5 .5 -.05 0 0Z';
+    var TEPI_MAWAR = 'M-.56 -.84C-.42 -1 -.16 -1 0 -.93C.16 -1 .42 -1 .56 -.84';
+    var KELOPAK_CANGKIR = 'M0 0C-.42 -.1 -.56 -.62 -.3 -.93C-.12 -1.05 .12 -1.05 .3 -.93C.56 -.62 .42 -.1 0 0Z';
+    var KELOPAK_PEONI = 'M0 0C-.62 -.26 -.8 -.84 -.36 -1Q-.18 -1.1 0 -1.01Q.18 -1.1 .36 -1C.8 -.84 .62 -.26 0 0Z';
+    // Daun mawar: bulat telur dengan tepi bergerigi halus (dibuat dari titik-titik, dua sisi terpisah untuk efek cahaya).
+    var DAUN_KANAN = 'M0 0L.154 -.062L.258 -.125L.355 -.188L.396 -.25L.453 -.312L.456 -.375L.477 -.438L.448 -.5L.44 -.562L.383 -.625L.352 -.688L.277 -.75L.231 -.812L.144 -.875L.072 -.938L0 -1Q.03 -.5 0 0Z';
+    var DAUN_KIRI = 'M0 0L-.154 -.062L-.258 -.125L-.355 -.188L-.396 -.25L-.453 -.312L-.456 -.375L-.477 -.438L-.448 -.5L-.44 -.562L-.383 -.625L-.352 -.688L-.277 -.75L-.231 -.812L-.144 -.875L-.072 -.938L0 -1Q.03 -.5 0 0Z';
+    var URAT_KELOPAK = 'M0 -.1Q.03 -.45 0 -.78M-.1 -.14Q-.24 -.44 -.32 -.7M.1 -.14Q.24 -.44 .32 -.7';
+    function acakB(seed) {
+      return function () {
+        seed |= 0; seed = seed + 0x6D2B79F5 | 0;
+        var r = Math.imul(seed ^ seed >>> 15, 1 | seed);
+        r = r + Math.imul(r ^ r >>> 7, 61 | r) ^ r;
+        return ((r ^ r >>> 14) >>> 0) / 4294967296;
+      };
+    }
+    function kelopakR(d, sudut, w, h, isi, tepi) {
+      var t = 'rotate(' + n(sudut) + ') scale(' + n(w) + ' ' + n(h) + ')';
+      return '<path d="' + d + '" transform="' + t + '" fill="url(#' + isi + ')" class="garis-kelopak" vector-effect="non-scaling-stroke"/>' +
+        (tepi ? '<path d="' + URAT_KELOPAK + '" transform="' + t + '" class="urat-kelopak" vector-effect="non-scaling-stroke"/>' +
+          '<path d="' + TEPI_MAWAR + '" transform="' + t + '" class="tepi-kelopak" vector-effect="non-scaling-stroke"/>' : '');
+    }
+    function bayang(x, y, rx, ry) { return '<ellipse cx="' + n(x) + '" cy="' + n(y) + '" rx="' + n(rx) + '" ry="' + n(ry) + '" fill="url(#g-bayang)"/>'; }
+    // Mawar mekar dilihat dari atas: kelopak luar lebar & terang, makin ke tengah makin gelap dan menguncup.
+    function mawar(x, y, r, v, putar, seed) {
+      var rnd = acakB(seed), g = 'g-kel' + v, gd = 'g-kel' + v + 'd', i;
+      var s = bayang(x + r * 0.1, y + r * 0.24, r * 1.22, r * 1.06) + '<g transform="translate(' + n(x) + ' ' + n(y) + ') rotate(' + (putar || 0) + ')">';
+      for (i = 0; i < 6; i++) s += kelopakR(KELOPAK_MAWAR, i * 60 + (rnd() - 0.5) * 16, r * (0.94 + rnd() * 0.12), r * (0.94 + rnd() * 0.12), g, true);
+      for (i = 0; i < 5; i++) s += kelopakR(KELOPAK_MAWAR, 30 + i * 72 + (rnd() - 0.5) * 16, r * 0.74, r * 0.77, g, true);
+      for (i = 0; i < 5; i++) s += kelopakR(KELOPAK_CANGKIR, 14 + i * 72 + (rnd() - 0.5) * 22, r * 0.54, r * 0.58, g, true);
+      for (i = 0; i < 4; i++) s += kelopakR(KELOPAK_CANGKIR, 50 + i * 90, r * 0.36, r * 0.4, g, false);
+      for (i = 0; i < 3; i++) s += kelopakR(KELOPAK_CANGKIR, 20 + i * 120, r * 0.22, r * 0.26, gd, false);
+      s += '<circle r="' + n(r * 0.1) + '" fill="url(#' + gd + ')"/>' +
+        '<path class="spiral' + v + '" d="M0 ' + n(-r * 0.03) + 'a' + n(r * 0.05) + ' ' + n(r * 0.05) + ' 0 1 1 ' + n(r * 0.07) + ' ' + n(r * 0.05) +
+        'a' + n(r * 0.11) + ' ' + n(r * 0.11) + ' 0 1 1 ' + n(-r * 0.16) + ' ' + n(-r * 0.09) + 'a' + n(r * 0.18) + ' ' + n(r * 0.18) + ' 0 1 1 ' + n(r * 0.24) + ' ' + n(r * 0.16) + '"/>';
+      return s + '</g>';
+    }
+    // Peoni: kelopak bergerigi bertumpuk lima lapis, benang sari emas di tengah.
+    function peoni(x, y, r, v, putar, seed) {
+      var rnd = acakB(seed), s = bayang(x + r * 0.1, y + r * 0.22, r * 1.2, r * 1.05) + '<g transform="translate(' + n(x) + ' ' + n(y) + ') rotate(' + (putar || 0) + ')">';
+      [[9, 1, 1.05, 0], [8, 0.8, 0.95, 18], [7, 0.6, 0.85, 6], [6, 0.4, 0.78, 28], [5, 0.25, 0.8, 12]].forEach(function (c, k) {
+        for (var i = 0; i < c[0]; i++) {
+          var h = r * c[1] * (0.9 + rnd() * 0.2);
+          s += kelopakR(KELOPAK_PEONI, c[3] + i * 360 / c[0] + (rnd() - 0.5) * 16, h * c[2], h, 'g-kel' + v + (k > 1 ? 'd' : ''), k < 2);
+        }
+      });
+      s += '<circle r="' + n(r * 0.08) + '" class="inti"/>';
+      for (var j = 0; j < 10; j++) { var b = j * 36 * Math.PI / 180; s += '<circle cx="' + n(Math.cos(b) * r * 0.11) + '" cy="' + n(Math.sin(b) * r * 0.11) + '" r="' + n(r * 0.025) + '" class="inti-dalam"/>'; }
+      return s + '</g>';
+    }
+    // Kuncup mawar di ujung tangkai
+    function kuncupMawar(x, y, r, v, sudut) {
+      return '<g transform="translate(' + n(x) + ' ' + n(y) + ') rotate(' + sudut + ')">' +
+        daunR(0, r * 0.9, r * 1.3, -42, true) + daunR(0, r * 0.9, r * 1.3, 42, true) +
+        '<path d="' + KELOPAK_CANGKIR + '" transform="scale(' + n(r * 0.95) + ' ' + n(r * 1.35) + ')" fill="url(#g-kel' + v + 'd)" class="garis-kelopak" vector-effect="non-scaling-stroke"/>' +
+        '<path d="' + KELOPAK_CANGKIR + '" transform="translate(' + n(-r * 0.22) + ' ' + n(r * 0.05) + ') rotate(-16) scale(' + n(r * 0.62) + ' ' + n(r * 1.1) + ')" fill="url(#g-kel' + v + ')" class="garis-kelopak" vector-effect="non-scaling-stroke"/>' +
+        '<path d="' + KELOPAK_CANGKIR + '" transform="translate(' + n(r * 0.24) + ' ' + n(r * 0.08) + ') rotate(18) scale(' + n(r * 0.55) + ' ' + n(r * 1) + ')" fill="url(#g-kel' + v + ')" class="garis-kelopak" vector-effect="non-scaling-stroke"/></g>';
+    }
+    // Daun runcing dengan tulang & urat daun
+    function daunR(x, y, p, sudut, gelap) {
+      var s = '<g transform="translate(' + n(x) + ' ' + n(y) + ') rotate(' + n(sudut) + ')">' +
+        '<path d="' + DAUN_KANAN + '" transform="scale(' + n(p * 0.62) + ' ' + n(p) + ')" fill="url(#g-daun' + (gelap ? 'R2' : 'R') + ')" class="garis-daun" vector-effect="non-scaling-stroke"/>' +
+        '<path d="' + DAUN_KIRI + '" transform="scale(' + n(p * 0.62) + ' ' + n(p) + ')" fill="url(#g-daun' + (gelap ? 'R3' : 'R2') + ')" class="garis-daun" vector-effect="non-scaling-stroke"/>' +
+        '<path class="urat-daun" d="M0 0Q' + n(p * 0.04) + ' ' + n(-p * 0.5) + ' ' + n(p * 0.02) + ' ' + n(-p * 0.94);
+      for (var k = 1; k < 4; k++) {
+        var yy = -p * k * 0.22;
+        s += 'M' + n(p * 0.015) + ' ' + n(yy) + 'q' + n(p * 0.09) + ' ' + n(-p * 0.04) + ' ' + n(p * 0.16) + ' ' + n(-p * 0.12) +
+          'M' + n(p * 0.015) + ' ' + n(yy) + 'q' + n(-p * 0.09) + ' ' + n(-p * 0.04) + ' ' + n(-p * 0.16) + ' ' + n(-p * 0.12);
+      }
+      return s + '"/></g>';
+    }
+    // Bunga kecil lima kelopak (putih-merona)
+    function kembang(x, y, r, putar) {
+      var s = '<g transform="translate(' + n(x) + ' ' + n(y) + ') rotate(' + (putar || 0) + ')">';
+      for (var i = 0; i < 5; i++) s += '<ellipse cx="0" cy="' + n(-r * 0.56) + '" rx="' + n(r * 0.42) + '" ry="' + n(r * 0.62) + '" transform="rotate(' + i * 72 + ')" fill="url(#g-putih)" class="garis-kelopak"/>';
+      s += '<circle r="' + n(r * 0.24) + '" class="inti"/>';
+      for (var j = 0; j < 6; j++) { var b = j * 60 * Math.PI / 180; s += '<circle cx="' + n(Math.cos(b) * r * 0.3) + '" cy="' + n(Math.sin(b) * r * 0.3) + '" r="' + n(r * 0.06) + '" class="inti-dalam"/>'; }
+      return s + '</g>';
+    }
+    // Tangkai kayu putih (eucalyptus): daun bulat keperakan berselang-seling
+    function kayuPutih(titikTitik, ukuran, seed) {
+      var rnd = acakB(seed), s = '<path class="tangkai-garis" d="M' + titikTitik.map(function (t) { return n(t[0]) + ' ' + n(t[1]); }).join('L') + '"/>';
+      for (var i = 0; i < titikTitik.length - 1; i++) {
+        var a = titikTitik[i], b = titikTitik[i + 1];
+        for (var k = 0; k < 3; k++) {
+          var t = (k + 0.5) / 3, x = a[0] + (b[0] - a[0]) * t, y = a[1] + (b[1] - a[1]) * t;
+          var sudut = Math.atan2(b[1] - a[1], b[0] - a[0]) * 180 / Math.PI + ((i * 3 + k) % 2 ? 90 : -90);
+          var r = ukuran * (1 - (i * 3 + k) / (titikTitik.length * 3 + 2)) * (0.85 + rnd() * 0.3);
+          var cx = x + Math.cos(sudut * Math.PI / 180) * r * 0.9, cy = y + Math.sin(sudut * Math.PI / 180) * r * 0.9;
+          s += '<ellipse cx="' + n(cx) + '" cy="' + n(cy) + '" rx="' + n(r) + '" ry="' + n(r * 0.86) + '" transform="rotate(' + n(sudut) + ' ' + n(cx) + ' ' + n(cy) + ')" fill="url(#g-kayu)" class="garis-kelopak"/>' +
+            '<path class="urat-daun" d="M' + n(x) + ' ' + n(y) + 'L' + n(cx + (cx - x) * 0.6) + ' ' + n(cy + (cy - y) * 0.6) + '"/>';
+        }
+      }
+      return s;
+    }
+    // Baby's breath: ranting tipis dengan butir bunga putih kecil
+    function bayi(x, y, panjang, sudut, seed) {
+      var rnd = acakB(seed), s = '<g transform="translate(' + n(x) + ' ' + n(y) + ') rotate(' + sudut + ')"><path class="tangkai-garis tipis" d="M0 0Q' + n(panjang * 0.1) + ' ' + n(-panjang * 0.5) + ' 0 ' + n(-panjang) + '"/>';
+      for (var i = 0; i < 5; i++) {
+        var py = -panjang * (0.45 + i * 0.12), arah = i % 2 ? 1 : -1, ex = arah * (10 + rnd() * 10), ey = py - 8 - rnd() * 8;
+        s += '<path class="tangkai-garis tipis" d="M0 ' + n(py) + 'L' + n(ex) + ' ' + n(ey) + '"/>';
+        for (var k = 0; k < 4; k++) s += '<circle cx="' + n(ex + (rnd() - 0.5) * 9) + '" cy="' + n(ey + (rnd() - 0.5) * 8) + '" r="' + n(1.4 + rnd() * 1.4) + '" class="butir-bayi"/>';
+      }
+      for (var j = 0; j < 4; j++) s += '<circle cx="' + n((rnd() - 0.5) * 9) + '" cy="' + n(-panjang + (rnd() - 0.5) * 8) + '" r="' + n(1.5 + rnd() * 1.3) + '" class="butir-bayi"/>';
+      return s + '</g>';
+    }
+    // Ranting pakis emas
+    function pakisEmas(x, y, panjang, sudut) {
+      var s = '<g transform="translate(' + n(x) + ' ' + n(y) + ') rotate(' + sudut + ')"><path class="daun-emas" d="M0 0Q4 ' + n(-panjang * 0.5) + ' 0 ' + n(-panjang) + '"/>';
+      for (var i = 1; i < 8; i++) {
+        var t = i / 8, py = -panjang * t, L = 9 * (1 - t * 0.6), ox = 2 * Math.sin(t * 3);
+        s += '<path class="daun-emas" d="M' + n(ox) + ' ' + n(py) + 'q' + n(L * 0.6) + ' -3 ' + n(L) + ' ' + n(-L * 0.7) + 'M' + n(ox) + ' ' + n(py) + 'q' + n(-L * 0.6) + ' -3 ' + n(-L) + ' ' + n(-L * 0.7) + '"/>';
+      }
+      return s + '</g>';
+    }
+    // Satu lapisan tangkai: ox/oy = titik tumpu ayunan (% dari kotak), a = sudut ayun, d = lama satu irama.
+    function lapisanTangkai(lebar, tinggi, isi, ox, oy, a, d) {
+      return '<span class="tangkai" style="--ox:' + ox + '%;--oy:' + oy + '%;--a:' + a + 'deg;--d:' + d + 's"><svg viewBox="0 0 ' + lebar + ' ' + tinggi + '">' + isi + '</svg></span>';
+    }
+    function ukuran(lebar, tinggi) { return '<svg class="ukuran" viewBox="0 0 ' + lebar + ' ' + tinggi + '"></svg>'; }
+
+    function isiSudut() {
+        var dedaun = '<path class="tangkai-garis" d="M-4 306C30 216 50 132 74 34"/><path class="tangkai-garis" d="M-4 302C84 270 172 226 252 148"/>';
+        [[44, 200, 34, -30, 0], [60, 148, 31, 28, 1], [70, 98, 27, -30, 0], [24, 252, 36, 34, 1],
+          [116, 252, 33, 66, 0], [166, 224, 30, 82, 1], [214, 186, 27, 72, 0], [92, 236, 26, 14, 1]]
+          .forEach(function (d) { dedaun += daunR(d[0], d[1], d[2], d[3], d[4]); });
+        dedaun += pakisEmas(98, 206, 72, 38) + pakisEmas(18, 216, 66, -14);
+        var kayu = kayuPutih([[2, 302], [62, 236], [118, 186], [176, 150], [226, 128]], 12, 3) + kayuPutih([[0, 300], [10, 236], [26, 176], [48, 128]], 10, 8);
+        var ranting = bayi(150, 236, 96, 52, 4) + bayi(64, 170, 88, -6, 6) + bayi(206, 274, 80, 74, 9) +
+          '<path class="tangkai-garis" d="M30 290C60 220 72 160 84 104"/>' + kuncupMawar(84, 104, 12, 1, 12) +
+          '<path class="tangkai-garis" d="M60 296C120 268 170 240 222 196"/>' + kuncupMawar(222, 196, 11, 2, 64);
+        var kecil = daunR(166, 204, 22, 60, true) + daunR(108, 190, 20, -30, true) +
+          kembang(152, 214, 13, 10) + kembang(178, 240, 11, 40) + kembang(118, 176, 11, 70) + kembang(196, 270, 12, 20) + kembang(16, 132, 10, 30) +
+          kembang(134, 196, 9, 50) + kembang(222, 244, 9, 15) + peoni(100, 186, 20, 1, 30, 14);
+        var utama = daunR(96, 292, 36, 50) + daunR(22, 216, 34, -40, true) + daunR(170, 302, 32, 84, true) +
+          peoni(60, 236, 54, 2, 10, 3) + mawar(136, 268, 44, 1, -12, 5) + mawar(30, 168, 31, 1, 34, 9) + mawar(196, 300, 26, 2, 20, 12);
+        return [dedaun, kayu, ranting, kecil, utama];
+    }
+    function isiUntaian() {
+        var sisi = '<path class="tangkai-garis" d="M156 60C118 52 82 46 22 58"/>' +
+          daunR(132, 56, 19, -78) + daunR(110, 52, 20, -100, true) + daunR(88, 50, 19, -76) + daunR(66, 52, 17, -104, true) + daunR(46, 56, 14, -82) +
+          kayuPutih([[150, 64], [116, 68], [80, 69], [50, 66]], 5.5, 5) + bayi(96, 54, 28, -64, 2) + kembang(120, 44, 8, 20) + kembang(76, 46, 7, 50) + kembang(100, 62, 6, 10);
+        return [sisi, '<g transform="translate(320 0) scale(-1 1)">' + sisi + '</g>',
+          daunR(148, 66, 20, -54, true) + daunR(172, 66, 20, 54, true) + kuncupMawar(134, 42, 7, 2, -42) + kuncupMawar(186, 42, 7, 2, 42) + mawar(160, 50, 25, 1, 0, 11)];
+    }
+    // Lapisan: [titik tumpu x%, y%, sudut ayun, lama irama]
+    var AYUN_SUDUT = [[1, 100, 2.4, 7.6], [2, 100, 4.2, 6.2], [6, 100, 5.2, 5.4], [10, 100, 3, 6.8], [8, 100, 1.5, 8.4]];
+    var AYUN_UNTAIAN = [[50, 66, 3.2, 6.4], [50, 66, -3.2, 6.9], [50, 75, 1.4, 7.8]];
+    function pakai(lebar, tinggi, awalan, ayun) {
+      return ukuran(lebar, tinggi) + ayun.map(function (a, i) { return lapisanTangkai(lebar, tinggi, '<use href="#' + awalan + i + '"/>', a[0], a[1], a[2], a[3]); }).join('');
+    }
     var bungaSet = {
-      sudut: function () {
-        var s = '<path class="tangkai" d="M-6 306C30 240 66 190 150 140"/><path class="tangkai" d="M-6 300C70 286 150 262 236 214"/><path class="tangkai" d="M4 306C10 236 18 170 34 92"/>';
-        [[34, 250, 58, -40], [58, 214, 52, 24], [96, 178, 48, -52], [132, 152, 44, 58], [150, 140, 40, 10], [70, 288, 56, 72], [124, 274, 52, 96],
-          [182, 248, 48, 62], [230, 216, 42, 104], [200, 232, 40, 30], [16, 232, 54, -16], [22, 176, 50, -34], [26, 132, 46, 14], [32, 96, 40, -20]
-        ].forEach(function (d) { s += daun(d[0], d[1], d[2], d[3]); });
-        s += daun(118, 236, 46, 40, 'daun-emas') + daun(54, 160, 42, -60, 'daun-emas') + daun(214, 196, 36, 70, 'daun-emas');
-        s += bunga(92, 222, 58, 1, 12) + bunga(176, 262, 38, 2, -18) + bunga(36, 142, 32, 2, 30);
-        s += tunas(150, 196, 14, 40) + tunas(240, 228, 12, 70) + tunas(28, 92, 12, -10);
-        s += kuntum(132, 250, 14) + kuntum(62, 180, 12) + kuntum(214, 270, 11);
-        [[160, 214, 3], [178, 226, 2.2], [110, 168, 2.6], [84, 158, 2], [252, 246, 2.4], [46, 106, 2.2], [120, 292, 2.6], [196, 290, 2]]
-          .forEach(function (t) { s += titik(t[0], t[1], t[2]); });
-        return '<svg viewBox="0 0 300 300">' + s + '</svg>';
+      // Digambar sekali di <defs>, dipakai ulang oleh semua sudut & untaian (DOM tetap ringan).
+      simbol: function () {
+        return isiSudut().map(function (isi, i) { return '<g id="bs-s' + i + '">' + isi + '</g>'; }).join('') +
+          isiUntaian().map(function (isi, i) { return '<g id="bs-u' + i + '">' + isi + '</g>'; }).join('');
       },
-      untaian: function () {
-        var s = '<path class="tangkai" d="M18 62C80 40 120 52 160 60C200 52 240 40 302 62"/>';
-        [[42, 58, 30, -70], [68, 50, 32, -112], [94, 50, 30, -62], [120, 56, 28, -116], [200, 56, 28, 116], [226, 50, 30, 62], [252, 50, 32, 112], [278, 58, 30, 70]]
-          .forEach(function (d) { s += daun(d[0], d[1], d[2], d[3]); });
-        s += daun(138, 62, 26, -150, 'daun-emas') + daun(182, 62, 26, 150, 'daun-emas') + kuntum(108, 46, 10) + kuntum(212, 46, 10) + bunga(160, 54, 26, 1, 0);
-        s += titik(30, 64, 2) + titik(290, 64, 2) + titik(84, 40, 1.8) + titik(236, 40, 1.8);
-        return '<svg viewBox="0 0 320 90">' + s + '</svg>';
-      },
+      sudut: function () { return pakai(300, 300, 'bs-s', AYUN_SUDUT); },
+      untaian: function () { return pakai(320, 90, 'bs-u', AYUN_UNTAIAN); },
       pembatas: function () {
         return '<svg viewBox="0 0 240 30"><path class="garis-emas" d="M8 15H96M144 15H232"/>' + daun(104, 15, 14, -90, 'daun-emas') + daun(136, 15, 14, 90, 'daun-emas') +
-          kuntum(120, 15, 9) + titik(92, 15, 1.6) + titik(148, 15, 1.6) + '</svg>';
+          kembang(120, 15, 8, 0) + titik(92, 15, 1.6) + titik(148, 15, 1.6) + '</svg>';
       }
     };
 
@@ -446,7 +586,7 @@
       }
     };
 
-    function defs() {
+    function defs(gaya) {
       return '<svg class="orn-defs" width="0" height="0" aria-hidden="true" focusable="false"><defs>' +
         '<radialGradient id="g-b1" cx=".5" cy="1" r="1"><stop offset="0" class="s-b1a"/><stop offset="1" class="s-b1b"/></radialGradient>' +
         '<radialGradient id="g-b2" cx=".5" cy="1" r="1"><stop offset="0" class="s-b2a"/><stop offset="1" class="s-b2b"/></radialGradient>' +
@@ -455,7 +595,17 @@
         '<radialGradient id="g-bal1" cx=".35" cy=".3" r=".8"><stop offset="0" class="s-b1b"/><stop offset="1" class="s-b1a"/></radialGradient>' +
         '<radialGradient id="g-bal2" cx=".35" cy=".3" r=".8"><stop offset="0" class="s-b2b"/><stop offset="1" class="s-b2a"/></radialGradient>' +
         '<radialGradient id="g-bal3" cx=".35" cy=".3" r=".8"><stop offset="0" class="s-db"/><stop offset="1" class="s-da"/></radialGradient>' +
-        '</defs></svg>';
+        '<linearGradient id="g-kel1" x1="0" y1="1" x2="0" y2="0"><stop offset="0" class="s-b1a"/><stop offset=".55" class="s-b1m"/><stop offset="1" class="s-b1b"/></linearGradient>' +
+        '<linearGradient id="g-kel1d" x1="0" y1="1" x2="0" y2="0"><stop offset="0" class="s-b1g"/><stop offset="1" class="s-b1a"/></linearGradient>' +
+        '<linearGradient id="g-kel2" x1="0" y1="1" x2="0" y2="0"><stop offset="0" class="s-b2a"/><stop offset=".55" class="s-b2m"/><stop offset="1" class="s-b2b"/></linearGradient>' +
+        '<linearGradient id="g-kel2d" x1="0" y1="1" x2="0" y2="0"><stop offset="0" class="s-b2g"/><stop offset="1" class="s-b2a"/></linearGradient>' +
+        '<linearGradient id="g-putih" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#ecd2c4"/><stop offset=".5" stop-color="#fbf1ea"/><stop offset="1" stop-color="#fffdf9"/></linearGradient>' +
+        '<linearGradient id="g-daunR" x1="0" y1="1" x2=".6" y2="0"><stop offset="0" class="s-da"/><stop offset=".45" class="s-db"/><stop offset="1" class="s-dt"/></linearGradient>' +
+        '<linearGradient id="g-daunR2" x1="0" y1="1" x2="0" y2="0"><stop offset="0" class="s-dg"/><stop offset="1" class="s-da"/></linearGradient>' +
+        '<linearGradient id="g-daunR3" x1="0" y1="1" x2="0" y2="0"><stop offset="0" class="s-dg"/><stop offset="1" class="s-dm2"/></linearGradient>' +
+        '<linearGradient id="g-kayu" x1="0" y1="0" x2="1" y2="1"><stop offset="0" class="s-k1"/><stop offset="1" class="s-k2"/></linearGradient>' +
+        '<radialGradient id="g-bayang"><stop offset="0" stop-color="#000" stop-opacity=".2"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>' +
+        ((ambil(gaya || 'bunga').simbol) || '') + '</defs></svg>';
     }
 
     var set = { bunga: bungaSet, balon: balonSet, geometri: geometriSet, garis: garisSet };
@@ -463,7 +613,7 @@
     function ambil(gaya) {
       if (!cache[gaya]) {
         var s = set[gaya] || bungaSet;
-        cache[gaya] = { gaya: gaya, sudut: s.sudut(), untaian: s.untaian(), pembatas: s.pembatas() };
+        cache[gaya] = { gaya: gaya, sudut: s.sudut(), untaian: s.untaian(), pembatas: s.pembatas(), simbol: s.simbol ? s.simbol() : '' };
       }
       return cache[gaya];
     }
@@ -591,6 +741,7 @@
     if (!fotoSlide.length) wadah.append(el('div', { class: 'slide aktif polos' }));
     s.append(wadah);
     if (!fotoSlide.length) s.append(sudutHias('kiri-atas'), sudutHias('kanan-bawah'));
+    else s.append(sudutHias('kiri-bawah kecil'), sudutHias('kanan-bawah kecil')); // bunga di kaki foto beranda
     s.append(el('div', { class: 'beranda-isi' },
       el('p', { class: 'label muncul', text: id.label }),
       id.tampil('muncul', true),
@@ -741,7 +892,7 @@
     var list = daftar(d.rundown).filter(function (r) { return teks(r.kegiatan); });
     if (!list.length) return null;
     return el('section', { class: 'bagian', id: 'rundown' },
-      sudutHias('kanan-atas kecil'),
+      sudutHias('kanan-atas kecil'), sudutHias('kiri-bawah kecil'),
       judulBagian('Susunan Acara', 'Rundown'),
       el('ol', { class: 'rundown' }, list.map(function (r, i) {
         return el('li', { class: 'muncul', style: '--tunda:' + Math.min(i * 0.06, 0.4) + 's' },
@@ -754,7 +905,7 @@
     var cerita = daftar(d.cerita).filter(function (c) { return teks(c.judul) || teks(c.teks); });
     if (!cerita.length) return null;
     return el('section', { class: 'bagian', id: 'cerita' },
-      sudutHias('kanan-atas kecil'),
+      sudutHias('kanan-atas kecil'), sudutHias('kiri-bawah kecil'),
       judulBagian(teks(d.judulCerita) || id.J.cerita[0], id.J.cerita[1]),
       el('ol', { class: 'linimasa' }, cerita.map(function (c, i) {
         var foto = amanUrl(c.foto);
@@ -781,7 +932,7 @@
         grid.append(el('div', { class: 'foto-galeri kosong muncul', 'aria-hidden': 'true' }, el('span', { text: g.ket || 'Foto ' + (i + 1) })));
       }
     });
-    return el('section', { class: 'bagian lembut', id: 'galeri' }, sudutHias('kiri-atas kecil'), judulBagian('Galeri', 'Momen Bahagia'), grid);
+    return el('section', { class: 'bagian lembut', id: 'galeri' }, sudutHias('kiri-atas kecil'), sudutHias('kanan-bawah kecil'), judulBagian('Galeri', 'Momen Bahagia'), grid);
   }
 
   function bukaLightbox(list, awal) {
@@ -1245,6 +1396,22 @@
     if (bilah) perbaruiBilah();
   }
 
+  // Bunga berlapis: tiap tangkai mulai di titik irama acak, dan hanya bergoyang saat terlihat di layar.
+  var pengamatBunga = null;
+  function hidupkanBunga() {
+    if (pengamatBunga) pengamatBunga.disconnect();
+    var semua = Array.prototype.slice.call(document.querySelectorAll('.orn-sudut, .orn-untaian, .bingkai-bunga')).filter(function (n) { return n.querySelector('.tangkai'); });
+    semua.forEach(function (n) {
+      n.querySelectorAll('.tangkai').forEach(function (t) { t.style.setProperty('--t', (-Math.random() * 8).toFixed(2) + 's'); });
+    });
+    if (geraknyaDikurangi) return;
+    if (!('IntersectionObserver' in window)) { semua.forEach(function (n) { n.classList.add('hidup'); }); return; }
+    pengamatBunga = new IntersectionObserver(function (entri) {
+      entri.forEach(function (e) { e.target.classList.toggle('hidup', e.isIntersecting); });
+    }, { rootMargin: '120px 0px' });
+    semua.forEach(function (n) { pengamatBunga.observe(n); });
+  }
+
   function aktifkanAnimasi() {
     if (pengamat) pengamat.disconnect();
     var semua = document.querySelectorAll('.muncul');
@@ -1289,7 +1456,7 @@
 
     var scrollLama = window.scrollY;
     app.textContent = '';
-    app.append(statis(ORN.defs(), 'defs-wadah'));
+    app.append(statis(ORN.defs(orn.gaya), 'defs-wadah'));
     if (!langsungBuka) app.append(bagianSampul(d, id, tglUtama));
     // Di demo per paket: bagian berbayar diberi label paket, yang tidak termasuk diganti kartu terkunci.
     var bagAcara = bagianAcara(d, id);
@@ -1329,6 +1496,7 @@
       document.body.classList.add('terkunci');
     }
     aktifkanAnimasi();
+    hidupkanBunga();
   }
 
   function tampilkanGalat(judul, pesan) {
