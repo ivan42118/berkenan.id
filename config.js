@@ -22,6 +22,9 @@ window.BRAND = {
   pembayaran: "Transfer bank atau QRIS",
   waktuPengerjaan: "1×24 jam",
 
+  // Admin yang membalas chat. Tampil di bagian akhir landing page, FAQ, dan footer.
+  admin: { nama: "Ivan", peran: "pendiri berkenan.id", jamBalas: "24 jam, setiap hari" },
+
   // Teks promo opsional di atas daftar harga. Pakai hanya kalau benar kamu jalankan.
   // Contoh: "Harga perkenalan untuk 20 pemesan pertama"
   promo: "",
@@ -42,14 +45,40 @@ window.BRAND = {
     harga: { basic: 49000, premium: 89000, eksklusif: 149000 }
   },
 
-  // Testimoni di landing page. Kosong = bagian testimoni disembunyikan.
-  // Pakai hanya testimoni asli, dengan kata-kata dan izin orangnya. Contoh:
-  //   { nama: "Rina & Dimas", acara: "Pernikahan · Bandung, 2025", teks: "Tamu kami banyak yang memuji…", link: "" }
-  testimoni: [],
+  // Testimoni & rekam jejak di landing page. Kosong = bagian ini disembunyikan.
+  //   jenis : pernikahan | khitan | ulangtahun | acara (untuk ringkasan jumlah acara, tampil TANPA nama)
+  //   izin  : ubah ke true HANYA setelah orangnya setuju dan "teks" sudah diganti dengan kata-kata aslinya.
+  //           Selama belum true, nama & kata-katanya tidak tampil; yang tampil hanya ringkasan jumlah acara.
+  //   foto / link (opsional): alamat https foto orangnya / undangannya.
+  // Semua "teks" di bawah masih TEMPLATE dan belum dikonfirmasi ke orangnya.
+  testimoni: [
+    { nama: "Burhan & Putri", jenis: "pernikahan", acara: "Pernikahan · Maroon Romance · Eksklusif", izin: false,
+      teks: "Tamu-tamu banyak yang bilang undangannya mewah dan rapi. QR check-in di pintu masuk juga bikin penerima tamu jauh lebih santai." },
+    { nama: "Andriyano & Sinta", jenis: "pernikahan", acara: "Pernikahan · Maroon Romance · Eksklusif", izin: false,
+      teks: "Revisinya cepat dan sabar mengikuti mau kami. Hasil akhirnya persis seperti yang kami bayangkan." },
+    { nama: "Wahyu & Nindi", jenis: "pernikahan", acara: "Pernikahan · Moss Garden · Eksklusif", izin: false,
+      teks: "Nuansa hijaunya pas sekali dengan konsep garden party kami. Video undangannya juga ramai dibagikan teman-teman di Status." },
+    { nama: "Gilang & Michelle", jenis: "pernikahan", acara: "Pernikahan · Desain kustom · Eksklusif", izin: false,
+      teks: "Kami minta desain sesuai konsep sendiri, dan hasilnya benar-benar beda dari undangan kebanyakan. Tinggal kirim ide, sisanya dibantu." },
+    { nama: "Khitanan M. Abhar Aljunaid", jenis: "khitan", acara: "Khitanan · Desain kustom · Eksklusif", izin: false,
+      teks: "Keluarga yang jauh tetap bisa ikut mendoakan. Undangannya mudah dibuka, bahkan oleh kakek dan nenek." },
+    { nama: "Zenada Dirga Cahaya", jenis: "ulangtahun", acara: "Ulang tahun · Ceria Pastel · Premium", izin: false,
+      teks: "Warnanya ceria dan lucu, cocok untuk pesta ulang tahun. Dari konfirmasi tamu, kami jadi tahu berapa suvenir yang perlu disiapkan." },
+    { nama: "Tommy & Ajeng", jenis: "pernikahan", acara: "Pernikahan · Maroon Romance · Basic", izin: false,
+      teks: "Harganya terjangkau tapi tampilannya tetap elegan. Tinggal sebar link ke grup keluarga, semua langsung dapat nama masing-masing." },
+    { nama: "Fikri & Bella", jenis: "pernikahan", acara: "Pernikahan · Maroon Romance · Basic", izin: false,
+      teks: "Prosesnya cepat, besoknya draf sudah jadi. Pas untuk kami yang persiapannya mepet." },
+    { nama: "Alumni SMK Veteran angkatan 2019", jenis: "acara", acara: "Reuni · Desain kustom", izin: false,
+      teks: "Undangan reuninya terlihat profesional dan gampang disebar di grup alumni. Panitia jadi mudah merekap siapa saja yang datang." },
+    { nama: "Rafi & Putri", jenis: "pernikahan", acara: "Pernikahan · Maroon Romance · Premium", izin: false,
+      teks: "Galeri foto prewedding kami tampil cantik, dan ucapan dari tamu masuk semua ke rekap. Senang sekali membacanya satu per satu." },
+    { nama: "Robith & Denada", jenis: "pernikahan", acara: "Pernikahan · Maroon Romance · Premium", izin: false,
+      teks: "Fitur RSVP-nya sangat membantu menghitung tamu yang datang. Pertanyaan kami juga selalu dijawab dengan cepat." }
+  ],
 
   // Pengaturan demo per paket (undangan/?u=demo-…&paket=…):
   //   demoTanpa     : fitur yang tidak termasuk paket ini (galeri, cerita, rundown, dresscode, rsvp, kontak,
-  //                   video, checkin, terimakasih)
+  //                   video, siaran, checkin, terimakasih)
   //   demoGaleri    : keterangan jumlah foto galeri, tampil di label bagian galeri
   //   demoTambahan  : keunggulan tambahan paket ini, tampil di bilah "Contoh paket"
   //   demoPreviewWa : true = tampilkan contoh preview link WhatsApp berfoto di demo
@@ -60,7 +89,7 @@ window.BRAND = {
       nama: "Basic",
       harga: 99000,
       catatan: "Aktif 6 bulan",
-      demoTanpa: ["galeri", "cerita", "rundown", "dresscode", "rsvp", "video", "checkin", "terimakasih"],
+      demoTanpa: ["galeri", "cerita", "rundown", "dresscode", "rsvp", "video", "siaran", "checkin", "terimakasih"],
       fitur: [
         "Bebas pilih semua tema",
         "Nama tamu personal, tanpa batas",
@@ -77,7 +106,7 @@ window.BRAND = {
       harga: 179000,
       unggulan: true,
       catatan: "Aktif 1 tahun",
-      demoTanpa: ["video", "checkin", "terimakasih"],
+      demoTanpa: ["video", "siaran", "checkin", "terimakasih"],
       demoGaleri: "hingga 12 foto",
       fitur: [
         "Semua fitur Basic",
@@ -95,7 +124,7 @@ window.BRAND = {
       catatan: "Aktif tanpa batas waktu",
       demoTanpa: [],
       demoGaleri: "tanpa batas",
-      demoTambahan: ["Desain kustom", "QR check-in", "Video undangan", "Video prewedding", "Halaman terima kasih", "Aktif selamanya"],
+      demoTambahan: ["Desain kustom", "QR check-in", "Video undangan", "Video prewedding", "Live streaming", "Halaman terima kasih", "Aktif selamanya"],
       demoPreviewWa: true,
       demoVideoUndangan: true,
       demoTerimaKasih: true,

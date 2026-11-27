@@ -5,7 +5,8 @@
   "judul": "Tasyakuran Khitanan",
   "sampul": "https://images.pexels.com/photos/11860824/pexels-photo-11860824.jpeg?auto=compress&cs=tinysrgb&w=1000",
   "sampulFokus": "45% 45%",
-  "musik": "",
+  "musik": "musik/canon-in-d.mp3",
+  "musikKredit": "Musik: “Canon in D Major” – Kevin MacLeod (incompetech.com), lisensi CC BY 3.0",
   "tokoh": {
     "panggilan": "Arkan",
     "lengkap": "Muhammad Arkan Al-Fatih",

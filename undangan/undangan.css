@@ -566,8 +566,10 @@ body[data-tema="gold"] .kartu-atm { box-shadow: 0 24px 40px -18px rgba(0, 0, 0, 
   backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); box-shadow: 0 14px 30px -12px rgba(0, 0, 0, 0.5);
   animation: naik 0.8s 0.4s ease both;
 }
-.nav-bawah a { width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; color: var(--redup); transition: background 0.3s, color 0.3s; }
-.nav-bawah a .ikon { width: 20px; height: 20px; display: inline-flex; }
+.nav-bawah a { width: 52px; height: 50px; border-radius: 22px; display: grid; place-items: center; align-content: center; gap: 3px; color: var(--redup); text-decoration: none; transition: background 0.3s, color 0.3s; }
+.nav-bawah a .ikon { width: 18px; height: 18px; display: inline-flex; }
+.nav-lbl { font: 500 9.5px/1 "Jost", system-ui, sans-serif; letter-spacing: 0.02em; white-space: nowrap; }
+@media (max-width: 349px) { .nav-bawah a { width: 46px; } .nav-lbl { font-size: 8.5px; } }
 .nav-bawah a svg { width: 100%; height: 100%; }
 .nav-bawah a.aktif { background: var(--aksen); color: var(--bg); }
 
@@ -854,3 +856,11 @@ svg.ukuran { visibility: hidden; }
   86% { transform: rotate(calc(var(--a, 3deg) * -0.35)); }
 }
 @media (prefers-reduced-motion: reduce) { .hidup > .ayunan { animation: none; } }
+
+/* tombol pesan di bilah contoh paket + kredit musik demo */
+.bp-aksi { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 8px; }
+.bp-aksi .bp-harga { font-size: 13.5px; margin: 0; }
+.bp-harga s { font-weight: 400; opacity: 0.6; margin-right: 6px; }
+.bp-pesan { flex: none; padding: 7px 14px; border-radius: 999px; background: #d9b66f; color: #2a0911; font: 600 12px/1.2 "Jost", system-ui, sans-serif; text-decoration: none; }
+.bp-pesan:focus-visible { outline: 2px solid #f6e2ae; outline-offset: 2px; }
+.kaki .kredit-musik { display: block; margin-top: 8px; font-size: 10.5px; letter-spacing: 0.02em; opacity: 0.75; }

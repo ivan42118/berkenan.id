@@ -5,7 +5,8 @@
   "usia": "2",
   "judul": "",
   "sampul": "https://images.pexels.com/photos/27175741/pexels-photo-27175741.jpeg?auto=compress&cs=tinysrgb&w=1000",
-  "musik": "",
+  "musik": "musik/carefree.mp3",
+  "musikKredit": "Musik: “Carefree” – Kevin MacLeod (incompetech.com), lisensi CC BY 3.0",
   "tokoh": {
     "panggilan": "Kenzie",
     "lengkap": "Kenzie Alfarizi Putra",

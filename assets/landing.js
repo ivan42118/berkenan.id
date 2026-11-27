@@ -2,7 +2,7 @@
   'use strict';
   var B = window.BRAND || {};
   var NOMOR_CONTOH = '6281234567890';
-  var VERSI = '20261127e'; // samakan dengan ?v= di index.html setiap kali ada update
+  var VERSI = '20261127f'; // samakan dengan ?v= di index.html setiap kali ada update
   var wa = String(B.whatsapp || '').replace(/\D/g, '');
 
   function rupiah(n) { return 'Rp ' + Number(n || 0).toLocaleString('id-ID'); }
@@ -27,12 +27,26 @@
   isiSemua('[data-waktu]', B.waktuPengerjaan);
   document.getElementById('tahun').textContent = new Date().getFullYear();
 
+  // Admin yang membalas chat (config.js → admin)
+  var A = B.admin || {};
+  isiSemua('[data-admin]', A.nama);
+  isiSemua('[data-jam-balas]', A.jamBalas);
+  var infoAdmin = document.getElementById('info-admin');
+  if (infoAdmin && A.nama) {
+    infoAdmin.textContent = 'Dibantu langsung oleh ' + A.nama + (A.peran ? ', ' + A.peran : '') + '.' + (A.jamBalas ? ' Chat dibalas ' + A.jamBalas + '.' : '');
+    infoAdmin.hidden = false;
+  }
+
   if (!wa || wa === NOMOR_CONTOH) document.getElementById('peringatan').hidden = false;
 
-  // Semua tombol WhatsApp umum
-  document.querySelectorAll('[data-wa]').forEach(function (a) {
-    a.href = linkWa(sapaan + 'saya ingin tanya-tanya tentang undangan digital pernikahan.');
-  });
+  // Semua tombol WhatsApp umum. Jenis acara mengikuti filter katalog yang sedang dipilih pengunjung.
+  var JENIS_WA = { pernikahan: 'pernikahan', khitan: 'khitanan', ulangtahun: 'ulang tahun', acara: 'acara' };
+  function pasangWaUmum(kategori) {
+    var jenis = JENIS_WA[kategori];
+    var pesan = sapaan + 'saya ingin membuat undangan digital' + (jenis ? ' untuk ' + jenis : '') + '. Boleh dibantu pilih tema dan paketnya?';
+    document.querySelectorAll('[data-wa]').forEach(function (a) { a.href = linkWa(pesan); });
+  }
+  pasangWaUmum('');
 
   var paket = Array.isArray(B.paket) ? B.paket : [];
 
@@ -83,6 +97,7 @@
       b.addEventListener('click', function () {
         filter.querySelectorAll('.chip').forEach(function (c) { c.classList.toggle('aktif', c === b); c.setAttribute('aria-selected', c === b ? 'true' : 'false'); });
         gridTema.querySelectorAll('.kartu-tema').forEach(function (kartu) { kartu.hidden = k !== 'semua' && kartu.dataset.kategori !== k; });
+        pasangWaUmum(k === 'semua' ? '' : k);
       });
       filter.append(b);
     });
@@ -284,37 +299,53 @@
   }
   tulisHarga();
 
-  // Testimoni (config.js → testimoni). Bagian & menu hanya tampil bila ada isinya.
-  var testi = (Array.isArray(B.testimoni) ? B.testimoni : []).filter(function (t) { return t && t.nama && t.teks; });
+  // Testimoni (config.js → testimoni). Nama & kata-kata hanya tampil bila izin: true.
+  // Sebelum itu yang tampil hanya ringkasan jumlah acara, tanpa nama siapa pun.
+  var semuaTesti = (Array.isArray(B.testimoni) ? B.testimoni : []).filter(function (t) { return t && t.nama; });
+  var testi = semuaTesti.filter(function (t) { return t.izin === true && t.teks; });
   var bagianTesti = document.getElementById('testimoni');
-  if (bagianTesti && testi.length) {
-    var gridTesti = document.getElementById('grid-testimoni');
-    testi.forEach(function (t) {
-      var kartu = el('figure', 'kartu-testi');
-      var kutip = el('blockquote', null, String(t.teks));
-      var siapa = el('figcaption');
-      var foto = /^https:\/\//.test(String(t.foto || '')) ? el('img', 'testi-foto') : el('span', 'testi-inisial', String(t.nama).trim().charAt(0).toUpperCase());
-      if (foto.tagName === 'IMG') { foto.src = t.foto; foto.alt = ''; foto.loading = 'lazy'; }
-      var info = el('span', 'testi-info');
-      info.append(el('strong', null, String(t.nama)));
-      if (t.acara) info.append(el('small', null, String(t.acara)));
-      siapa.append(foto, info);
-      kartu.append(kutip, siapa);
-      if (/^https:\/\//.test(String(t.link || ''))) {
-        var lihat = el('a', 'testi-link', 'Lihat undangannya ›');
-        lihat.href = t.link; lihat.target = '_blank'; lihat.rel = 'noopener';
-        kartu.append(lihat);
-      }
-      gridTesti.append(kartu);
-    });
+  if (bagianTesti && semuaTesti.length) {
+    var JENIS_RINGKAS = { pernikahan: 'pernikahan', khitan: 'khitanan', ulangtahun: 'ulang tahun', acara: 'acara lain' };
+    var hitungJenis = {};
+    semuaTesti.forEach(function (t) { if (JENIS_RINGKAS[t.jenis]) hitungJenis[t.jenis] = (hitungJenis[t.jenis] || 0) + 1; });
+    var ringkas = document.getElementById('ringkas-testi');
+    var butirRingkas = function (n, label) { var li = el('li'); li.append(el('b', null, String(n)), el('span', null, label)); ringkas.append(li); };
+    butirRingkas(semuaTesti.length, 'undangan');
+    Object.keys(JENIS_RINGKAS).forEach(function (k) { if (hitungJenis[k]) butirRingkas(hitungJenis[k], JENIS_RINGKAS[k]); });
+    if (testi.length) {
+      var gridTesti = document.getElementById('grid-testimoni');
+      testi.forEach(function (t) {
+        var kartu = el('figure', 'kartu-testi');
+        var kutip = el('blockquote', null, String(t.teks));
+        var siapa = el('figcaption');
+        var foto = /^https:\/\//.test(String(t.foto || '')) ? el('img', 'testi-foto') : el('span', 'testi-inisial', String(t.nama).trim().charAt(0).toUpperCase());
+        if (foto.tagName === 'IMG') { foto.src = t.foto; foto.alt = ''; foto.loading = 'lazy'; }
+        var info = el('span', 'testi-info');
+        info.append(el('strong', null, String(t.nama)));
+        if (t.acara) info.append(el('small', null, String(t.acara)));
+        siapa.append(foto, info);
+        kartu.append(kutip, siapa);
+        if (/^https:\/\//.test(String(t.link || ''))) {
+          var lihat = el('a', 'testi-link', 'Lihat undangannya ›');
+          lihat.href = t.link; lihat.target = '_blank'; lihat.rel = 'noopener';
+          kartu.append(lihat);
+        }
+        gridTesti.append(kartu);
+      });
+      document.getElementById('testi-ajak').hidden = false;
+      var menuHarga = document.querySelector('.menu a[href="#harga"]');
+      if (menuHarga) { var m = el('a', null, 'Testimoni'); m.href = '#testimoni'; menuHarga.after(m); }
+    } else {
+      bagianTesti.querySelector('.eyebrow').textContent = 'Rekam jejak';
+    }
     bagianTesti.hidden = false;
-    var menuHarga = document.querySelector('.menu a[href="#harga"]');
-    if (menuHarga) { var m = el('a', null, 'Testimoni'); m.href = '#testimoni'; menuHarga.after(m); }
   }
 
   // Kontak di footer
   var kontak = document.getElementById('kontak');
+  if (A.nama) kontak.append('Admin: ' + A.nama);
   if (wa && wa !== NOMOR_CONTOH) {
+    if (kontak.childNodes.length) kontak.append(' · ');
     var a = el('a', null, 'WhatsApp +' + wa);
     a.href = linkWa(sapaan); a.target = '_blank'; a.rel = 'noopener';
     kontak.append(a);

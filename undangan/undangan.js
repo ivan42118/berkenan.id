@@ -883,9 +883,13 @@
             waktuAcara(a) ? el('a', { class: 'tombol kecil garis', href: linkKalender(a, teks(a.nama) + ' – ' + id.nama), target: '_blank', rel: 'noopener' }, ikon('kalender'), el('span', { class: 'lbl', text: 'Kalender' })) : null));
       }),
       kartuDresscode(d),
-      amanUrl(d.siaran) ? el('div', { class: 'kartu-acara siaran muncul' },
+      amanUrl(d.siaran) ? tandaiFitur(el('div', { class: 'kartu-acara siaran muncul' },
         el('p', { class: 'paragraf', text: 'Tidak bisa hadir? Saksikan momen ini secara langsung.' }),
-        el('a', { class: 'tombol', href: amanUrl(d.siaran), target: '_blank', rel: 'noopener' }, ikon('siaran'), el('span', { class: 'lbl', text: 'Tonton Siaran Langsung' }))) : null);
+        el('a', { class: 'tombol', href: amanUrl(d.siaran), target: '_blank', rel: 'noopener', onclick: slug.indexOf('demo-') === 0 ? function (e) {
+          // Demo belum punya siaran sungguhan: tampilkan penjelasan, jangan membuka beranda YouTube.
+          e.preventDefault(); var n = this.parentNode.querySelector('.catatan-demo'); if (n) n.hidden = false;
+        } : null }, ikon('siaran'), el('span', { class: 'lbl', text: 'Tonton Siaran Langsung' })),
+        slug.indexOf('demo-') === 0 ? el('p', { class: 'catatan-demo', hidden: true, text: 'Ini contoh. Di undangan asli, tombol ini langsung membuka siaran YouTube atau Instagram Live acara kalian.' }) : null), 'siaran') : null);
   }
 
   function bagianRundown(d) {
@@ -1021,7 +1025,7 @@
       statistik.textContent = '';
       statistik.append(
         el('div', null, el('strong', { text: String(list.length) }), el('span', { text: id.jenis === 'acara' ? 'Konfirmasi' : 'Ucapan' })),
-        el('div', null, el('strong', { text: String(hadir) }), el('span', { text: 'Hadir' })),
+        el('div', null, el('strong', { text: String(hadir) }), el('span', { text: 'Konfirmasi hadir' })),
         el('div', null, el('strong', { text: String(tidak) }), el('span', { text: 'Tidak hadir' })));
       daftarUcapan.textContent = '';
       var berisi = list.filter(function (u) { return teks(u.ucapan); });
@@ -1071,7 +1075,7 @@
       el('p', { class: 'paragraf muncul', text: J.ajakan }),
       form,
       waTuan ? el('a', { class: 'tombol garis kecil muncul', target: '_blank', rel: 'noopener', href: 'https://wa.me/' + waTuan + '?text=' + encodeURIComponent('Halo, saya ' + (tamu || '…') + '. Saya ingin konfirmasi kehadiran di ' + J.waRsvp + '.') }, el('span', { class: 'lbl', text: 'Konfirmasi via WhatsApp' })) : null,
-      (!endpoint && !modePreview) ? el('p', { class: 'catatan-demo', text: 'Mode demo: ucapan hanya tersimpan di perangkat ini.' }) : null,
+      (!endpoint && !modePreview) ? el('p', { class: 'catatan-demo', text: 'Mode demo: ucapan hanya tersimpan di perangkat ini. Di undangan asli, rekap lengkap beserta jumlah orang yang hadir masuk ke spreadsheet pemilik acara.' }) : null,
       statistik,
       daftarUcapan);
     setTimeout(function () { perbaruiJumlah(); muat(); }, 0);
@@ -1143,7 +1147,8 @@
       penanda,
       teks(d.keluarga) ? el('p', { class: 'keluarga muncul', text: teks(d.keluarga) }) : null,
       pembatas(),
-      el('footer', { class: 'kaki' }, 'Undangan digital oleh ', el('a', { href: ref, target: '_blank', rel: 'noopener', text: BRAND.nama || 'kami' })));
+      el('footer', { class: 'kaki' }, 'Undangan digital oleh ', el('a', { href: ref, target: '_blank', rel: 'noopener', text: BRAND.nama || 'kami' }),
+        teks(d.musikKredit) ? el('small', { class: 'kredit-musik', text: teks(d.musikKredit) }) : null));
     return s;
   }
 
@@ -1155,7 +1160,7 @@
     if (item.length < 2) return null;
     var nav = el('nav', { class: 'nav-bawah', 'aria-label': 'Navigasi undangan', hidden: !sudahDibuka });
     item.forEach(function (x, i) {
-      nav.append(el('a', { href: '#' + x[0], 'aria-label': x[2], title: x[2], 'data-target': x[0], class: i === 0 ? 'aktif' : null }, ikon(x[1])));
+      nav.append(el('a', { href: '#' + x[0], title: x[2], 'data-target': x[0], class: i === 0 ? 'aktif' : null }, ikon(x[1]), el('span', { class: 'nav-lbl', text: x[2] })));
     });
     if ('IntersectionObserver' in window) {
       if (pengamatNav) pengamatNav.disconnect();
@@ -1530,6 +1535,7 @@
     if (tanpa.indexOf('rsvp') >= 0) c.rsvp = Object.assign({}, d.rsvp || {}, { aktif: false });
     if (tanpa.indexOf('kontak') >= 0) c.kontak = [];
     if (tanpa.indexOf('video') >= 0) c.video = '';
+    if (tanpa.indexOf('siaran') >= 0) c.siaran = '';
     if (tanpa.indexOf('checkin') >= 0) c.checkin = false;
     return c;
   }
@@ -1537,9 +1543,25 @@
     try { return window.top !== window; } catch (e) { return true; }
   }
   function rupiah(n) { return 'Rp ' + Number(n || 0).toLocaleString('id-ID'); }
+  // Harga promo paket selama diskon config.js masih berlaku (sama dengan landing page).
+  function hargaPromoPaket(p) {
+    var D = BRAND.diskon, akhir = D ? Date.parse(D.sampai) : NaN;
+    if (!D || D.aktif === false || isNaN(akhir) || Date.now() >= akhir || !D.harga || !p) return null;
+    var h = Number(D.harga[p.id]);
+    return h > 0 && h < p.harga ? h : null;
+  }
+  // Link WhatsApp untuk memesan tema + paket yang sedang dilihat di demo.
+  function linkPesanDemo(p) {
+    var daftarTema = BRAND.tema || [], promo = hargaPromoPaket(p), D = BRAND.diskon || {};
+    var tema = daftarTema.filter(function (t) { return t.demo === slug; })[0] || daftarTema.filter(function (t) { return t.id === (dataAsli || {}).tema; })[0];
+    var harga = promo ? rupiah(promo) + ', ' + D.nama + ' — harga normal ' + rupiah(p.harga) : rupiah(p.harga);
+    var pesan = 'Halo ' + (BRAND.nama || 'admin') + ', saya mau pesan undangan digital' + (tema ? ' tema ' + tema.nama : '') +
+      ', paket ' + p.nama + ' (' + harga + ').\n\nJenis acara: \nTanggal acara: \nKota: ';
+    return 'https://wa.me/' + String(BRAND.whatsapp || '').replace(/\D/g, '') + '?text=' + encodeURIComponent(pesan);
+  }
 
-  var LABEL_BAGIAN = { galeri: 'Galeri foto', cerita: 'Cerita', rundown: 'Rundown', dresscode: 'Dress code', rsvp: 'RSVP & ucapan', kontak: 'Kontak panitia', video: 'Video prewedding', checkin: 'QR check-in tamu', terimakasih: 'Halaman terima kasih' };
-  var LABEL_PIL = { galeri: 'Galeri', cerita: 'Cerita', rundown: 'Rundown', dresscode: 'Dress code', rsvp: 'RSVP', video: 'Video', checkin: 'QR check-in', terimakasih: 'Terima kasih' };
+  var LABEL_BAGIAN = { galeri: 'Galeri foto', cerita: 'Cerita', rundown: 'Rundown', dresscode: 'Dress code', rsvp: 'RSVP & ucapan', kontak: 'Kontak panitia', video: 'Video prewedding', siaran: 'Live streaming', checkin: 'QR check-in tamu', terimakasih: 'Halaman terima kasih' };
+  var LABEL_PIL = { galeri: 'Galeri', cerita: 'Cerita', rundown: 'Rundown', dresscode: 'Dress code', rsvp: 'RSVP', video: 'Video', siaran: 'Live streaming', checkin: 'QR check-in', terimakasih: 'Terima kasih' };
   var GEMBOK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>';
 
   // Bagian yang tidak ada di setidaknya satu paket (urutan sesuai config).
@@ -1613,6 +1635,7 @@
     var tutup = el('button', { type: 'button', class: 'bp-tutup', 'aria-label': 'Tutup bilah contoh paket', onclick: function () { bilah.remove(); bilah = null; } }, '×');
     bilah = el('div', { class: 'bilah-paket', role: 'region', 'aria-label': 'Contoh undangan per paket' },
       el('div', { class: 'bp-baris' }, el('span', { class: 'bp-label', text: 'Contoh paket' }), pilihan, tutup),
+      el('div', { class: 'bp-aksi' }),
       el('div', { class: 'bp-fitur', 'aria-live': 'polite' }),
       el('p', { class: 'bp-petunjuk', text: 'Buka undangan, lalu gulir ke bawah untuk melihat bedanya.' }));
     document.body.append(bilah);
@@ -1626,9 +1649,13 @@
       b.classList.toggle('aktif', aktif);
       b.setAttribute('aria-checked', aktif ? 'true' : 'false');
     });
+    var aksi = bilah.querySelector('.bp-aksi'), promo = hargaPromoPaket(p);
+    aksi.textContent = '';
+    aksi.append(
+      el('span', { class: 'bp-harga' }, promo ? el('s', { text: rupiah(p.harga) }) : null, rupiah(promo || p.harga)),
+      el('a', { class: 'bp-pesan', href: linkPesanDemo(p), target: '_blank', rel: 'noopener' }, 'Pesan paket ini ›'));
     var wadah = bilah.querySelector('.bp-fitur');
     wadah.textContent = '';
-    wadah.append(el('span', { class: 'bp-harga', text: rupiah(p.harga) }));
     var tambahan = Array.isArray(p.demoTambahan) ? p.demoTambahan : [];
     if (tambahan.length) {
       var sebelum = semuaPaket[semuaPaket.indexOf(p) - 1];
