@@ -213,3 +213,39 @@ code { font-size: .9em; background: rgba(0, 0, 0, .08); padding: 1px 6px; border
   html { scroll-behavior: auto; }
   .btn, .kartu-tema, .wa-mengambang { transition: none; }
 }
+
+/* ---------- promo berbatas waktu (config.js → diskon) ---------- */
+.pil-promo { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 14px; padding: 7px 16px; border-radius: 999px; background: var(--aksen); color: #fff;
+  font-size: 13.5px; font-weight: 500; letter-spacing: .02em; text-decoration: none; box-shadow: 0 10px 24px -12px rgba(107, 28, 43, .6); }
+.pil-promo::after { content: "›"; font-size: 17px; line-height: 1; }
+.coret, .harga-normal s { color: var(--redup); font-weight: 400; text-decoration-thickness: 1.5px; }
+.pita-promo { justify-self: center; display: grid; justify-items: center; gap: 6px; margin-top: 10px; padding: 18px 26px 16px; border-radius: 22px;
+  background: linear-gradient(135deg, var(--aksen), var(--aksen-gelap)); color: #fff; text-align: center; box-shadow: 0 24px 50px -26px rgba(78, 18, 32, .7); max-width: 560px; }
+.kepala .pita-promo .pp-judul { margin: 0; max-width: none; font-family: var(--font-judul); font-size: 26px; font-weight: 600; line-height: 1.15; color: #f6e2ae; }
+.kepala .pita-promo .pp-ket { margin: 0; max-width: 46ch; font-size: 14.5px; line-height: 1.5; color: #fff; opacity: .92; }
+.hitung-promo { display: flex; gap: 8px; margin-top: 6px; }
+.hp-unit { display: grid; min-width: 58px; padding: 8px 6px 6px; border-radius: 12px; background: rgba(255, 255, 255, .12); border: 1px solid rgba(246, 226, 174, .35); }
+.hp-unit b { font-family: var(--font-judul); font-size: 26px; font-weight: 600; line-height: 1; font-variant-numeric: tabular-nums; }
+.hp-unit small { font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; opacity: .8; }
+.paket .label-diskon { position: absolute; top: 18px; right: 18px; padding: 5px 11px; border-radius: 999px; background: #c0392b; color: #fff; font-size: 13px; font-weight: 600; letter-spacing: .02em; }
+.paket .harga-normal { font-size: 14px; color: var(--redup); margin-bottom: -8px; }
+
+/* ---------- testimoni (config.js → testimoni) ---------- */
+.testimoni { background: var(--aksen-lembut); }
+.grid-testimoni { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 20px; max-width: 1080px; margin: 0 auto; }
+.kartu-testi { margin: 0; background: var(--kartu); border: 1px solid var(--garis); border-radius: 22px; padding: 26px 24px 22px; display: flex; flex-direction: column; gap: 16px; }
+.kartu-testi blockquote { margin: 0; flex: 1; font-family: var(--font-judul); font-size: 20px; font-style: italic; line-height: 1.5; color: var(--tinta); }
+.kartu-testi blockquote::before { content: "“"; display: block; font-size: 54px; line-height: .6; color: var(--emas); margin-bottom: 6px; font-style: normal; }
+.kartu-testi figcaption { display: flex; align-items: center; gap: 12px; }
+.testi-foto, .testi-inisial { width: 44px; height: 44px; border-radius: 50%; flex: none; object-fit: cover; }
+.testi-inisial { display: grid; place-items: center; background: var(--aksen); color: #fff; font-family: var(--font-judul); font-size: 21px; font-weight: 600; }
+.testi-info { display: grid; line-height: 1.3; }
+.testi-info strong { font-weight: 500; }
+.testi-info small { font-size: 13px; color: var(--redup); }
+.testi-link { font-size: 14px; color: var(--aksen); text-underline-offset: 3px; }
+@media (max-width: 520px) {
+  .pita-promo { padding: 16px 16px 14px; }
+  .kepala .pita-promo .pp-judul { font-size: 23px; }
+  .hp-unit { min-width: 52px; }
+  .hp-unit b { font-size: 22px; }
+}

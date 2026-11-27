@@ -26,6 +26,27 @@ window.BRAND = {
   // Contoh: "Harga perkenalan untuk 20 pemesan pertama"
   promo: "",
 
+  // Diskon berbatas waktu. Tampil otomatis di landing page (pita promo + hitung mundur + harga coret)
+  // dan BERAKHIR OTOMATIS setelah tanggal "sampai", jadi harga normal kembali tanpa perlu diubah.
+  //   aktif  : ubah ke false untuk mematikan lebih awal, misalnya saat kuota sudah penuh
+  //   sampai : batas akhir promo (WIB = +07:00)
+  //   harga  : harga promo per id paket; paket yang tidak disebut tetap harga normal
+  //   kuota  : jumlah pemesan yang dapat harga promo (hanya teks; matikan "aktif" bila sudah penuh)
+  diskon: {
+    aktif: true,
+    nama: "Promo Akhir Tahun",
+    persen: 50,
+    keterangan: "Spesial pembukaan berkenan.id",
+    kuota: 30,
+    sampai: "2027-01-01T23:59:59+07:00",
+    harga: { basic: 49000, premium: 89000, eksklusif: 149000 }
+  },
+
+  // Testimoni di landing page. Kosong = bagian testimoni disembunyikan.
+  // Pakai hanya testimoni asli, dengan kata-kata dan izin orangnya. Contoh:
+  //   { nama: "Rina & Dimas", acara: "Pernikahan · Bandung, 2025", teks: "Tamu kami banyak yang memuji…", link: "" }
+  testimoni: [],
+
   // Pengaturan demo per paket (undangan/?u=demo-…&paket=…):
   //   demoTanpa     : fitur yang tidak termasuk paket ini (galeri, cerita, rundown, dresscode, rsvp, kontak,
   //                   video, checkin, terimakasih)
