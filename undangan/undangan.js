@@ -424,8 +424,8 @@
       return s + '</g>';
     }
     // Tangkai kayu putih (eucalyptus): daun bulat keperakan berselang-seling
-    function kayuPutih(titikTitik, ukuran, seed) {
-      var rnd = acakB(seed), s = '<path class="tangkai-garis" d="M' + titikTitik.map(function (t) { return n(t[0]) + ' ' + n(t[1]); }).join('L') + '"/>';
+    function kayuPutih(titikTitik, ukuran, seed, tanpaBatang) {
+      var rnd = acakB(seed), s = tanpaBatang ? '' : '<path class="tangkai-garis" d="M' + titikTitik.map(function (t) { return n(t[0]) + ' ' + n(t[1]); }).join('L') + '"/>';
       for (var i = 0; i < titikTitik.length - 1; i++) {
         var a = titikTitik[i], b = titikTitik[i + 1];
         for (var k = 0; k < 3; k++) {
@@ -461,25 +461,25 @@
     }
     // Satu lapisan tangkai: ox/oy = titik tumpu ayunan (% dari kotak), a = sudut ayun, d = lama satu irama.
     function lapisanTangkai(lebar, tinggi, isi, ox, oy, a, d) {
-      return '<span class="tangkai" style="--ox:' + ox + '%;--oy:' + oy + '%;--a:' + a + 'deg;--d:' + d + 's"><svg viewBox="0 0 ' + lebar + ' ' + tinggi + '">' + isi + '</svg></span>';
+      return '<span class="ayunan" style="--ox:' + ox + '%;--oy:' + oy + '%;--a:' + a + 'deg;--d:' + d + 's"><svg viewBox="0 0 ' + lebar + ' ' + tinggi + '">' + isi + '</svg></span>';
     }
     function ukuran(lebar, tinggi) { return '<svg class="ukuran" viewBox="0 0 ' + lebar + ' ' + tinggi + '"></svg>'; }
 
+    // Rangkaian sudut: gerombol bunga yang rapat (sedikit batang), daun pendek mengintip di tepinya.
     function isiSudut() {
-        var dedaun = '<path class="tangkai-garis" d="M-4 306C30 216 50 132 74 34"/><path class="tangkai-garis" d="M-4 302C84 270 172 226 252 148"/>';
-        [[44, 200, 34, -30, 0], [60, 148, 31, 28, 1], [70, 98, 27, -30, 0], [24, 252, 36, 34, 1],
-          [116, 252, 33, 66, 0], [166, 224, 30, 82, 1], [214, 186, 27, 72, 0], [92, 236, 26, 14, 1]]
+        var dedaun = '';
+        [[176, 208, 30, 62, 0], [206, 252, 30, 80, 1], [122, 182, 30, 28, 0], [80, 156, 30, -8, 1], [40, 168, 30, -40, 0],
+          [20, 214, 30, -62, 1], [150, 196, 26, 44, 1], [232, 290, 26, 96, 0], [100, 150, 24, 10, 0]]
           .forEach(function (d) { dedaun += daunR(d[0], d[1], d[2], d[3], d[4]); });
-        dedaun += pakisEmas(98, 206, 72, 38) + pakisEmas(18, 216, 66, -14);
-        var kayu = kayuPutih([[2, 302], [62, 236], [118, 186], [176, 150], [226, 128]], 12, 3) + kayuPutih([[0, 300], [10, 236], [26, 176], [48, 128]], 10, 8);
-        var ranting = bayi(150, 236, 96, 52, 4) + bayi(64, 170, 88, -6, 6) + bayi(206, 274, 80, 74, 9) +
-          '<path class="tangkai-garis" d="M30 290C60 220 72 160 84 104"/>' + kuncupMawar(84, 104, 12, 1, 12) +
-          '<path class="tangkai-garis" d="M60 296C120 268 170 240 222 196"/>' + kuncupMawar(222, 196, 11, 2, 64);
-        var kecil = daunR(166, 204, 22, 60, true) + daunR(108, 190, 20, -30, true) +
-          kembang(152, 214, 13, 10) + kembang(178, 240, 11, 40) + kembang(118, 176, 11, 70) + kembang(196, 270, 12, 20) + kembang(16, 132, 10, 30) +
-          kembang(134, 196, 9, 50) + kembang(222, 244, 9, 15) + peoni(100, 186, 20, 1, 30, 14);
-        var utama = daunR(96, 292, 36, 50) + daunR(22, 216, 34, -40, true) + daunR(170, 302, 32, 84, true) +
-          peoni(60, 236, 54, 2, 10, 3) + mawar(136, 268, 44, 1, -12, 5) + mawar(30, 168, 31, 1, 34, 9) + mawar(196, 300, 26, 2, 20, 12);
+        dedaun += pakisEmas(150, 210, 44, 46) + pakisEmas(56, 170, 42, -18);
+        var kayu = kayuPutih([[96, 250], [150, 212], [196, 190]], 9, 3, true) + kayuPutih([[40, 240], [30, 196], [34, 156]], 8, 8, true);
+        var ranting = bayi(186, 226, 40, 64, 4) + bayi(70, 160, 38, -14, 6) + bayi(226, 276, 34, 84, 9) +
+          kuncupMawar(172, 188, 10, 1, 40) + kuncupMawar(66, 146, 9, 2, -20) + kuncupMawar(236, 262, 9, 1, 76);
+        var kecil = peoni(118, 204, 30, 1, 30, 14) + mawar(178, 236, 25, 2, 18, 16) + mawar(76, 186, 22, 2, -20, 18) +
+          kembang(150, 182, 12, 10) + kembang(204, 216, 11, 40) + kembang(212, 270, 12, 20) + kembang(44, 150, 11, 30) +
+          kembang(98, 166, 10, 70) + kembang(142, 230, 10, 50) + kembang(26, 200, 10, 15);
+        var utama = peoni(60, 236, 54, 2, 10, 3) + mawar(136, 268, 44, 1, -12, 5) + mawar(30, 174, 30, 1, 34, 9) + mawar(196, 298, 28, 2, 20, 12) +
+          daunR(100, 300, 28, 52) + daunR(168, 306, 26, 84, true) + kembang(96, 286, 10, 25);
         return [dedaun, kayu, ranting, kecil, utama];
     }
     function isiUntaian() {
@@ -1400,9 +1400,9 @@
   var pengamatBunga = null;
   function hidupkanBunga() {
     if (pengamatBunga) pengamatBunga.disconnect();
-    var semua = Array.prototype.slice.call(document.querySelectorAll('.orn-sudut, .orn-untaian, .bingkai-bunga')).filter(function (n) { return n.querySelector('.tangkai'); });
+    var semua = Array.prototype.slice.call(document.querySelectorAll('.orn-sudut, .orn-untaian, .bingkai-bunga')).filter(function (n) { return n.querySelector('.ayunan'); });
     semua.forEach(function (n) {
-      n.querySelectorAll('.tangkai').forEach(function (t) { t.style.setProperty('--t', (-Math.random() * 8).toFixed(2) + 's'); });
+      n.querySelectorAll('.ayunan').forEach(function (t) { t.style.setProperty('--t', (-Math.random() * 8).toFixed(2) + 's'); });
     });
     if (geraknyaDikurangi) return;
     if (!('IntersectionObserver' in window)) { semua.forEach(function (n) { n.classList.add('hidup'); }); return; }

@@ -424,8 +424,8 @@ body[data-tema="gold"] .kutipan blockquote p { font-family: "Cormorant Garamond"
 }
 .bingkai-foto img { width: 100%; height: 100%; object-fit: cover; filter: var(--filter-foto); transition: transform 1.2s ease; }
 .mempelai:hover .bingkai-foto img { transform: scale(1.05); }
-.bingkai-bunga { position: absolute; width: 142px; left: -52px; bottom: -48px; pointer-events: none; }
-.mempelai:nth-of-type(odd) .bingkai-bunga { left: auto; right: -44px; transform: scaleX(-1); }
+.bingkai-bunga { position: absolute; width: 136px; left: -46px; bottom: -6px; pointer-events: none; }
+.mempelai:nth-of-type(odd) .bingkai-bunga { left: auto; right: -46px; transform: scaleX(-1); }
 .monogram { width: 100%; height: 100%; display: grid; place-items: center; background: radial-gradient(circle at 50% 30%, var(--kartu), transparent), var(--bg-2); font-family: var(--f-script); font-size: 96px; color: var(--aksen-2); }
 .nama-lengkap { font-family: var(--f-judul); font-size: 21px; font-weight: 600; color: var(--teks); }
 .ortu { color: var(--redup); font-size: 14px; max-width: 30ch; }
@@ -841,9 +841,9 @@ body[data-tema="modern"] .field input, body[data-tema="modern"] .field select, b
 .tangkai-garis.tipis { stroke-width: 0.7; }
 .butir-bayi { fill: #fffbf3; stroke: rgba(120, 100, 80, 0.25); stroke-width: 0.4; }
 svg.ukuran { visibility: hidden; }
-.tangkai { position: absolute; inset: 0; display: block; transform-origin: var(--ox, 0%) var(--oy, 100%); }
-.tangkai svg { display: block; width: 100%; height: 100%; overflow: visible; }
-.hidup > .tangkai { animation: angin var(--d, 6s) ease-in-out var(--t, 0s) infinite; }
+.ayunan { position: absolute; inset: 0; display: block; transform-origin: var(--ox, 0%) var(--oy, 100%); }
+.ayunan svg { display: block; width: 100%; height: 100%; overflow: visible; }
+.hidup > .ayunan { animation: angin var(--d, 6s) ease-in-out var(--t, 0s) infinite; }
 /* Hembusan tidak beraturan: condong, kembali sedikit, hembusan lebih kuat, lalu reda */
 @keyframes angin {
   0%, 100% { transform: rotate(calc(var(--a, 3deg) * -0.55)); }
@@ -853,4 +853,4 @@ svg.ukuran { visibility: hidden; }
   72% { transform: rotate(calc(var(--a, 3deg) * 0.15)); }
   86% { transform: rotate(calc(var(--a, 3deg) * -0.35)); }
 }
-@media (prefers-reduced-motion: reduce) { .hidup > .tangkai { animation: none; } }
+@media (prefers-reduced-motion: reduce) { .hidup > .ayunan { animation: none; } }
