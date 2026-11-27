@@ -300,3 +300,6 @@ html.promo-terbuka { overflow: hidden; }
 @media (max-width: 820px) { .harga-hp { display: inline-block; margin-left: auto; } }
 @media (max-width: 420px) { .harga-hp { font-size: 14px; } .ringkas-testi li { min-width: 84px; padding: 12px 12px 10px; } .ringkas-testi b { font-size: 30px; } }
 @media (max-width: 349px) { .harga-hp { display: none; } }
+
+/* Tombol "Lihat … testimoni lainnya" */
+.testi-lagi { text-align: center; margin: 26px 0 0; }

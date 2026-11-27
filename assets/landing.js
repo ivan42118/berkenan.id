@@ -2,7 +2,7 @@
   'use strict';
   var B = window.BRAND || {};
   var NOMOR_CONTOH = '6281234567890';
-  var VERSI = '20261127f'; // samakan dengan ?v= di index.html setiap kali ada update
+  var VERSI = '20261128a'; // samakan dengan ?v= di index.html setiap kali ada update
   var wa = String(B.whatsapp || '').replace(/\D/g, '');
 
   function rupiah(n) { return 'Rp ' + Number(n || 0).toLocaleString('id-ID'); }
@@ -314,8 +314,10 @@
     Object.keys(JENIS_RINGKAS).forEach(function (k) { if (hitungJenis[k]) butirRingkas(hitungJenis[k], JENIS_RINGKAS[k]); });
     if (testi.length) {
       var gridTesti = document.getElementById('grid-testimoni');
-      testi.forEach(function (t) {
+      var TAMPIL_AWAL = 6; // sisanya disembunyikan di balik tombol supaya halaman di HP tidak terlalu panjang
+      testi.forEach(function (t, i) {
         var kartu = el('figure', 'kartu-testi');
+        if (i >= TAMPIL_AWAL) kartu.hidden = true;
         var kutip = el('blockquote', null, String(t.teks));
         var siapa = el('figcaption');
         var foto = /^https:\/\//.test(String(t.foto || '')) ? el('img', 'testi-foto') : el('span', 'testi-inisial', String(t.nama).trim().charAt(0).toUpperCase());
@@ -332,6 +334,20 @@
         }
         gridTesti.append(kartu);
       });
+      if (testi.length > TAMPIL_AWAL) {
+        var sisa = testi.length - TAMPIL_AWAL;
+        var bungkusLagi = el('p', 'testi-lagi');
+        var tombolLagi = el('button', 'btn garis kecil', 'Lihat ' + sisa + ' testimoni lainnya');
+        tombolLagi.type = 'button';
+        tombolLagi.addEventListener('click', function () {
+          var tersembunyi = gridTesti.querySelectorAll('.kartu-testi[hidden]');
+          tersembunyi.forEach(function (k) { k.hidden = false; });
+          bungkusLagi.remove();
+          if (tersembunyi[0]) { tersembunyi[0].tabIndex = -1; tersembunyi[0].focus({ preventScroll: true }); }
+        });
+        bungkusLagi.append(tombolLagi);
+        gridTesti.after(bungkusLagi);
+      }
       document.getElementById('testi-ajak').hidden = false;
       var menuHarga = document.querySelector('.menu a[href="#harga"]');
       if (menuHarga) { var m = el('a', null, 'Testimoni'); m.href = '#testimoni'; menuHarga.after(m); }

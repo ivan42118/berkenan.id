@@ -47,33 +47,37 @@ window.BRAND = {
 
   // Testimoni & rekam jejak di landing page. Kosong = bagian ini disembunyikan.
   //   jenis : pernikahan | khitan | ulangtahun | acara (untuk ringkasan jumlah acara, tampil TANPA nama)
-  //   izin  : ubah ke true HANYA setelah orangnya setuju dan "teks" sudah diganti dengan kata-kata aslinya.
+  //   izin  : ubah ke true HANYA setelah orangnya membaca dan setuju dengan kalimat di "teks".
   //           Selama belum true, nama & kata-katanya tidak tampil; yang tampil hanya ringkasan jumlah acara.
   //   foto / link (opsional): alamat https foto orangnya / undangannya.
-  // Semua "teks" di bawah masih TEMPLATE dan belum dikonfirmasi ke orangnya.
+  // Urutan di sini = urutan tampil. 6 pertama langsung terlihat, sisanya di balik tombol "Lihat … lainnya".
+  // Kata-kata ditulis Ivan atas permintaan masing-masing (mereka menyerahkan kata-katanya).
+  // Kirim dulu kalimatnya ke orangnya; setelah mereka oke, ubah izin-nya ke true.
   testimoni: [
-    { nama: "Burhan & Putri", jenis: "pernikahan", acara: "Pernikahan · Maroon Romance · Eksklusif", izin: false,
-      teks: "Tamu-tamu banyak yang bilang undangannya mewah dan rapi. QR check-in di pintu masuk juga bikin penerima tamu jauh lebih santai." },
-    { nama: "Andriyano & Sinta", jenis: "pernikahan", acara: "Pernikahan · Maroon Romance · Eksklusif", izin: false,
-      teks: "Revisinya cepat dan sabar mengikuti mau kami. Hasil akhirnya persis seperti yang kami bayangkan." },
-    { nama: "Wahyu & Nindi", jenis: "pernikahan", acara: "Pernikahan · Moss Garden · Eksklusif", izin: false,
-      teks: "Nuansa hijaunya pas sekali dengan konsep garden party kami. Video undangannya juga ramai dibagikan teman-teman di Status." },
     { nama: "Gilang & Michelle", jenis: "pernikahan", acara: "Pernikahan · Desain kustom · Eksklusif", izin: false,
-      teks: "Kami minta desain sesuai konsep sendiri, dan hasilnya benar-benar beda dari undangan kebanyakan. Tinggal kirim ide, sisanya dibantu." },
-    { nama: "Khitanan M. Abhar Aljunaid", jenis: "khitan", acara: "Khitanan · Desain kustom · Eksklusif", izin: false,
-      teks: "Keluarga yang jauh tetap bisa ikut mendoakan. Undangannya mudah dibuka, bahkan oleh kakek dan nenek." },
+      teks: "Kami cuma kirim ide kasar, lalu dibantu sampai jadi desain yang benar-benar sesuai keinginan kami. Beda dari undangan kebanyakan." },
     { nama: "Zenada Dirga Cahaya", jenis: "ulangtahun", acara: "Ulang tahun · Ceria Pastel · Premium", izin: false,
-      teks: "Warnanya ceria dan lucu, cocok untuk pesta ulang tahun. Dari konfirmasi tamu, kami jadi tahu berapa suvenir yang perlu disiapkan." },
-    { nama: "Tommy & Ajeng", jenis: "pernikahan", acara: "Pernikahan · Maroon Romance · Basic", izin: false,
-      teks: "Harganya terjangkau tapi tampilannya tetap elegan. Tinggal sebar link ke grup keluarga, semua langsung dapat nama masing-masing." },
-    { nama: "Fikri & Bella", jenis: "pernikahan", acara: "Pernikahan · Maroon Romance · Basic", izin: false,
-      teks: "Prosesnya cepat, besoknya draf sudah jadi. Pas untuk kami yang persiapannya mepet." },
+      teks: "Warnanya ceria dan lucu, pas untuk pesta ulang tahun. Dari konfirmasi kehadiran, kami jadi lebih mudah memperkirakan jumlah tamu." },
+    { nama: "Wahyu & Nindi", jenis: "pernikahan", acara: "Pernikahan · Moss Garden · Eksklusif", izin: false,
+      teks: "Nuansa hijaunya teduh, cocok dengan konsep acara kami. Video undangannya juga enak dibagikan di Status WhatsApp." },
+    { nama: "Khitanan M. Abhar Aljunaid", jenis: "khitan", acara: "Khitanan · Desain kustom · Eksklusif", izin: false,
+      teks: "Desainnya dibuat khusus untuk khitanan anak kami. Keluarga yang jauh juga bisa ikut mengirim doa lewat kolom ucapan." },
+    { nama: "Rafi & Putri", jenis: "pernikahan", acara: "Pernikahan · Maroon Romance · Premium", izin: false,
+      teks: "Foto-foto prewedding kami tampil cantik di galeri. Ucapan dari tamu juga terkumpul rapi, senang sekali membacanya satu per satu." },
+    { nama: "Robith & Denada", jenis: "pernikahan", acara: "Pernikahan · Maroon Romance · Basic", izin: false,
+      teks: "Paketnya sederhana, tapi tampilannya tetap elegan. Amplop digitalnya juga memudahkan tamu yang berhalangan hadir." },
     { nama: "Alumni SMK Veteran angkatan 2019", jenis: "acara", acara: "Reuni · Desain kustom", izin: false,
       teks: "Undangan reuninya terlihat profesional dan gampang disebar di grup alumni. Panitia jadi mudah merekap siapa saja yang datang." },
-    { nama: "Rafi & Putri", jenis: "pernikahan", acara: "Pernikahan · Maroon Romance · Premium", izin: false,
-      teks: "Galeri foto prewedding kami tampil cantik, dan ucapan dari tamu masuk semua ke rekap. Senang sekali membacanya satu per satu." },
-    { nama: "Robith & Denada", jenis: "pernikahan", acara: "Pernikahan · Maroon Romance · Premium", izin: false,
-      teks: "Fitur RSVP-nya sangat membantu menghitung tamu yang datang. Pertanyaan kami juga selalu dijawab dengan cepat." }
+    { nama: "Andriyano & Sinta", jenis: "pernikahan", acara: "Pernikahan · Maroon Romance · Eksklusif", izin: false,
+      teks: "Setiap permintaan perubahan dari kami dilayani dengan sabar. Hasil akhirnya persis seperti yang kami bayangkan." },
+    { nama: "Burhan & Putri", jenis: "pernikahan", acara: "Pernikahan · Maroon Romance · Premium", izin: false,
+      teks: "Warna marunnya elegan, pas dengan dekorasi kami. Keluarga juga gampang membukanya, tinggal klik langsung ketemu lokasinya." },
+    { nama: "Tommy & Ajeng", jenis: "pernikahan", acara: "Pernikahan · Maroon Romance · Premium", izin: false,
+      teks: "Link undangan per nama tamu bikin kirimnya terasa lebih sopan dan personal. Kami tinggal salin, lalu kirim lewat WhatsApp." },
+    { nama: "Fikri & Bella", jenis: "pernikahan", acara: "Pernikahan · Maroon Romance · Premium", izin: false,
+      teks: "Prosesnya cepat dan komunikasinya enak. Cocok untuk kami yang persiapannya serba mepet." },
+    { nama: "Raka & Sesil", jenis: "pernikahan", acara: "Pernikahan · Maroon Romance · Premium", izin: false,
+      teks: "Susunan acara dan dress code tertulis jelas di undangan, jadi tamu tidak bingung. Musiknya juga bikin suasananya makin hangat." }
   ],
 
   // Pengaturan demo per paket (undangan/?u=demo-…&paket=…):
@@ -97,7 +101,7 @@ window.BRAND = {
         "Simpan ke kalender tamu",
         "Amplop digital (rekening / e-wallet)",
         "Musik latar",
-        "1× revisi"
+        "5× revisi"
       ]
     },
     {
@@ -114,7 +118,7 @@ window.BRAND = {
         "Kisah / cerita, rundown & dress code",
         "RSVP & ucapan tamu + rekap kehadiran",
         "Generator link tamu untuk sebar via WA",
-        "3× revisi"
+        "10× revisi"
       ]
     },
     {
@@ -130,13 +134,14 @@ window.BRAND = {
       demoTerimaKasih: true,
       fitur: [
         "Semua fitur Premium",
-        "Desain kustom sesuai konsep acara (2× revisi desain)",
+        "Desain kustom sesuai konsep acara",
         "QR check-in, buku tamu digital & layar sambutan",
         "Video undangan 15 detik untuk Status & Story",
         "Video prewedding & live streaming",
         "Halaman terima kasih setelah acara",
         "Galeri tanpa batas & preview link WA berfoto",
-        "Pengerjaan prioritas 6 jam, revisi sepuasnya 7 hari"
+        "Pengerjaan prioritas 6 jam",
+        "Revisi tanpa batas"
       ]
     }
   ],
