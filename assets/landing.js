@@ -2,7 +2,7 @@
   'use strict';
   var B = window.BRAND || {};
   var NOMOR_CONTOH = '6281234567890';
-  var VERSI = '20261127d'; // samakan dengan ?v= di index.html setiap kali ada update
+  var VERSI = '20261127e'; // samakan dengan ?v= di index.html setiap kali ada update
   var wa = String(B.whatsapp || '').replace(/\D/g, '');
 
   function rupiah(n) { return 'Rp ' + Number(n || 0).toLocaleString('id-ID'); }
@@ -93,10 +93,13 @@
     // v = versi situs, supaya browser tidak memakai halaman demo lama dari cache setelah update.
     var demo = 'undangan/?u=' + encodeURIComponent(t.demo) + '&to=' + encodeURIComponent(SAPAAN_DEMO[t.kategori] || 'Tamu Undangan') + '&v=' + VERSI;
     var kartu = el('article', 'kartu-tema');
+    var labelTema = el('div', 'label-tema');
     if (t.kategori) {
       kartu.dataset.kategori = t.kategori;
-      kartu.append(el('span', 'kategori-tema', NAMA_KATEGORI[t.kategori] || t.kategori));
+      labelTema.append(el('span', 'kategori-tema', NAMA_KATEGORI[t.kategori] || t.kategori));
     }
+    if (diskonAktif()) labelTema.append(el('span', 'diskon-tema', 'Diskon ' + D.persen + '%'));
+    if (labelTema.childNodes.length) kartu.append(labelTema);
     var pratinjau = el('div', 'pratinjau');
     var frame = document.createElement('iframe');
     frame.src = demo;
@@ -120,7 +123,14 @@
   });
 
   // Pita promo: judul, keterangan, kuota, dan hitung mundur sampai promo berakhir.
-  var pita = null, timerPromo = null;
+  var pita = null, timerPromo = null, semuaHitung = [];
+  function buatHitung() {
+    var kotak = el('div', 'hitung-promo');
+    semuaHitung.push(['hari', 'jam', 'menit', 'detik'].map(function (l) {
+      var u = el('span', 'hp-unit'); var b = el('b', null, '00'); u.append(b, el('small', null, l)); kotak.append(u); return b;
+    }));
+    return kotak;
+  }
   function pasangPita() {
     if (!diskonAktif()) return;
     var hero = document.querySelector('.hero-teks .eyebrow');
@@ -129,10 +139,7 @@
       ajak.href = '#harga';
       hero.parentNode.insertBefore(ajak, hero);
     }
-    var kotak = el('div', 'hitung-promo');
-    var unit = ['hari', 'jam', 'menit', 'detik'].map(function (l) {
-      var u = el('span', 'hp-unit'); var b = el('b', null, '00'); u.append(b, el('small', null, l)); kotak.append(u); return b;
-    });
+    var kotak = buatHitung();
     pita = el('div', 'pita-promo');
     pita.setAttribute('role', 'note');
     pita.append(el('p', 'pp-judul', D.nama + ' — Diskon ' + D.persen + '%'),
@@ -144,15 +151,103 @@
       var sisa = akhirDiskon - Date.now();
       if (sisa <= 0) { // promo selesai: kembalikan harga normal tanpa memuat ulang
         clearInterval(timerPromo); pita.remove();
-        var pil = document.querySelector('.pil-promo'); if (pil) pil.remove();
+        document.querySelectorAll('.pil-promo, .diskon-tema, .promo-lapis').forEach(function (n) { n.remove(); });
+        document.documentElement.classList.remove('promo-terbuka');
         hargaHero(); tulisHarga(); return;
       }
-      [Math.floor(sisa / 864e5), Math.floor(sisa / 36e5) % 24, Math.floor(sisa / 6e4) % 60, Math.floor(sisa / 1e3) % 60]
-        .forEach(function (v, i) { unit[i].textContent = String(v).padStart(2, '0'); });
+      var angka = [Math.floor(sisa / 864e5), Math.floor(sisa / 36e5) % 24, Math.floor(sisa / 6e4) % 60, Math.floor(sisa / 1e3) % 60];
+      semuaHitung.forEach(function (unit) { angka.forEach(function (v, i) { unit[i].textContent = String(v).padStart(2, '0'); }); });
     }
+    pasangPita.tik = tik;
     tik(); timerPromo = setInterval(tik, 1000);
   }
   pasangPita();
+
+  // Jendela promo + konfeti saat situs dibuka. Setelah ditutup, tidak muncul lagi selama 24 jam.
+  function konfeti() {
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var kanvas = el('canvas', 'konfeti');
+    kanvas.setAttribute('aria-hidden', 'true');
+    document.body.append(kanvas);
+    var ctx = kanvas.getContext('2d'), dpr = Math.min(2, window.devicePixelRatio || 1), W, H;
+    function ukur() { W = innerWidth; H = innerHeight; kanvas.width = W * dpr; kanvas.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0); }
+    ukur(); addEventListener('resize', ukur);
+    var WARNA = ['#6b1c2b', '#b8914c', '#f6e2ae', '#e8a4b0', '#ffffff', '#8c9a74', '#d9b679'];
+    var butir = [];
+    function semprot(x, y, sudut, jumlah) {
+      for (var i = 0; i < jumlah; i++) {
+        var a = sudut + (Math.random() - 0.5) * 1.1, v = 7 + Math.random() * 9;
+        butir.push({ x: x, y: y, vx: Math.cos(a) * v, vy: Math.sin(a) * v, r: Math.random() * Math.PI, vr: (Math.random() - 0.5) * 0.35,
+          w: 6 + Math.random() * 6, h: 4 + Math.random() * 6, warna: WARNA[i % WARNA.length], bentuk: Math.random() < 0.3 ? 'bulat' : 'kotak', goyang: Math.random() * 6.28 });
+      }
+    }
+    semprot(0, H * 0.75, -Math.PI / 3, 90);                    // dari kiri bawah
+    semprot(W, H * 0.75, -Math.PI * 2 / 3, 90);                // dari kanan bawah
+    setTimeout(function () { semprot(W / 2, -10, Math.PI / 2, 70); }, 350); // hujan dari atas
+    var mulai = performance.now();
+    (function gambar(t) {
+      ctx.clearRect(0, 0, W, H);
+      butir.forEach(function (b) {
+        b.vy += 0.22; b.vx *= 0.985; b.vy *= 0.985; b.goyang += 0.08;
+        b.x += b.vx + Math.sin(b.goyang) * 0.6; b.y += b.vy; b.r += b.vr;
+        ctx.save(); ctx.translate(b.x, b.y); ctx.rotate(b.r); ctx.fillStyle = b.warna;
+        if (b.bentuk === 'bulat') { ctx.beginPath(); ctx.arc(0, 0, b.w / 2.4, 0, 6.28); ctx.fill(); }
+        else ctx.fillRect(-b.w / 2, -b.h / 2 * Math.abs(Math.cos(b.goyang)), b.w, b.h * Math.abs(Math.cos(b.goyang)) + 0.5);
+        ctx.restore();
+      });
+      butir = butir.filter(function (b) { return b.y < H + 30; });
+      if (butir.length && t - mulai < 7000) requestAnimationFrame(gambar);
+      else { removeEventListener('resize', ukur); kanvas.remove(); }
+    })(mulai);
+  }
+  function jendelaPromo() {
+    if (!diskonAktif()) return;
+    var KUNCI = 'berkenan-promo-ditutup';
+    try { var lalu = Number(localStorage.getItem(KUNCI)); if (lalu && Date.now() - lalu < 864e5) return; } catch (e) { /* tanpa penyimpanan */ }
+    var tutup = el('button', 'promo-tutup', '×');
+    tutup.type = 'button'; tutup.setAttribute('aria-label', 'Tutup info promo');
+    var daftar = el('ul', 'promo-harga');
+    paket.forEach(function (p) {
+      var h = hargaPromo(p);
+      if (!h) return;
+      var li = el('li'); li.append(el('span', null, p.nama), el('s', null, rupiah(p.harga)), el('b', null, rupiah(h)));
+      daftar.append(li);
+    });
+    var lihat = el('a', 'btn', 'Lihat harga promo');
+    lihat.href = '#harga';
+    var tanya = el('a', 'btn garis', 'Tanya via WhatsApp');
+    tanya.href = linkWa(sapaan + 'saya mau tanya tentang ' + D.nama + ' diskon ' + D.persen + '%.');
+    tanya.target = '_blank'; tanya.rel = 'noopener';
+    var atas = el('div', 'promo-atas');
+    atas.append(el('p', 'promo-label', D.nama), el('p', 'promo-besar', 'Diskon ' + D.persen + '%'),
+      el('p', 'promo-ket', (D.keterangan || 'Untuk semua paket') + (D.kuota ? ' · ' + D.kuota + ' pemesan pertama' : '')),
+      buatHitung(), el('p', 'promo-sampai', 'Berakhir ' + tglAkhir()));
+    var bawah = el('div', 'promo-bawah');
+    bawah.append(daftar);
+    var aksi = el('div', 'promo-aksi'); aksi.append(lihat, tanya); bawah.append(aksi);
+    var kotak = el('div', 'promo-kotak'); kotak.append(tutup, atas, bawah);
+    var lapis = el('div', 'promo-lapis');
+    lapis.setAttribute('role', 'dialog'); lapis.setAttribute('aria-modal', 'true'); lapis.setAttribute('aria-label', D.nama + ' diskon ' + D.persen + '%');
+    lapis.append(kotak);
+    function tutupJendela() {
+      try { localStorage.setItem(KUNCI, String(Date.now())); } catch (e) { /* abaikan */ }
+      lapis.classList.add('keluar');
+      document.documentElement.classList.remove('promo-terbuka');
+      document.removeEventListener('keydown', esc);
+      setTimeout(function () { lapis.remove(); }, 300);
+    }
+    function esc(e) { if (e.key === 'Escape') tutupJendela(); }
+    tutup.addEventListener('click', tutupJendela);
+    lihat.addEventListener('click', tutupJendela);
+    lapis.addEventListener('click', function (e) { if (e.target === lapis) tutupJendela(); });
+    document.addEventListener('keydown', esc);
+    document.body.append(lapis);
+    document.documentElement.classList.add('promo-terbuka');
+    if (pasangPita.tik) pasangPita.tik();
+    tutup.focus({ preventScroll: true });
+    konfeti();
+  }
+  setTimeout(jendelaPromo, 700);
 
   // Daftar harga
   var gridHarga = document.getElementById('grid-harga');

@@ -249,3 +249,42 @@ code { font-size: .9em; background: rgba(0, 0, 0, .08); padding: 1px 6px; border
   .hp-unit { min-width: 52px; }
   .hp-unit b { font-size: 22px; }
 }
+
+/* ---------- label diskon di kartu tema ---------- */
+.label-tema { position: absolute; top: 28px; left: 28px; right: 28px; z-index: 2; display: flex; flex-wrap: wrap; gap: 6px; pointer-events: none; }
+.label-tema .kategori-tema { position: static; }
+.diskon-tema { background: #c0392b; color: #fff; font-size: 12px; font-weight: 600; letter-spacing: 0.04em; padding: 4px 10px; border-radius: 999px; box-shadow: 0 6px 14px -6px rgba(192, 57, 43, .7); }
+
+/* ---------- jendela promo + konfeti ---------- */
+html.promo-terbuka { overflow: hidden; }
+.promo-lapis { position: fixed; inset: 0; z-index: 90; display: grid; place-items: center; padding: 20px; background: rgba(26, 12, 15, .58);
+  -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px); animation: promoLatar .35s ease both; }
+.promo-lapis.keluar { animation: promoLatarKeluar .3s ease forwards; }
+.promo-kotak { position: relative; width: min(400px, 100%); max-height: calc(100vh - 40px); overflow: auto; border-radius: 28px; background: var(--kartu);
+  box-shadow: 0 40px 90px -30px rgba(0, 0, 0, .6); animation: promoMasuk .55s cubic-bezier(.2, .9, .3, 1.25) both; }
+.promo-lapis.keluar .promo-kotak { animation: promoKeluar .3s ease forwards; }
+.promo-tutup { position: absolute; top: 12px; right: 12px; z-index: 2; width: 38px; height: 38px; border-radius: 50%; border: 0; cursor: pointer;
+  background: rgba(255, 255, 255, .18); color: #fff; font-size: 24px; line-height: 1; display: grid; place-items: center; transition: background .2s; }
+.promo-tutup:hover { background: rgba(255, 255, 255, .3); }
+.promo-tutup:focus-visible { outline: 2px solid #f6e2ae; outline-offset: 2px; }
+.promo-atas { display: grid; justify-items: center; gap: 6px; padding: 32px 24px 24px; text-align: center; color: #fff;
+  background: radial-gradient(130% 120% at 50% 0%, #8f2c40 0%, var(--aksen) 45%, var(--aksen-gelap) 100%); }
+.promo-label { font-size: 12px; font-weight: 500; letter-spacing: .26em; text-transform: uppercase; color: #f6e2ae; }
+.promo-besar { font-family: var(--font-judul); font-size: 54px; font-weight: 600; line-height: 1; color: #f6e2ae; text-shadow: 0 6px 20px rgba(0, 0, 0, .25); }
+.promo-ket { font-size: 14.5px; opacity: .92; max-width: 30ch; }
+.promo-sampai { font-size: 12.5px; opacity: .8; }
+.promo-atas .hitung-promo { margin: 8px 0 2px; }
+.promo-bawah { display: grid; gap: 16px; padding: 18px 22px 22px; }
+.promo-harga { list-style: none; margin: 0; padding: 0; display: grid; }
+.promo-harga li { display: grid; grid-template-columns: 1fr auto auto; align-items: baseline; gap: 12px; padding: 10px 2px; border-bottom: 1px dashed var(--garis); font-size: 15px; }
+.promo-harga li:last-child { border-bottom: 0; }
+.promo-harga s { color: var(--redup); font-size: 13.5px; }
+.promo-harga b { font-family: var(--font-judul); font-size: 22px; font-weight: 600; color: var(--aksen); }
+.promo-aksi { display: grid; gap: 10px; }
+.promo-aksi .btn { width: 100%; justify-content: center; }
+.konfeti { position: fixed; inset: 0; z-index: 95; width: 100%; height: 100%; pointer-events: none; }
+@keyframes promoLatar { from { opacity: 0; } to { opacity: 1; } }
+@keyframes promoLatarKeluar { to { opacity: 0; } }
+@keyframes promoMasuk { from { opacity: 0; transform: translateY(30px) scale(.9); } to { opacity: 1; transform: none; } }
+@keyframes promoKeluar { to { opacity: 0; transform: translateY(16px) scale(.96); } }
+@media (prefers-reduced-motion: reduce) { .promo-lapis, .promo-kotak { animation: none; } }
