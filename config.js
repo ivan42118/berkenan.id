@@ -50,34 +50,34 @@ window.BRAND = {
   //   izin  : ubah ke true HANYA setelah orangnya membaca dan setuju dengan kalimat di "teks".
   //           Selama belum true, nama & kata-katanya tidak tampil; yang tampil hanya ringkasan jumlah acara.
   //   foto / link (opsional): alamat https foto orangnya / undangannya.
-  // Urutan di sini = urutan tampil. 6 pertama langsung terlihat, sisanya di balik tombol "Lihat … lainnya".
+  // Urutan di sini = urutan tampil di slider testimoni (bergeser otomatis).
   // Kata-kata ditulis Ivan atas permintaan masing-masing (mereka menyerahkan kata-katanya).
   // Kirim dulu kalimatnya ke orangnya; setelah mereka oke, ubah izin-nya ke true.
   testimoni: [
     { nama: "Gilang & Michelle", jenis: "pernikahan", acara: "Pernikahan · Desain kustom · Eksklusif", izin: false,
-      teks: "Kami cuma kirim ide kasar, lalu dibantu sampai jadi desain yang benar-benar sesuai keinginan kami. Beda dari undangan kebanyakan." },
+      teks: "Awalnya cuma kirim konsep seadanya, nggak nyangka jadinya sebagus ini. Beda dari undangan yang biasa kami terima." },
     { nama: "Zenada Dirga Cahaya", jenis: "ulangtahun", acara: "Ulang tahun · Ceria Pastel · Premium", izin: false,
-      teks: "Warnanya ceria dan lucu, pas untuk pesta ulang tahun. Dari konfirmasi kehadiran, kami jadi lebih mudah memperkirakan jumlah tamu." },
+      teks: "Temanya lucu, warnanya pas buat ultah. Enaknya tamu bisa konfirmasi datang atau nggak, jadi kami bisa kira-kira mau siapin buat berapa orang." },
     { nama: "Wahyu & Nindi", jenis: "pernikahan", acara: "Pernikahan · Moss Garden · Eksklusif", izin: false,
-      teks: "Nuansa hijaunya teduh, cocok dengan konsep acara kami. Video undangannya juga enak dibagikan di Status WhatsApp." },
+      teks: "Suka banget sama hijaunya, adem dilihat. Video undangannya langsung kami pasang di status WA." },
     { nama: "Khitanan M. Abhar Aljunaid", jenis: "khitan", acara: "Khitanan · Desain kustom · Eksklusif", izin: false,
-      teks: "Desainnya dibuat khusus untuk khitanan anak kami. Keluarga yang jauh juga bisa ikut mengirim doa lewat kolom ucapan." },
+      teks: "Saudara yang di luar kota nggak bisa datang, tapi masih bisa kirim doa lewat undangannya. Alhamdulillah." },
     { nama: "Rafi & Putri", jenis: "pernikahan", acara: "Pernikahan · Maroon Romance · Premium", izin: false,
-      teks: "Foto-foto prewedding kami tampil cantik di galeri. Ucapan dari tamu juga terkumpul rapi, senang sekali membacanya satu per satu." },
+      teks: "Foto prewed kami jadi kelihatan lebih bagus di sini, haha. Paling senang pas baca ucapan dari tamu satu-satu." },
     { nama: "Robith & Denada", jenis: "pernikahan", acara: "Pernikahan · Maroon Romance · Basic", izin: false,
-      teks: "Paketnya sederhana, tapi tampilannya tetap elegan. Amplop digitalnya juga memudahkan tamu yang berhalangan hadir." },
+      teks: "Kami ambil paket yang paling simpel, tapi hasilnya tetap elegan. Fitur amplop digitalnya kepakai banget." },
     { nama: "Alumni SMK Veteran angkatan 2019", jenis: "acara", acara: "Reuni · Desain kustom", izin: false,
-      teks: "Undangan reuninya terlihat profesional dan gampang disebar di grup alumni. Panitia jadi mudah merekap siapa saja yang datang." },
+      teks: "Biasanya panitia repot nanyain satu-satu siapa yang mau datang. Kemarin cukup sebar link di grup, rekapnya langsung kelihatan." },
     { nama: "Andriyano & Sinta", jenis: "pernikahan", acara: "Pernikahan · Maroon Romance · Eksklusif", izin: false,
-      teks: "Setiap permintaan perubahan dari kami dilayani dengan sabar. Hasil akhirnya persis seperti yang kami bayangkan." },
+      teks: "Kami lumayan banyak maunya, ganti ini ganti itu, tapi tetap dilayani dengan sabar. Makasih banyak ya!" },
     { nama: "Burhan & Putri", jenis: "pernikahan", acara: "Pernikahan · Maroon Romance · Premium", izin: false,
-      teks: "Warna marunnya elegan, pas dengan dekorasi kami. Keluarga juga gampang membukanya, tinggal klik langsung ketemu lokasinya." },
+      teks: "Warnanya mewah, nyambung sama dekorasi nikahan kami. Tamu tinggal klik peta, langsung diarahkan ke lokasi." },
     { nama: "Tommy & Ajeng", jenis: "pernikahan", acara: "Pernikahan · Maroon Romance · Premium", izin: false,
-      teks: "Link undangan per nama tamu bikin kirimnya terasa lebih sopan dan personal. Kami tinggal salin, lalu kirim lewat WhatsApp." },
+      teks: "Paling suka sama link per nama tamu. Jadi nggak kirim undangan yang sama ke semua orang, lebih sopan aja rasanya." },
     { nama: "Fikri & Bella", jenis: "pernikahan", acara: "Pernikahan · Maroon Romance · Premium", izin: false,
-      teks: "Prosesnya cepat dan komunikasinya enak. Cocok untuk kami yang persiapannya serba mepet." },
+      teks: "Persiapan kami mepet banget, untung prosesnya cepat dan gampang diajak ngobrol." },
     { nama: "Raka & Sesil", jenis: "pernikahan", acara: "Pernikahan · Maroon Romance · Premium", izin: false,
-      teks: "Susunan acara dan dress code tertulis jelas di undangan, jadi tamu tidak bingung. Musiknya juga bikin suasananya makin hangat." }
+      teks: "Rundown sama dress code udah ada di undangan, jadi tamu nggak nanya-nanya lagi mau pakai baju apa." }
   ],
 
   // Pengaturan demo per paket (undangan/?u=demo-…&paket=…):

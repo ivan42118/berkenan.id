@@ -232,7 +232,23 @@ code { font-size: .9em; background: rgba(0, 0, 0, .08); padding: 1px 6px; border
 
 /* ---------- testimoni (config.js → testimoni) ---------- */
 .testimoni { background: var(--aksen-lembut); }
-.grid-testimoni { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 20px; max-width: 1080px; margin: 0 auto; }
+/* Slider: 3 kartu per layar di desktop, 2 di tablet, 1 (+ intip kartu berikutnya) di HP */
+.slider-testi { max-width: 1080px; margin: 0 auto; }
+.jalur-testi { position: relative; display: flex; gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; overscroll-behavior-x: contain; padding: 2px 0; }
+.jalur-testi::-webkit-scrollbar { display: none; }
+.jalur-testi .kartu-testi { flex: 0 0 calc((100% - 40px) / 3); scroll-snap-align: start; }
+.kendali-testi { display: flex; align-items: center; justify-content: center; gap: 16px; margin-top: 24px; }
+.satu-hal .kendali-testi { display: none; }
+.panah-testi { width: 42px; height: 42px; flex: none; display: grid; place-items: center; padding: 0 0 3px; border-radius: 50%; border: 1px solid var(--aksen); background: transparent; color: var(--aksen); font: 400 26px/1 var(--font-teks); cursor: pointer; transition: background .2s ease, color .2s ease; }
+.panah-testi:hover { background: var(--aksen); color: #fff; }
+.panah-testi:focus-visible, .titik-testi button:focus-visible { outline: 2px solid var(--aksen); outline-offset: 3px; }
+.titik-testi { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px; }
+.titik-testi.angka { min-width: 64px; font-size: 15px; letter-spacing: .08em; color: var(--redup); font-variant-numeric: tabular-nums; }
+.titik-testi button { position: relative; width: 8px; height: 8px; margin: 4px; padding: 0; border: 0; border-radius: 999px; background: rgba(107, 28, 43, .25); cursor: pointer; transition: width .3s ease, background .3s ease; }
+.titik-testi button::after { content: ""; position: absolute; inset: -8px -4px; }
+.titik-testi button[aria-current="true"] { width: 22px; background: var(--aksen); }
+@media (max-width: 900px) { .jalur-testi .kartu-testi { flex-basis: calc((100% - 20px) / 2); } }
+@media (max-width: 600px) { .jalur-testi { gap: 14px; } .jalur-testi .kartu-testi { flex-basis: 86%; } }
 .kartu-testi { margin: 0; background: var(--kartu); border: 1px solid var(--garis); border-radius: 22px; padding: 26px 24px 22px; display: flex; flex-direction: column; gap: 16px; }
 .kartu-testi blockquote { margin: 0; flex: 1; font-family: var(--font-judul); font-size: 20px; font-style: italic; line-height: 1.5; color: var(--tinta); }
 .kartu-testi blockquote::before { content: "“"; display: block; font-size: 54px; line-height: .6; color: var(--emas); margin-bottom: 6px; font-style: normal; }
@@ -301,5 +317,3 @@ html.promo-terbuka { overflow: hidden; }
 @media (max-width: 420px) { .harga-hp { font-size: 14px; } .ringkas-testi li { min-width: 84px; padding: 12px 12px 10px; } .ringkas-testi b { font-size: 30px; } }
 @media (max-width: 349px) { .harga-hp { display: none; } }
 
-/* Tombol "Lihat … testimoni lainnya" */
-.testi-lagi { text-align: center; margin: 26px 0 0; }

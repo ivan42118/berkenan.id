@@ -2,7 +2,7 @@
   'use strict';
   var B = window.BRAND || {};
   var NOMOR_CONTOH = '6281234567890';
-  var VERSI = '20261128a'; // samakan dengan ?v= di index.html setiap kali ada update
+  var VERSI = '20261128b'; // samakan dengan ?v= di index.html setiap kali ada update
   var wa = String(B.whatsapp || '').replace(/\D/g, '');
 
   function rupiah(n) { return 'Rp ' + Number(n || 0).toLocaleString('id-ID'); }
@@ -312,12 +312,15 @@
     var butirRingkas = function (n, label) { var li = el('li'); li.append(el('b', null, String(n)), el('span', null, label)); ringkas.append(li); };
     butirRingkas(semuaTesti.length, 'undangan');
     Object.keys(JENIS_RINGKAS).forEach(function (k) { if (hitungJenis[k]) butirRingkas(hitungJenis[k], JENIS_RINGKAS[k]); });
+    bagianTesti.hidden = false; // tampilkan dulu supaya lebar kartu slider bisa diukur
     if (testi.length) {
-      var gridTesti = document.getElementById('grid-testimoni');
-      var TAMPIL_AWAL = 6; // sisanya disembunyikan di balik tombol supaya halaman di HP tidak terlalu panjang
+      var sliderTesti = document.getElementById('slider-testi');
+      var jalurTesti = document.getElementById('jalur-testi');
       testi.forEach(function (t, i) {
         var kartu = el('figure', 'kartu-testi');
-        if (i >= TAMPIL_AWAL) kartu.hidden = true;
+        kartu.setAttribute('role', 'group');
+        kartu.setAttribute('aria-roledescription', 'slide');
+        kartu.setAttribute('aria-label', (i + 1) + ' dari ' + testi.length);
         var kutip = el('blockquote', null, String(t.teks));
         var siapa = el('figcaption');
         var foto = /^https:\/\//.test(String(t.foto || '')) ? el('img', 'testi-foto') : el('span', 'testi-inisial', String(t.nama).trim().charAt(0).toUpperCase());
@@ -332,29 +335,106 @@
           lihat.href = t.link; lihat.target = '_blank'; lihat.rel = 'noopener';
           kartu.append(lihat);
         }
-        gridTesti.append(kartu);
+        jalurTesti.append(kartu);
       });
-      if (testi.length > TAMPIL_AWAL) {
-        var sisa = testi.length - TAMPIL_AWAL;
-        var bungkusLagi = el('p', 'testi-lagi');
-        var tombolLagi = el('button', 'btn garis kecil', 'Lihat ' + sisa + ' testimoni lainnya');
-        tombolLagi.type = 'button';
-        tombolLagi.addEventListener('click', function () {
-          var tersembunyi = gridTesti.querySelectorAll('.kartu-testi[hidden]');
-          tersembunyi.forEach(function (k) { k.hidden = false; });
-          bungkusLagi.remove();
-          if (tersembunyi[0]) { tersembunyi[0].tabIndex = -1; tersembunyi[0].focus({ preventScroll: true }); }
-        });
-        bungkusLagi.append(tombolLagi);
-        gridTesti.after(bungkusLagi);
-      }
+      sliderTesti.hidden = false;
+      pasangSlider(sliderTesti, jalurTesti);
       document.getElementById('testi-ajak').hidden = false;
       var menuHarga = document.querySelector('.menu a[href="#harga"]');
       if (menuHarga) { var m = el('a', null, 'Testimoni'); m.href = '#testimoni'; menuHarga.after(m); }
     } else {
       bagianTesti.querySelector('.eyebrow').textContent = 'Rekam jejak';
     }
-    bagianTesti.hidden = false;
+  }
+
+  // Slider testimoni: bergeser sendiri tiap 5 detik, bisa di-swipe, ada panah & titik.
+  // Berhenti sementara saat kursor/fokus ada di dalamnya atau saat tidak terlihat di layar,
+  // dan berhenti total begitu pengunjung menggeser sendiri. Tidak bergerak sendiri bila
+  // pengunjung memilih "kurangi gerakan" di HP/komputernya.
+  function pasangSlider(slider, jalur) {
+    var kartu = Array.prototype.slice.call(jalur.children);
+    var wadahTitik = slider.querySelector('.titik-testi');
+    var kurangiGerak = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var JEDA = 5000;
+    var perLayar = 1, jumlahHal = 1, hal = 0, titik = [];
+    var otomatis = !kurangiGerak, ditahan = false, terlihat = !('IntersectionObserver' in window);
+    var terakhir = Date.now();
+
+    function posisi(p) {
+      var maks = jalur.scrollWidth - jalur.clientWidth;
+      var target = kartu[Math.min(p * perLayar, kartu.length - 1)];
+      return Math.max(0, Math.min(target.offsetLeft - kartu[0].offsetLeft, maks));
+    }
+    function tandai() {
+      var x = jalur.scrollLeft, terdekat = 0, jarak = Infinity;
+      for (var p = 0; p < jumlahHal; p++) {
+        var d = Math.abs(posisi(p) - x);
+        if (d < jarak) { jarak = d; terdekat = p; }
+      }
+      hal = terdekat;
+      titik.forEach(function (b, i) { b.setAttribute('aria-current', i === hal ? 'true' : 'false'); });
+      if (!titik.length) wadahTitik.textContent = (hal + 1) + ' / ' + jumlahHal;
+    }
+    function ke(p) {
+      hal = (p + jumlahHal) % jumlahHal;
+      jalur.scrollTo({ left: posisi(hal), behavior: kurangiGerak ? 'auto' : 'smooth' });
+      terakhir = Date.now();
+    }
+    function berhenti() { otomatis = false; }
+    function ukur() {
+      var celah = parseFloat(getComputedStyle(jalur).columnGap) || 0;
+      perLayar = Math.max(1, Math.round((jalur.clientWidth + celah) / (kartu[0].offsetWidth + celah)));
+      jumlahHal = Math.ceil(kartu.length / perLayar);
+      wadahTitik.textContent = '';
+      titik = [];
+      // Lebih dari 6 halaman (biasanya di HP): pakai penanda angka "3 / 12" supaya titiknya tidak berderet dua baris.
+      wadahTitik.classList.toggle('angka', jumlahHal > 6);
+      for (var i = 0; jumlahHal <= 6 && i < jumlahHal; i++) {
+        var b = el('button');
+        b.type = 'button';
+        b.setAttribute('aria-label', 'Testimoni ' + (i * perLayar + 1) + (perLayar > 1 ? '–' + Math.min((i + 1) * perLayar, kartu.length) : ''));
+        b.addEventListener('click', ke.bind(null, i));
+        b.addEventListener('click', berhenti);
+        wadahTitik.append(b);
+        titik.push(b);
+      }
+      slider.classList.toggle('satu-hal', jumlahHal < 2);
+      tandai();
+    }
+
+    slider.querySelector('.mundur').addEventListener('click', function () { berhenti(); ke(hal - 1); });
+    slider.querySelector('.maju').addEventListener('click', function () { berhenti(); ke(hal + 1); });
+    jalur.addEventListener('pointerdown', berhenti);
+    jalur.addEventListener('touchstart', berhenti, { passive: true });
+    jalur.addEventListener('wheel', function (e) { if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) berhenti(); }, { passive: true });
+    slider.addEventListener('pointerenter', function (e) { if (e.pointerType === 'mouse') ditahan = true; });
+    slider.addEventListener('pointerleave', function (e) { if (e.pointerType === 'mouse') ditahan = false; });
+    slider.addEventListener('focusin', function () { ditahan = true; });
+    slider.addEventListener('focusout', function (e) { if (!slider.contains(e.relatedTarget)) ditahan = false; });
+
+    var antreGulir = false;
+    jalur.addEventListener('scroll', function () {
+      if (antreGulir) return;
+      antreGulir = true;
+      requestAnimationFrame(function () { antreGulir = false; tandai(); });
+    }, { passive: true });
+
+    var antreUkur;
+    window.addEventListener('resize', function () {
+      clearTimeout(antreUkur);
+      antreUkur = setTimeout(function () { var h = hal; ukur(); ke(Math.min(h, jumlahHal - 1)); }, 150);
+    });
+
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (entri) { terlihat = entri[0].isIntersecting; }, { threshold: 0.5 }).observe(slider);
+    }
+    // Cek tiap 0,5 detik; selama ditahan/tak terlihat, hitungan 5 detik diulang dari awal.
+    setInterval(function () {
+      if (!otomatis || ditahan || !terlihat || document.hidden || jumlahHal < 2) { terakhir = Date.now(); return; }
+      if (Date.now() - terakhir >= JEDA) ke(hal + 1);
+    }, 500);
+
+    ukur();
   }
 
   // Kontak di footer

@@ -21,7 +21,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/landing.css?v=20261128a">
+  <link rel="stylesheet" href="assets/landing.css?v=20261128b">
 </head>
 <body>
   <div class="peringatan" id="peringatan" hidden>
@@ -64,7 +64,7 @@
         <div class="hp">
           <!-- Undangan dirender selebar HP asli (375px) lalu diperkecil, supaya tampilannya persis seperti di HP tamu. -->
           <div class="hp-layar">
-            <iframe src="undangan/?u=demo-maroon&amp;to=Tamu%20Spesial&amp;v=20261128a" title="Contoh undangan tema Maroon Romance"></iframe>
+            <iframe src="undangan/?u=demo-maroon&amp;to=Tamu%20Spesial&amp;v=20261128b" title="Contoh undangan tema Maroon Romance"></iframe>
           </div>
         </div>
         <p class="hp-ket">Coba langsung: tekan “Buka Undangan”</p>
@@ -169,7 +169,14 @@
         <p>Sebelum memakai nama berkenan.id, kami sudah membuatkan undangan digital untuk keluarga dan sahabat.<span id="testi-ajak" hidden> Ini kesan mereka.</span></p>
         <ul class="ringkas-testi" id="ringkas-testi"></ul>
       </header>
-      <div class="grid-testimoni" id="grid-testimoni"></div>
+      <div class="slider-testi" id="slider-testi" role="region" aria-roledescription="carousel" aria-label="Testimoni" hidden>
+        <div class="jalur-testi" id="jalur-testi"></div>
+        <div class="kendali-testi">
+          <button type="button" class="panah-testi mundur" aria-label="Testimoni sebelumnya">‹</button>
+          <div class="titik-testi"></div>
+          <button type="button" class="panah-testi maju" aria-label="Testimoni berikutnya">›</button>
+        </div>
+      </div>
     </section>
 
     <section class="bagian lembut" id="cara">
@@ -244,7 +251,7 @@
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 0 0-7.8 13.5L3 21l4.6-1.2A9 9 0 1 0 12 3z"/><path d="M9 8.5c0 3.5 3 6.5 6.5 6.5l1-1.6-2-1-1 1c-1.2-.5-2.4-1.7-2.9-2.9l1-1-1-2z"/></svg>
   </a>
 
-  <script src="config.js?v=20261128a"></script>
-  <script src="assets/landing.js?v=20261128a"></script>
+  <script src="config.js?v=20261128b"></script>
+  <script src="assets/landing.js?v=20261128b"></script>
 </body>
 </html>
