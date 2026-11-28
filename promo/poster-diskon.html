@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Poster Promo Akhir Tahun — sumber</title>
+<!--
+  Poster Promo Akhir Tahun berkenan.id untuk Instagram / Facebook / Status WA.
+  Harga, kuota, tanggal akhir, dan nomor WA diambil dari config.js, jadi selalu sama dengan website.
+    ?format=feed  (bawaan) 1080×1350 — postingan feed (4:5)
+    ?format=story          1080×1920 — Story / Status WA (9:16), isi penting di luar area tombol IG
+  Pratinjau : jalankan server lokal, buka promo/poster-diskon.html?format=story
+  Ekspor PNG:
+    node promo/render.mjs --halaman="promo/poster-diskon.html?format=feed" --lebar=1080 --tinggi=1350 --foto=promo/hasil/poster-diskon-feed.png
+    node promo/render.mjs --halaman="promo/poster-diskon.html?format=story" --lebar=1080 --tinggi=1920 --foto=promo/hasil/poster-diskon-story.png
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,500;1,600&family=Jost:wght@300;400;500;600&display=block">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: #111; overflow: hidden; }
+  #panggung { position: absolute; left: 0; top: 0; width: 1080px; height: 1350px; overflow: hidden; transform-origin: 0 0;
+    background: radial-gradient(120% 90% at 50% 38%, #7d2436 0%, #4c1322 50%, #2a0911 100%);
+    font-family: 'Jost', system-ui, sans-serif; color: #fbf3e8; -webkit-font-smoothing: antialiased;
+    font-variant-numeric: lining-nums; }
+  .story #panggung { height: 1920px; }
+  #kilau { position: absolute; inset: 0; }
+  #vignet { position: absolute; inset: 0; pointer-events: none; background: radial-gradient(120% 100% at 50% 45%, transparent 62%, rgba(0, 0, 0, 0.42) 100%); }
+  .bingkai { position: absolute; inset: 30px; border: 1.5px solid rgba(217, 182, 111, 0.42); border-radius: 30px; pointer-events: none; }
+  .bingkai::before { content: ""; position: absolute; inset: 9px; border: 1px solid rgba(217, 182, 111, 0.18); border-radius: 23px; }
+
+  .isi { position: absolute; inset: 0; z-index: 2; display: flex; flex-direction: column; align-items: center; justify-content: space-between;
+    padding: 78px 84px 74px; text-align: center; }
+  /* Story: atas ±270 px & bawah ±340 px tertutup nama akun dan kolom balas Instagram */
+  .story .isi { padding: 270px 84px 340px; }
+  .jenis { display: none; margin-top: 22px; font-size: 25px; letter-spacing: 0.06em; color: rgba(251, 243, 232, 0.8); }
+  .story .jenis { display: block; }
+
+  /* Kepala */
+  .logo { display: flex; align-items: center; gap: 16px; }
+  .logo svg { display: block; filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.35)); }
+  .merek { font-weight: 500; font-size: 42px; line-height: 1; letter-spacing: -0.01em; color: #f3dca6; }
+  .kepala { display: flex; flex-direction: column; align-items: center; }
+  .eyebrow { display: flex; align-items: center; gap: 22px; margin-top: 30px; font-weight: 500; font-size: 25px; letter-spacing: 0.42em; color: #e6cd9c; padding-left: .42em; }
+  .eyebrow::before, .eyebrow::after { content: ""; width: 70px; height: 1.5px; background: linear-gradient(90deg, transparent, #d9b66f); }
+  .eyebrow::after { transform: scaleX(-1); }
+  .besar { margin-top: 4px; font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic; font-weight: 600; font-size: 214px; line-height: 0.98; letter-spacing: -0.01em;
+    background: linear-gradient(180deg, #fbe7b5 10%, #e9c47e 55%, #c08a3e 100%); -webkit-background-clip: text; background-clip: text; color: transparent;
+    filter: drop-shadow(0 14px 26px rgba(0, 0, 0, 0.35)); padding: 0 24px; }
+  .sub { margin-top: 6px; font-size: 31px; font-weight: 300; color: rgba(251, 243, 232, 0.92); }
+  .kuota { display: inline-block; margin-top: 18px; padding: 10px 28px; border-radius: 999px; border: 1.5px solid rgba(240, 207, 143, 0.75);
+    font-weight: 500; font-size: 26px; letter-spacing: 0.02em; color: #f3dca6; background: rgba(240, 207, 143, 0.08); }
+
+  /* Tengah: HP + daftar harga */
+  .tengah { display: flex; align-items: center; justify-content: center; gap: 54px; width: 100%; }
+  .hp { position: relative; flex: none; padding: 10px; border-radius: 46px; transform: rotate(-5deg);
+    background: linear-gradient(150deg, #4a4a50 0%, #141417 38%, #2a2a30 100%);
+    box-shadow: 0 46px 70px -26px rgba(0, 0, 0, 0.8), inset 0 0 0 2px rgba(255, 255, 255, 0.09), inset 0 0 0 4px #0b0b0d; }
+  .hp::after { content: ""; position: absolute; z-index: -1; left: 50%; top: 50%; width: 520px; height: 520px; margin: -260px 0 0 -260px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(240, 205, 140, 0.26) 0%, rgba(240, 205, 140, 0) 65%); }
+  .layar { position: relative; overflow: hidden; border-radius: 37px; background: #000; isolation: isolate; }
+  .layar iframe { position: absolute; left: 0; top: 0; width: 375px; height: 812px; border: 0; transform-origin: 0 0; }
+  .pulau { position: absolute; z-index: 2; top: 9px; left: 50%; width: 30%; height: 20px; transform: translateX(-50%); border-radius: 12px; background: #000; }
+  .kilap { position: absolute; z-index: 2; inset: 0; pointer-events: none; background: linear-gradient(115deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 28%); }
+
+  .harga { width: 470px; text-align: left; }
+  .daftar { list-style: none; background: #fbf6ee; border-radius: 28px; padding: 10px 30px; color: #2a2521;
+    box-shadow: 0 34px 60px -28px rgba(0, 0, 0, 0.7); }
+  .daftar li { display: grid; grid-template-columns: 1fr auto; align-items: center; row-gap: 2px; padding: 20px 0; border-bottom: 1px solid rgba(42, 37, 33, 0.12); }
+  .daftar li:last-child { border-bottom: 0; }
+  .paket { font-weight: 500; font-size: 29px; display: flex; align-items: center; gap: 10px; }
+  .daftar li.unggulan { position: relative; }
+  .normal { grid-column: 1; font-size: 22px; color: #8a8079; text-decoration: line-through; text-decoration-thickness: 1.5px; }
+  /* Lencana duduk di garis pemisah di atas baris Premium, supaya kolom harga tetap rata */
+  .lencana { position: absolute; left: -2px; top: -14px; white-space: nowrap; font-size: 15px; font-weight: 600; letter-spacing: 0.05em; color: #fff;
+    background: #6b1c2b; padding: 4px 13px 5px; border-radius: 999px; box-shadow: 0 0 0 4px #fbf6ee; }
+  .promo { grid-column: 2; grid-row: 1 / span 2; font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 600; font-size: 54px; line-height: 1; color: #6b1c2b; }
+  .promo small { font-size: 0.62em; margin-right: 2px; }
+  .poin { list-style: none; margin-top: 26px; display: grid; gap: 12px; padding-left: 6px; }
+  .poin li { display: flex; align-items: center; gap: 14px; font-size: 25px; font-weight: 400; color: rgba(251, 243, 232, 0.95); }
+  .poin li::before { content: ""; flex: none; width: 26px; height: 26px; border-radius: 50%;
+    background: #e9c47e url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 12.5l4 4 8-9' fill='none' stroke='%232a0911' stroke-width='2.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 18px no-repeat; }
+
+  /* Kaki */
+  .kaki { display: flex; flex-direction: column; align-items: center; }
+  .cta { display: inline-flex; align-items: center; gap: 16px; padding: 22px 44px; border-radius: 999px; font-weight: 600; font-size: 32px; color: #2a0911;
+    background: linear-gradient(135deg, #c9974a, #f3d89c 55%, #c9974a); box-shadow: 0 20px 40px -16px rgba(236, 201, 138, 0.55); }
+  .cta svg { width: 38px; height: 38px; flex: none; }
+  .cta .nomor { font-weight: 500; letter-spacing: 0.02em; }
+  .catatan { margin-top: 20px; font-size: 23px; letter-spacing: 0.04em; color: rgba(243, 220, 166, 0.85); }
+  .catatan b { font-weight: 500; color: #f3dca6; }
+</style>
+</head>
+<body>
+<div id="panggung">
+  <canvas id="kilau"></canvas>
+  <div class="bingkai"></div>
+
+  <div class="isi">
+    <div class="kepala">
+      <div class="logo"><span id="ikon"></span><p class="merek" data-brand></p></div>
+      <p class="eyebrow" id="nama-promo"></p>
+      <p class="besar" id="besar"></p>
+      <p class="sub" id="sub"></p>
+      <p class="kuota" id="kuota"></p>
+      <p class="jenis">Pernikahan · Khitan · Ulang Tahun · Acara</p>
+    </div>
+
+    <div class="tengah">
+      <div class="hp" id="hp"></div>
+      <div class="harga">
+        <ul class="daftar" id="daftar"></ul>
+        <ul class="poin">
+          <li>Lihat draf dulu, baru bayar</li>
+          <li id="poin-waktu"></li>
+          <li>Nama tamu personal, tanpa batas</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="kaki">
+      <p class="cta">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#2a0911" d="M12 2.2a9.8 9.8 0 0 0-8.4 14.9L2.3 21.8l4.8-1.3A9.8 9.8 0 1 0 12 2.2zm0 1.8a8 8 0 1 1-4.1 14.9l-.3-.2-2.8.8.8-2.7-.2-.3A8 8 0 0 1 12 4zm-3.3 4c-.2 0-.6.1-.9.4-.3.3-1.1 1.1-1.1 2.7s1.2 3.2 1.3 3.4c.2.2 2.3 3.6 5.7 4.9 2.8 1.1 3.4.9 4 .8.6-.1 2-.8 2.2-1.6.3-.8.3-1.5.2-1.6l-.6-.4-2.1-1c-.3-.1-.5-.2-.7.2l-1 1.2c-.2.2-.4.2-.7.1-.3-.2-1.3-.5-2.5-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6l.5-.6.3-.5c.1-.2 0-.4 0-.5l-1-2.3c-.2-.6-.5-.6-.7-.6h-.6z"/></svg>
+        <span>Pesan via WhatsApp</span><span class="nomor" id="nomor"></span>
+      </p>
+      <p class="catatan" id="catatan"></p>
+    </div>
+  </div>
+
+  <div id="vignet"></div>
+</div>
+<script src="../config.js"></script>
+<script src="../assets/logo/logo.js"></script>
+<script>
+(function () {
+  'use strict';
+  var B = window.BRAND || {};
+  var D = B.diskon || {};
+  var Q = new URLSearchParams(location.search);
+  var RENDER = Q.get('render') === '1';
+  var STORY = Q.get('format') === 'story';
+  var LEBAR = 1080, TINGGI = STORY ? 1920 : 1350;
+  var $ = function (id) { return document.getElementById(id); };
+  if (STORY) document.documentElement.classList.add('story');
+
+  var rupiah = function (n) { return 'Rp' + Number(n).toLocaleString('id-ID'); };
+  var BULAN = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+  var akhir = new Date(D.sampai || '2027-01-01T23:59:59+07:00');
+  // Tanggal dalam WIB, apa pun zona waktu komputer yang merender.
+  var wib = new Date(akhir.getTime() + 7 * 3600 * 1000);
+  var tglAkhir = wib.getUTCDate() + ' ' + BULAN[wib.getUTCMonth()] + ' ' + wib.getUTCFullYear();
+
+  document.querySelectorAll('[data-brand]').forEach(function (n) { n.textContent = String(B.nama || 'berkenan.id').toLowerCase(); });
+  if (window.svgIkonBerkenan) $('ikon').innerHTML = svgIkonBerkenan('gelap', 64);
+  $('nama-promo').textContent = String(D.nama || 'Promo Akhir Tahun').toUpperCase();
+  $('besar').textContent = 'Diskon ' + (D.persen || 50) + '%';
+  $('sub').textContent = D.keterangan || 'Untuk semua paket';
+  if (D.kuota) $('kuota').textContent = 'Khusus ' + D.kuota + ' pemesan pertama'; else $('kuota').remove();
+  $('poin-waktu').textContent = 'Draf jadi dalam ' + (B.waktuPengerjaan || '1×24 jam');
+
+  (B.paket || []).forEach(function (p) {
+    var h = (D.harga || {})[p.id] || p.harga;
+    var li = document.createElement('li');
+    var nama = document.createElement('span'); nama.className = 'paket'; nama.textContent = p.nama;
+    var normal = document.createElement('span'); normal.className = 'normal'; normal.textContent = rupiah(p.harga);
+    var promo = document.createElement('span'); promo.className = 'promo';
+    promo.innerHTML = '<small>Rp</small>' + Number(h).toLocaleString('id-ID');
+    li.append(nama, promo, normal);
+    if (p.unggulan) {
+      li.className = 'unggulan';
+      var l = document.createElement('span'); l.className = 'lencana'; l.textContent = 'Paling dipilih'; li.append(l);
+    }
+    $('daftar').append(li);
+  });
+
+  // 62895… → 0895-3861-24189
+  var wa = String(B.whatsapp || '').replace(/\D/g, '');
+  var lokal = wa.indexOf('62') === 0 ? '0' + wa.slice(2) : wa;
+  $('nomor').textContent = lokal.replace(/^(\d{4})(\d{4})(\d+)$/, '$1-$2-$3');
+  $('catatan').innerHTML = 'Berlaku sampai <b>' + tglAkhir + '</b>' + (B.instagram ? ' · IG <b>@' + B.instagram + '</b>' : '');
+
+  // HP berisi sampul undangan demo asli.
+  var SKALA = STORY ? 0.74 : 0.66;
+  var w = Math.round(375 * SKALA), t = Math.round(812 * SKALA);
+  var layar = document.createElement('div');
+  layar.className = 'layar';
+  layar.style.width = w + 'px'; layar.style.height = t + 'px';
+  var f = document.createElement('iframe');
+  f.src = '../undangan/?u=demo-maroon&to=' + encodeURIComponent('Bapak & Ibu Hartono') + '&v=poster';
+  f.tabIndex = -1;
+  f.setAttribute('aria-hidden', 'true');
+  f.style.transform = 'scale(' + SKALA + ')';
+  layar.append(f);
+  layar.insertAdjacentHTML('beforeend', '<div class="pulau"></div><div class="kilap"></div>');
+  $('hp').append(layar);
+
+  // Kilau emas diam (acak tetap, jadi hasil ekspor selalu sama). Dipanggil setelah font termuat:
+  // titik yang jatuh di atas teks, daftar harga, HP, atau tombol dilewati supaya tulisan tetap bersih.
+  function gambarKilau() {
+    var kanvas = $('kilau'); kanvas.width = LEBAR; kanvas.height = TINGGI;
+    var c = kanvas.getContext('2d'), seed = 20261231;
+    var dasar = $('panggung').getBoundingClientRect(), k = dasar.width / LEBAR;
+    var area = [].map.call(document.querySelectorAll('.logo, .eyebrow, .besar, .sub, .kuota, .jenis, .hp, .daftar, .poin li, .cta, .catatan'), function (n) {
+      var b = n.getBoundingClientRect();
+      return { x1: (b.left - dasar.left) / k - 16, y1: (b.top - dasar.top) / k - 16, x2: (b.right - dasar.left) / k + 16, y2: (b.bottom - dasar.top) / k + 16 };
+    });
+    var kena = function (x, y) { return area.some(function (a) { return x > a.x1 && x < a.x2 && y > a.y1 && y < a.y2; }); };
+    function acak() { seed |= 0; seed = seed + 0x6D2B79F5 | 0; var r = Math.imul(seed ^ seed >>> 15, 1 | seed); r = r + Math.imul(r ^ r >>> 7, 61 | r) ^ r; return ((r ^ r >>> 14) >>> 0) / 4294967296; }
+    for (var i = 0; i < (STORY ? 120 : 90); i++) {
+      var x = acak() * LEBAR, y = acak() * TINGGI, r = 0.8 + acak() * 2.6, a = 0.15 + acak() * 0.5;
+      if (kena(x, y)) continue;
+      c.globalAlpha = a * 0.25; c.fillStyle = '#f3d9a0';
+      c.beginPath(); c.arc(x, y, r * 3.2, 0, 6.283); c.fill();
+      c.globalAlpha = a; c.beginPath(); c.arc(x, y, r, 0, 6.283); c.fill();
+      if (r > 2.9) {
+        c.strokeStyle = '#f8e6bb'; c.lineWidth = 1.2; c.globalAlpha = a * 0.8;
+        c.beginPath(); c.moveTo(x - r * 4, y); c.lineTo(x + r * 4, y); c.moveTo(x, y - r * 4); c.lineTo(x, y + r * 4); c.stroke();
+      }
+    }
+  }
+
+  if (!RENDER) {
+    var pas = function () { var k = Math.min(innerWidth / LEBAR, innerHeight / TINGGI); $('panggung').style.transform = 'scale(' + k + ')'; };
+    pas(); addEventListener('resize', pas);
+  }
+
+  // Siap diekspor: undangan termuat, font & foto siap, animasi pembuka selesai.
+  function sampai(cek, batas) {
+    var mulai = Date.now();
+    return new Promise(function (res) { (function ulang() { if (cek() || Date.now() - mulai > (batas || 20000)) res(); else setTimeout(ulang, 120); })(); });
+  }
+  function muatGambar(url) { return new Promise(function (res) { var g = new Image(); g.onload = g.onerror = function () { res(); }; g.src = url; setTimeout(res, 15000); }); }
+  function fotoDi(doc) {
+    var url = [];
+    doc.querySelectorAll('[style]').forEach(function (n) {
+      var s = n.getAttribute('style') || '', m, re = /url\(["']?([^"')]+)["']?\)/g;
+      while ((m = re.exec(s))) url.push(m[1]);
+    });
+    doc.querySelectorAll('img').forEach(function (img) { if (img.currentSrc || img.src) url.push(img.currentSrc || img.src); });
+    return url.filter(function (u, i, a) { return a.indexOf(u) === i; });
+  }
+  var doc;
+  sampai(function () { doc = f.contentDocument; return doc && doc.getElementById('sampul') && doc.querySelector('.isi'); })
+    .then(function () { return Promise.all([doc.fonts.ready].concat(fotoDi(doc).map(muatGambar))); })
+    .then(function () { return Promise.all(['500 42px Jost', '300 31px Jost', '600 32px Jost', 'italic 600 214px "Cormorant Garamond"', '600 54px "Cormorant Garamond"'].map(function (x) { return document.fonts.load(x); })); })
+    .then(gambarKilau)
+    .then(function () { return new Promise(function (r) { setTimeout(r, 3500); }); })
+    .then(function () {
+      doc.getAnimations().forEach(function (a) {
+        try { if (isFinite(a.effect.getComputedTiming().endTime)) a.finish(); } catch (e) { /* abaikan */ }
+      });
+      return new Promise(function (r) { setTimeout(r, 400); });
+    })
+    .then(function () { window.siap = true; });
+})();
+</script>
+</body>
+</html>
