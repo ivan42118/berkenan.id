@@ -2,7 +2,7 @@
   'use strict';
   var B = window.BRAND || {};
   var NOMOR_CONTOH = '6281234567890';
-  var VERSI = '20261128c'; // samakan dengan ?v= di index.html setiap kali ada update
+  var VERSI = '20261128d'; // samakan dengan ?v= di index.html setiap kali ada update
   var wa = String(B.whatsapp || '').replace(/\D/g, '');
 
   function rupiah(n) { return 'Rp ' + Number(n || 0).toLocaleString('id-ID'); }
@@ -234,9 +234,10 @@
     tanya.href = linkWa(sapaan + 'saya mau tanya tentang ' + D.nama + ' diskon ' + D.persen + '%.');
     tanya.target = '_blank'; tanya.rel = 'noopener';
     var atas = el('div', 'promo-atas');
+    var ket = el('p', 'promo-ket', D.keterangan || 'Untuk semua paket');
+    if (D.kuota) ket.append(el('span', 'promo-kuota', D.kuota + ' pemesan pertama')); // selalu di baris sendiri
     atas.append(el('p', 'promo-label', D.nama), el('p', 'promo-besar', 'Diskon ' + D.persen + '%'),
-      el('p', 'promo-ket', (D.keterangan || 'Untuk semua paket') + (D.kuota ? ' · ' + D.kuota + ' pemesan pertama' : '')),
-      buatHitung(), el('p', 'promo-sampai', 'Berakhir ' + tglAkhir()));
+      ket, buatHitung(), el('p', 'promo-sampai', 'Berakhir ' + tglAkhir()));
     var bawah = el('div', 'promo-bawah');
     bawah.append(daftar);
     var aksi = el('div', 'promo-aksi'); aksi.append(lihat, tanya); bawah.append(aksi);

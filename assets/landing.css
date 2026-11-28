@@ -288,6 +288,7 @@ html.promo-terbuka { overflow: hidden; }
 .promo-label { font-size: 12px; font-weight: 500; letter-spacing: .26em; text-transform: uppercase; color: #f6e2ae; }
 .promo-besar { font-family: var(--font-judul); font-size: 54px; font-weight: 600; line-height: 1; color: #f6e2ae; text-shadow: 0 6px 20px rgba(0, 0, 0, .25); }
 .promo-ket { font-size: 14.5px; opacity: .92; max-width: 30ch; }
+.promo-kuota { display: block; }
 .promo-sampai { font-size: 12.5px; opacity: .8; }
 .promo-atas .hitung-promo { margin: 8px 0 2px; }
 .promo-bawah { display: grid; gap: 16px; padding: 18px 22px 22px; }
