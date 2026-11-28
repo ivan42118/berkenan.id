@@ -983,7 +983,8 @@
     if (r.aktif === false) return null;
     var J = id.J;
     var endpoint = amanUrl(r.endpoint || BRAND.rsvpEndpoint);
-    var lokal = !endpoint || modePreview;
+    // Undangan contoh tetap lokal: ucapan calon pembeli yang mencoba demo tidak masuk ke sheet / tampil ke publik.
+    var lokal = !endpoint || modePreview || slug.indexOf('demo-') === 0;
     var kunciLokal = 'ucapan:' + (slug || 'preview');
     var daftarUcapan = el('ul', { class: 'daftar-ucapan' });
     var statistik = el('div', { class: 'statistik' });

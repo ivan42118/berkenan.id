@@ -10,7 +10,8 @@
   var B = window.BRAND || {};
   var Q = new URLSearchParams(location.search);
   var slug = (Q.get('u') || '').toLowerCase().trim();
-  var endpoint = String(B.rsvpEndpoint || '').trim();
+  var demo = slug.indexOf('demo-') === 0; // halaman contoh: data hanya di HP ini, tidak dikirim ke sheet
+  var endpoint = demo ? '' : String(B.rsvpEndpoint || '').trim();
   var JSQR_LIB = 'https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js';
   var $ = function (id) { return document.getElementById(id); };
 
@@ -379,7 +380,9 @@
     window.addEventListener('online', function () { kirimAntrian(); tarik(); });
     window.addEventListener('offline', perbaruiStatus);
   } else {
-    $('catatan-mode').textContent = 'Mode uji: kehadiran hanya tersimpan di HP ini. Untuk menyatukan data beberapa HP penerima tamu ke Google Sheet, isi rsvpEndpoint di config.js.';
+    $('catatan-mode').textContent = demo
+      ? 'Ini halaman contoh: kehadiran hanya tersimpan di HP ini. Di undangan asli, data dikirim ke Google Sheet dan disinkronkan antar-HP penerima tamu.'
+      : 'Mode uji: kehadiran hanya tersimpan di HP ini. Untuk menyatukan data beberapa HP penerima tamu ke Google Sheet, isi rsvpEndpoint di config.js.';
   }
   perbaruiRingkas();
 

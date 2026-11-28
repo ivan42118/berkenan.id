@@ -15,9 +15,11 @@ window.BRAND = {
   // Dipakai untuk membuat link undangan dan preview WhatsApp. Ganti saat pindah ke domain sendiri.
   situs: "https://ivan42118.github.io/berkenan.id",
 
-  // URL Web App Google Apps Script untuk RSVP & ucapan (lihat rsvp/apps-script.gs).
+  // URL Web App Google Apps Script untuk RSVP, ucapan & QR check-in (lihat rsvp/apps-script.gs).
+  // Data masuk ke Google Sheet "berkenan.id — Data Tamu" milik pemilik berkenan.id.
   // Kosong = mode demo: ucapan hanya tersimpan di browser pengunjung.
-  rsvpEndpoint: "",
+  // Undangan contoh (slug "demo-…") selalu mode demo, jadi isian calon pembeli tidak masuk ke sheet.
+  rsvpEndpoint: "https://script.google.com/macros/s/AKfycbxsKRkIId7320YlSe4x4BjcCplPwq0k3s4j3F58JvTJiPga3tIKAmwCnOCwoVdyS_c-/exec",
 
   pembayaran: "Transfer bank atau QRIS",
   waktuPengerjaan: "1×24 jam",
